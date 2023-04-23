@@ -19,7 +19,7 @@ export default function Menu() {
           <ul className="menu-inner py-1">
             {/* Dashboards */}
             <li className="menu-item ">
-              <a href="dash.php" className="menu-link">
+              <a href="/dash" className="menu-link">
                 <i className="menu-icon tf-icons bx bx-envelope" />
                 <div data-i18n="Dashboards">Dashboards</div>
               </a>
@@ -32,30 +32,30 @@ export default function Menu() {
               </a>
               <ul className="menu-sub">
                 <li className="menu-item active">
-                  <a href="profile.php" className="menu-link ">
+                  <a href="/profile" className="menu-link ">
                     <div data-i18n="Collapsed menu">View</div>
                   </a>
                 </li>
                 <li className="menu-item">
-                  <a href="downline.php" className="menu-link">
+                  <a href="/downline" className="menu-link">
                     <div data-i18n="Content navbar">DownLine</div>
                   </a>
                 </li>
                 <li className="menu-item">
-                  <a href="business.php" className="menu-link">
+                  <a href="/business" className="menu-link">
                     <div data-i18n="Content nav + Sidebar">Business</div>
                   </a>
                 </li>
               </ul>
             </li>
             <li className="menu-item ">
-              <a href="stake.php" className="menu-link">
+              <a href="/stake" className="menu-link">
                 <i className="menu-icon tf-icons bx bx-envelope" />
                 <div data-i18n="Kanban">Stake</div>
               </a>
             </li>
             <li className="menu-item ">
-              <a href="income.php" className="menu-link">
+              <a href="/income" className="menu-link">
                 <i className="menu-icon tf-icons bx bx-envelope" />
                 <div data-i18n="Invoice">Awards/Rewards</div>
               </a>
@@ -105,25 +105,25 @@ export default function Menu() {
               </a>
               <ul className="menu-sub">
                 <li className="menu-item">
-                  <a href="wallet.php" className="menu-link">
+                  <a href="/wallet" className="menu-link">
                     <div data-i18n="List">View</div>
                   </a>
                 </li>
                 <li className="menu-item">
-                  <a href="request.php" className="menu-link">
+                  <a href="/request" className="menu-link">
                     <div data-i18n="Billing & Plans">Withdrawl Request</div>
                   </a>
                 </li>
               </ul>
             </li>
             <li className="menu-item ">
-              <a href="support.php" className="menu-link">
+              <a href="/support" className="menu-link">
                 <i className="menu-icon tf-icons bx bx-envelope" />
                 <div data-i18n="Roles & Permissions">Support</div>
               </a>
             </li>
             <li className="menu-item ">
-              <a href="login.php" className="menu-link">
+              <a href="/" className="menu-link">
                 <i className="menu-icon tf-icons bx bx-envelope" />
                 <div data-i18n="Login">Disconnect</div>
               </a>

@@ -78,7 +78,7 @@ export default function Wallet() {
                                             <div className="card-header border-0">
                                                 <div className="d-flex justify-content-between">
                                                     <h3 className="card-title">Withdrawal History</h3>
-                                                    <a href="request.php" className="btn  btn-sm rounded-pill btn-info">Add Request</a>
+                                                    <a href="/request" className="btn  btn-sm rounded-pill btn-info">Add Request</a>
                                                 </div>
                                             </div>
                                             <div className="card-datatable table-responsive">
