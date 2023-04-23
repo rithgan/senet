@@ -2,7 +2,6 @@ import React from 'react'
 
 export default function Register() {
     return (
-
         <div className="container-xxl">
             <div className="authentication-wrapper authentication-basic container-p-y">
                 <div className="authentication-inner py-4">
@@ -26,7 +25,7 @@ export default function Register() {
                             <form id="formAuthentication" className="mb-3" action="/" method="POST">
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Sponsor ID</label>
-                                    <input type="text" className="form-control" id="splid" name="splid" placeholder="Enter Sponsor ID" autofocus />
+                                    <input type="text" className="form-control" id="splid" name="splid" placeholder="Enter Sponsor ID" autoFocus />
                                 </div>
                                 <button className="btn btn-primary d-grid w-100">Connect With LKD</button>
                             </form>

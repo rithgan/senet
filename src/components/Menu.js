@@ -1,6 +1,14 @@
-import React from 'react'
+import React,{useContext} from 'react'
+import { AuthContext } from '../context/AuthContext';
+import { HistoryContext } from '../context/HistoryContext';
 
 export default function Menu() {
+  const [isLoggedIn,setIsLoggedIn] = useContext(AuthContext);
+  const history = useContext(HistoryContext)
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    history.push('/');
+  };
     return (
 
         <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
@@ -123,7 +131,7 @@ export default function Menu() {
               </a>
             </li>
             <li className="menu-item ">
-              <a href="/" className="menu-link">
+              <a onClick={handleLogout()} href="/" className="menu-link">
                 <i className="menu-icon tf-icons bx bx-envelope" />
                 <div data-i18n="Login">Disconnect</div>
               </a>

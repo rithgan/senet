@@ -1,7 +1,27 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
+import { HistoryContext } from '../context/HistoryContext';
+const config = require('../config.json')
 
-
-export default function Login({ipAddress}) {
+export default function Login({ ipAddress }) {
+    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext);
+    const history = useContext(HistoryContext)
+    const handleLogin = async (address, ip) => {
+        try {
+            let request = await axios.post(`${config.baseUrl}/api`, {
+                address: address,
+                ip: ip
+            })
+            console.log(request.message)
+            if (request.status) {
+                setIsLoggedIn(true)
+                history.push('/dash');
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
     return (
         <div className="container-xxl">
             <div className="authentication-wrapper authentication-basic container-p-y">

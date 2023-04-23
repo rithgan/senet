@@ -4,12 +4,18 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { IpProvider } from './context/IpContext';
+import { AuthProvider } from './context/AuthContext';
+import { HistoryProvider } from './context/HistoryContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <IpProvider>
-    <App />
+      <AuthProvider>
+        <HistoryProvider>
+        <App />
+        </HistoryProvider>
+      </AuthProvider>
     </IpProvider>
   </React.StrictMode>
 );
