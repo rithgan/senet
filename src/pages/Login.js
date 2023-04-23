@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function Login() {
+
+export default function Login({ipAddress}) {
     return (
         <div className="container-xxl">
             <div className="authentication-wrapper authentication-basic container-p-y">

@@ -1,5 +1,5 @@
 import { BrowserRouter, Switch, Route, useHistory } from 'react-router-dom';
-import { useState } from 'react';
+import {useContext } from 'react';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dash from "./pages/Dash";
@@ -10,9 +10,12 @@ import Profile from "./pages/Profile";
 import Request from "./pages/Request";
 import Support from "./pages/Support";
 import Wallet from "./pages/Wallet";
+import { IpContext } from './context/IpContext';
+
 
 
 function App() {
+  const [ipAddress] = useContext(IpContext);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const history = useHistory();
 
@@ -32,26 +35,26 @@ function App() {
   // };
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/">
-          {/* <Login onLogin={handleLogin} /> */}
-          <Login />
-        </Route>
-        <Route path="/register"><Register /></Route>
-        <Route path="/dash"><Dash /></Route>
-        <Route path="/business"><Business /></Route>
-        <Route path="/downline"><Downline /></Route>
-        <Route path="/income"><Income /></Route>
-        <Route path="/profile"><Profile /></Route>
-        <Route path="/request"><Request /></Route>
-        <Route path="/wallet"><Wallet /></Route>
-        <Route path="/support"><Support /></Route>
-        <Route path="*">
-          <h1>404 Page Not Found</h1>
-        </Route>
-      </Switch>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            {/* <Login onLogin={handleLogin} /> */}
+            <Login ipAddress={ipAddress}/>
+          </Route>
+          <Route path="/register"><Register /></Route>
+          <Route path="/dash"><Dash /></Route>
+          <Route path="/business"><Business /></Route>
+          <Route path="/downline"><Downline /></Route>
+          <Route path="/income"><Income /></Route>
+          <Route path="/profile"><Profile /></Route>
+          <Route path="/request"><Request /></Route>
+          <Route path="/wallet"><Wallet /></Route>
+          <Route path="/support"><Support /></Route>
+          <Route path="*">
+            <h1>404 Page Not Found</h1>
+          </Route>
+        </Switch>
+      </BrowserRouter>
   );
 }
 
