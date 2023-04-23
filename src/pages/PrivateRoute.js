@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import { AuthContext } from '../context/AuthContext';
 
 function PrivateRoute({ component: Component, ...rest }) {
-  const { isLoggedIn } = useContext(AuthContext);
-
+  // const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext);
+  let isLoggedIn = false
+  const loginData = JSON.parse(localStorage.getItem('loginData'));
+  if(loginData.auth.length > 0){
+    isLoggedIn = true
+  }
+  console.log(isLoggedIn)
   return (
     <Route
       {...rest}

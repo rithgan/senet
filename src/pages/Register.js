@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 export default function Register() {
     return (
@@ -11,12 +12,12 @@ export default function Register() {
                             {/* Logo */}
                             <div className="app-brand justify-content-center">
                                 {/* go back to login pages */}
-                                <a href="/" className="app-brand-link gap-2">
+                                <Link to="/" className="app-brand-link gap-2">
                                     <span className="app-brand-logo demo">
                                         <img src="assets/ficon.svg" style={{ height: '40px', width: 'auto' }} alt="ficon" />
                                     </span>
                                     <span className="app-brand-text demo text-body fw-bolder" style={{ textTransform: 'capitalize' }}>LinkDao Defi</span>
-                                </a>
+                                </Link>
                             </div>
                             {/* /Logo */}
                             <h4 className="mb-2">New Staker 🔒</h4>
@@ -31,10 +32,10 @@ export default function Register() {
                             </form>
                             <div className="text-center">
                                 {/* go back to login php */}
-                                <a href="/" className="d-flex align-items-center justify-content-center">
+                                <Link to="/" className="d-flex align-items-center justify-content-center">
                                     <i className="bx bx-chevron-left scaleX-n1-rtl bx-sm" />
                                     Back to login
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

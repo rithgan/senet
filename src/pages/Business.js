@@ -6,13 +6,13 @@ import Menu from '../components/Menu';
 export default function Business() {
     return (
         <>
-            <div class="layout-wrapper layout-content-navbar  ">
-                <div class="layout-container">
+            <div className="layout-wrapper layout-content-navbar  ">
+                <div className="layout-container">
                     <Menu />
-                    <div class="layout-page">
+                    <div className="layout-page">
                         <Header />
-                        <div class="content-wrapper">
-                            <div class="container-xxl flex-grow-1 container-p-y">
+                        <div className="content-wrapper">
+                            <div className="container-xxl flex-grow-1 container-p-y">
                                 <div className="row">
                                     <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
                                         <div className="card">
@@ -117,8 +117,8 @@ export default function Business() {
                         </div>
                     </div>
                 </div>
-                <div class="layout-overlay layout-menu-toggle"></div>
-                <div class="drag-target"></div>
+                <div className="layout-overlay layout-menu-toggle"></div>
+                <div className="drag-target"></div>
             </div>
         </>
     );
