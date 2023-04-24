@@ -1,7 +1,39 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
+import { NetworkContext } from '../context/NetworkContext';
+import axios from 'axios';
+const config = require('../config.json')
 
-export default function Register() {
+export default function Register({ipAddress}) {
+    const [account, setAccount] = useContext(NetworkContext);
+
+    const handleRegister = (e)=>{
+        e.preventDefault()
+        let data = JSON.stringify({
+            "address": account,
+            "ip": ipAddress
+          });
+          
+          let axiosConfig = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url:`${config.baseUrl}`,
+            headers: { 
+              'address': account, 
+              'ip': ipAddress, 
+              'Content-Type': 'application/json'
+            },
+            data : data
+          };
+          console.log(axiosConfig)
+          axios.request(axiosConfig)
+          .then((response) => {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
     return (
         <div className="container-xxl">
             <div className="authentication-wrapper authentication-basic container-p-y">
@@ -23,7 +55,7 @@ export default function Register() {
                             <h4 className="mb-2">New Staker 🔒</h4>
                             <p className="mb-4">Explore the multiple possibilites with our unique token</p>
                             {/* Connect with lkd form and action, go to dash.php */}
-                            <form id="formAuthentication" className="mb-3" action="/" method="POST">
+                            <form id="formAuthentication" className="mb-3" onSubmit={handleRegister}>
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Sponsor ID</label>
                                     <input type="text" className="form-control" id="splid" name="splid" placeholder="Enter Sponsor ID" autoFocus />

@@ -34,7 +34,7 @@ export default function Login({ ipAddress,onLogin }) {
         if (web3Modal().cachedProvider) {
             connectWallet();
         }
-    }, [connectWallet]);
+    }, []);
 
     useEffect(() => {
         if (provider?.on) {
