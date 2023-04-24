@@ -1,8 +1,6 @@
 import React, { useContext, useCallback, useEffect } from 'react'
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
 import { Link } from 'react-router-dom'
-import { HistoryContext } from '../context/HistoryContext';
 import web3Modal from ".././modal";
 import { ConnectContext } from '../context/ConnectContext';
 import { NetworkContext } from '../context/NetworkContext';
@@ -13,7 +11,6 @@ const config = require('../config.json')
 export default function Login({ ipAddress,onLogin }) {
     const [account, setAccount] = useContext(NetworkContext);
     const [provider, setProvider] = useContext(ConnectContext)
-    const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext);
     // const history = useContext(HistoryContext)
     const history = useHistory();
 
@@ -100,7 +97,7 @@ export default function Login({ ipAddress,onLogin }) {
     }
 
     function setLoginData (loginData){
-        localStorage.setItem('loginData', JSON.stringify(loginData));
+        sessionStorage.setItem('loginData', JSON.stringify(loginData));
     }
     return (
         <div className="container-xxl">

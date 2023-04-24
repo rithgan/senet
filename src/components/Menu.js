@@ -1,6 +1,5 @@
 import React, { useContext, useCallback, useEffect } from 'react'
-import { AuthContext } from '../context/AuthContext';
-import { HistoryContext } from '../context/HistoryContext';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { ConnectContext } from '../context/ConnectContext';
 import { NetworkContext } from '../context/NetworkContext';
 import web3Modal from ".././modal";
@@ -8,10 +7,9 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 export default function Menu() {
-  const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext);
   const [account, setAccount] = useContext(NetworkContext);
   const [provider, setProvider] = useContext(ConnectContext)
-  const history = useContext(HistoryContext)
+  const history = useHistory();
 
 
   const refreshState = useCallback(() => {
@@ -56,7 +54,7 @@ export default function Menu() {
 
   const handleLogout = () => {
     disconnectWallet()
-    setIsLoggedIn(false);
+    sessionStorage.removeItem('loginData');
     history.push('/');
   };
   return (
