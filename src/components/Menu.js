@@ -81,10 +81,10 @@ export default function Menu() {
       };
       let response = await axios.request(axiosConfig)
       response = response.data
-      if (response.status) {
-        sessionStorage.removeItem('loginData');
-        history.push('/');
-      }
+      console.log('logging out')
+      console.log(response)
+      sessionStorage.removeItem('loginData'); 
+      history.push('/');
 
     } catch (error) {
       console.error(error)
