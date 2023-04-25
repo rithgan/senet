@@ -2,13 +2,17 @@ import React, { useContext, useCallback, useEffect } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { ConnectContext } from '../context/ConnectContext';
 import { NetworkContext } from '../context/NetworkContext';
+import { IpContext } from '../context/IpContext';
 import web3Modal from ".././modal";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
-
+import axios from 'axios';
+const config = require('../config.json')
 
 export default function Menu() {
   const [account, setAccount] = useContext(NetworkContext);
   const [provider, setProvider] = useContext(ConnectContext)
+  const [ipAddress] = useContext(IpContext);
+
   const history = useHistory();
 
 
@@ -52,10 +56,39 @@ export default function Menu() {
     }
   }, [disconnectWallet, provider, setAccount]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // disconnectWallet()
-    sessionStorage.removeItem('loginData');
-    history.push('/');
+    try {
+      const loginData = JSON.parse(sessionStorage.getItem('loginData'));
+      let data = JSON.stringify({
+        "address": account,
+        "ip": ipAddress,
+        "ulid": loginData?.ulid
+      });
+
+      let axiosConfig = {
+        method: 'post',
+        url: `${config.baseUrl}/api/logout`,
+        headers: {
+          'address': account,
+          'ip': ipAddress,
+          'ulid': '6049090',
+          'auth': loginData?.auth,
+          'token': loginData?.token,
+          'Content-Type': 'application/json'
+        },
+        data: data
+      };
+      let response = await axios.request(axiosConfig)
+      response = response.data
+      if (response.status) {
+        sessionStorage.removeItem('loginData');
+        history.push('/');
+      }
+
+    } catch (error) {
+      console.error(error)
+    }
   };
   return (
 
@@ -179,7 +212,7 @@ export default function Menu() {
           </Link>
         </li>
         <li className="menu-item ">
-          <Link onClick={()=>handleLogout()} to="/" className="menu-link">
+          <Link onClick={() => handleLogout()} to="/" className="menu-link">
             <i className="menu-icon tf-icons bx bx-envelope" />
             <div data-i18n="Login">Disconnect</div>
           </Link>
