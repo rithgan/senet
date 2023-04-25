@@ -32,7 +32,7 @@ function App() {
                   <Route path="/register"><Register ipAddress={ipAddress} /></Route>
                   <PrivateRoute exact path="/dash" component={Dash} />
                   <PrivateRoute exact path="/business" component={Business} />
-                  <PrivateRoute exact path="/downline" component={Downline} />
+                  <PrivateRoute exact path="/downline" component={Downline} ipAddress={ipAddress} />
                   <PrivateRoute exact path="/income" component={Income} />
                   <PrivateRoute exact path="/profile" component={Profile} />
                   <PrivateRoute exact path="/request" component={Request} />
