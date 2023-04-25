@@ -1,4 +1,4 @@
-import React,{useContext} from 'react'
+import React,{useContext,useState} from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
@@ -6,18 +6,18 @@ const config = require('../config.json')
 
 export default function Register({ipAddress}) {
     const [account, setAccount] = useContext(NetworkContext);
-
+    const [splid,setSplid] = useState('')
     const handleRegister = (e)=>{
         e.preventDefault()
         let data = JSON.stringify({
+            "splid":splid,
             "address": account,
             "ip": ipAddress
           });
           
           let axiosConfig = {
             method: 'post',
-            maxBodyLength: Infinity,
-            url:`${config.baseUrl}`,
+            url:`${config.baseUrl}/api/register`,
             headers: { 
               'address': account, 
               'ip': ipAddress, 
@@ -58,7 +58,7 @@ export default function Register({ipAddress}) {
                             <form id="formAuthentication" className="mb-3" onSubmit={handleRegister}>
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Sponsor ID</label>
-                                    <input type="text" className="form-control" id="splid" name="splid" placeholder="Enter Sponsor ID" autoFocus />
+                                    <input type="text" className="form-control" id="splid" name="splid" placeholder="Enter Sponsor ID" autoFocus value={splid} onChange={(e)=>setSplid(e.target.value)}/>
                                 </div>
                                 <button className="btn btn-primary d-grid w-100">Connect With LKD</button>
                             </form>

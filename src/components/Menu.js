@@ -53,7 +53,7 @@ export default function Menu() {
   }, [disconnectWallet, provider, setAccount]);
 
   const handleLogout = () => {
-    disconnectWallet()
+    // disconnectWallet()
     sessionStorage.removeItem('loginData');
     history.push('/');
   };

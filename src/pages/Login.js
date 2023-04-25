@@ -34,7 +34,7 @@ export default function Login({ ipAddress,onLogin }) {
         if (web3Modal().cachedProvider) {
             connectWallet();
         }
-    }, []);
+    },[]);
 
     useEffect(() => {
         if (provider?.on) {
@@ -72,7 +72,6 @@ export default function Login({ ipAddress,onLogin }) {
             });
             let axiosConfig = {
                 method: 'post',
-                maxBodyLength: Infinity,
                 url: `${config.baseUrl}/api`,
                 headers: {
                     'address': address,
