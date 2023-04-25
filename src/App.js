@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import Request from "./pages/Request";
 import Support from "./pages/Support";
 import Wallet from "./pages/Wallet";
+import NotFound from './pages/NotFound';
 import PrivateRoute from './pages/PrivateRoute';
 import { IpContext } from './context/IpContext';
 import { NetworkProvider } from './context/NetworkContext';
@@ -39,7 +40,7 @@ function App() {
                   <PrivateRoute exact path="/wallet" component={Wallet} />
                   <PrivateRoute exact path="/support" component={Support} />
                   <Route path="*">
-                    <h1>404 Page Not Found</h1>
+                    <NotFound/>
                   </Route>
                 </Switch>
         </ConnectProvider>
