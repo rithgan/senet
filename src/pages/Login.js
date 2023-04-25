@@ -6,6 +6,7 @@ import { ConnectContext } from '../context/ConnectContext';
 import { NetworkContext } from '../context/NetworkContext';
 import { ethers } from "ethers";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Swal from 'sweetalert2'
 const config = require('../config.json')
 
 export default function Login({ ipAddress,onLogin }) {
@@ -26,7 +27,12 @@ export default function Login({ ipAddress,onLogin }) {
                 setAccount(accounts[0]);
             }
         } catch (error) {
-            console.error(error);
+            console.error(error?.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error?.message
+              })
         }
     }, [setAccount, setProvider]);
 
@@ -91,7 +97,12 @@ export default function Login({ ipAddress,onLogin }) {
                 console.log('going to dash')
             }
         } catch (err) {
-            console.log(err)
+            console.log(err?.message)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: err?.message
+              })
         }
     }
 
