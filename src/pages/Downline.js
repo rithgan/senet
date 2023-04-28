@@ -1,4 +1,4 @@
-import React, { useContext, useEffect,useState } from 'react'
+import React, { useCallback, useContext, useEffect,useState } from 'react'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Menu from '../components/Menu';
@@ -9,9 +9,10 @@ const config = require('../config.json')
 
 export default function Downline({ ipAddress, loginData }) {
   const [account, setAccount] = useContext(NetworkContext);
-  const [downline,setDownline] = useState({})
-
-  const handleDownline = () => {
+  const [downline,setDownline] = useState({});
+  const [downlineTable,setDownlineTable] = useState({});
+  const level = [1, 2, 3, 4, 5, 6,7, 8,9,10,11,13,14,15,16,17,18,19,20,21]
+  const handleDownline = useCallback(() => {
     let data = JSON.stringify({
       "address": account,
       "ip": ipAddress,
@@ -35,18 +36,20 @@ export default function Downline({ ipAddress, loginData }) {
     
     axios.request(axiosConfig)
     .then((response) => {
-      setDownline(JSON.stringify(response.data))
+      setDownline(response.data)
       // setDownline(config.downline)
-      console.log(downline)
+      setDownlineTable(response.data.downList)
+      console.log(response.data); 
+      
     })
     .catch((error) => {
       console.log(error);
     });
-  }
+  },[account, ipAddress, loginData.auth, loginData.token, loginData.ulid])
 
   useEffect(() => {
     handleDownline()
-  })
+  },[handleDownline])
 
   return (
     <>
@@ -128,8 +131,8 @@ export default function Downline({ ipAddress, loginData }) {
                                 <label className="form-label" htmlFor="paymentName">Level</label>
                                 <select className="form-control" id="level" name="level">
                                   <option>Select Level</option>
-                                  {downline?.downList?.map(list=>(
-                                    <option>{list.level} level</option>
+                                  {level?.map(list=>(
+                                    <option value={list}>{list} level</option>
                                   ))}
                                 </select>
                               </div>
@@ -166,11 +169,29 @@ export default function Downline({ ipAddress, loginData }) {
                               <th>Date Of Registration</th>
                               <th>Status</th>
                               <th>Date Of Activation</th>
+                              <th>Sponsor Name</th>
+                              <th>Sponsor ID</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                            </tr>
+                            {
+                              downline?.downList?.map((list, index)=>{
+                                
+                                return (<tr>
+                                  <td>{index}</td>
+                                  <td>{list.name}</td>
+                                  <td>{list.name} Level</td>
+                                  <td>{list.invest}</td>
+                                  <td>{list.jdate}</td>
+                                  <td>{list.status}</td>
+                                  <td>{list.adate}</td>
+                                  <td>{list.sname}</td>
+                                  <td>{list.splid}</td>
+                                </tr>)
+                                
+                              })
+
+                            }
                           </tbody>
                         </table>
                       </div>

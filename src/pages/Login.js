@@ -72,30 +72,7 @@ export default function Login({ ipAddress,onLogin }) {
             let address = account, ip = ipAddress
             connectWallet()
             console.log(address, ip, history)
-            let data = JSON.stringify({
-                "address": address,
-                "ip": ip
-            });
-            let axiosConfig = {
-                method: 'post',
-                url: `${config.baseUrl}/api`,
-                headers: {
-                    'address': address,
-                    'ip': ip,
-                    'Content-Type': 'application/json'
-                },
-                data: data
-            };
-            let response = await axios.request(axiosConfig)
-            response = response.data
-            if (response.status) {
-                let loginData = response.data
-                console.log(loginData)
-                setLoginData(loginData)
-                onLogin(response.data)
-                history.push('/dash');
-                console.log('going to dash')
-            }
+            login();
         } catch (err) {
             console.log(err?.message)
             Swal.fire({
@@ -106,6 +83,43 @@ export default function Login({ ipAddress,onLogin }) {
         }
     }
 
+    const login =async ()=>{
+        let address = account, ip = ipAddress
+        let data = JSON.stringify({
+            "address": address,
+            "ip": ip
+        });
+        let axiosConfig = {
+            method: 'post',
+            url: `${config.baseUrl}/api`,
+            headers: {
+                'address': address,
+                'ip': ip,
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
+        let response = await axios.request(axiosConfig)
+        response = response.data
+        if (response.status) {
+            let loginData = response.data
+            console.log(loginData)
+            setLoginData(loginData)
+            onLogin(response.data)
+            history.push('/dash');
+            console.log('going to dash')
+        }
+        else if(response.code === 30)
+        {
+            Swal.fire({
+                icon: 'info',
+                title: 'Oops...',
+                text: response?.message
+              }).then(()=>{
+                history.push('/register');
+              })
+        }
+    };
     function setLoginData (loginData){
         sessionStorage.setItem('loginData', JSON.stringify(loginData));
     }
