@@ -15,6 +15,7 @@ import PrivateRoute from './pages/PrivateRoute';
 import { IpContext } from './context/IpContext';
 import { NetworkProvider } from './context/NetworkContext';
 import { ConnectProvider } from "./context/ConnectContext";
+import Stakes from './pages/Stakes/Stakes';
 
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
                   <PrivateRoute exact path="/request" component={Request} />
                   <PrivateRoute exact path="/wallet" component={Wallet} />
                   <PrivateRoute exact path="/support" component={Support} />
+                  <PrivateRoute exact path="/stake" component={Stakes} />
                   <Route path="*">
                     <NotFound/>
                   </Route>
