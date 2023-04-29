@@ -1,9 +1,56 @@
-import React from 'react'
+import React, { useCallback, useContext, useEffect,useState } from 'react'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Menu from '../components/Menu';
+import { NetworkContext } from '../context/NetworkContext';
+import axios from 'axios';
+const config = require('../config.json')
 
-export default function Business() {
+export default function Business({ipAddress, loginData}) {
+    const [account, setAccount] = useContext(NetworkContext);
+  const [business,setBusiness] = useState({});
+  const [businessTable,setBusinessTable] = useState({});
+  
+  const handleBusiness = useCallback(() => {
+    
+    let data = JSON.stringify({
+      "address": account,
+      "ip": ipAddress,
+      "ulid": loginData.ulid
+    });
+    
+    let axiosConfig = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: `${config.baseUrl}/api/business`,
+      headers: { 
+        'address': account, 
+        'ip': ipAddress, 
+        'ulid': loginData.ulid, 
+        'auth': loginData.auth, 
+        'token': loginData.token, 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+    console.log(axiosConfig)
+    axios.request(axiosConfig)  
+    .then((response) => {
+        setBusiness(response.data)
+      // setDownline(config.downline)
+      setBusinessTable(response.data.info)
+      console.log(response.data); 
+      
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  },[account, ipAddress, loginData.auth, loginData.token, loginData.ulid])
+
+  useEffect(() => {
+    
+    handleBusiness()
+  },[handleBusiness])
     return (
         <>
             <div className="layout-wrapper layout-content-navbar  ">
@@ -21,7 +68,7 @@ export default function Business() {
                                                     <div className="card-info">
                                                         <p className="card-text">Downline</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">58,352</h4>
+                                                            <h4 className="card-title mb-0 me-2">{business?.total}</h4>
                                                         </div>
                                                     </div>
                                                     <div className="card-icon">
@@ -40,7 +87,7 @@ export default function Business() {
                                                     <div className="card-info">
                                                         <p className="card-text">Business</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">58,352 USD</h4>
+                                                            <h4 className="card-title mb-0 me-2">{business?.buss?.toFixed(3)}</h4>
                                                         </div>
                                                     </div>
                                                     <div className="card-icon">
@@ -59,7 +106,7 @@ export default function Business() {
                                                     <div className="card-info">
                                                         <p className="card-text">Top Leg</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">58,352 USD</h4>
+                                                            <h4 className="card-title mb-0 me-2">{business?.top?.toFixed(3)}</h4>
                                                         </div>
                                                     </div>
                                                     <div className="card-icon">
@@ -78,7 +125,7 @@ export default function Business() {
                                                     <div className="card-info">
                                                         <p className="card-text">Other Leg</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">58,352 USD</h4>
+                                                            <h4 className="card-title mb-0 me-2">{business?.other?.toFixed(3)}</h4>
                                                         </div>
                                                     </div>
                                                     <div className="card-icon">
@@ -105,8 +152,18 @@ export default function Business() {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                    </tr>
+                                                    {
+                                                        business?.info?.map((list, index)=>{
+                                                            return(
+                                                                <tr>
+                                                                    <td>{index+1}</td>
+                                                                    <td>{list.buss}</td>
+                                                                    <td>{list.uname} USD</td>
+                                                                    <td>{list.ulid}</td>
+                                                                </tr>
+                                                            )
+                                                        })
+                                                    }
                                                 </tbody>
                                             </table>
                                         </div>

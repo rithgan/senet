@@ -178,7 +178,7 @@ export default function Downline({ ipAddress, loginData }) {
                               downline?.downList?.map((list, index)=>{
                                 
                                 return (<tr>
-                                  <td>{index}</td>
+                                  <td>{index+1}</td>
                                   <td>{list.name}</td>
                                   <td>{list.name} Level</td>
                                   <td>{list.invest}</td>
