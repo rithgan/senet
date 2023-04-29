@@ -47,15 +47,15 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                         <div className="text_grey">Deposited</div>
                       </div>
                       <div className="col-12 col-md-2">
-                        <div>{wallet} LKD</div>
+                        <div>{apr}</div>
                         <div className="text_grey">APR</div>
                       </div>
                       <div className="col-12 col-md-2">
-                        <div>{wallet} LKD</div>
+                        <div>{daily} LKD</div>
                         <div className="text_grey">LKD Reward</div>
                       </div>
                       <div className="col-12 col-md-2">
-                        <div>{wallet} LKD</div>
+                        <div>${parseFloat(price*totalStaked).toFixed(3)}</div>
                         <div className="text_grey">TVL</div>
                       </div>
                       <div className="col-12 col-md-2">
