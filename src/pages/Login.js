@@ -121,7 +121,7 @@ export default function Login({ ipAddress,onLogin }) {
         }
     };
     function setLoginData (loginData){
-        sessionStorage.setItem('loginData', JSON.stringify(loginData));
+        localStorage.setItem('loginData', JSON.stringify(loginData));
     }
     return (
         <div className="container-xxl">

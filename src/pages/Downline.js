@@ -33,7 +33,7 @@ export default function Downline({ ipAddress, loginData }) {
       },
       data : data
     };
-    
+    console.log(axiosConfig)
     axios.request(axiosConfig)
     .then((response) => {
       setDownline(response.data)

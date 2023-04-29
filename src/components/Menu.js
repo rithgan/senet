@@ -59,7 +59,7 @@ export default function Menu() {
   const handleLogout = async () => {
     // disconnectWallet()
     try {
-      const loginData = JSON.parse(sessionStorage.getItem('loginData'));
+      const loginData = JSON.parse(localStorage.getItem('loginData'));
       let data = JSON.stringify({
         "address": account,
         "ip": ipAddress,
@@ -83,7 +83,7 @@ export default function Menu() {
       response = response.data
       console.log('logging out')
       console.log(response)
-      sessionStorage.removeItem('loginData'); 
+      localStorage.removeItem('loginData'); 
       history.push('/');
 
     } catch (error) {

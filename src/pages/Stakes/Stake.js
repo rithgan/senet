@@ -67,7 +67,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
               <div className="accordion-content">
                 <div className="borderpool"></div>
                 <div className="main001">
-                  <div className="jssp205" style={{ height: '13.4rem' }}>
+                  <div className="jssp205">
                     <div className="ct1-inputpool">
                       <input type="text" placeholder="0.0" value={deposit} onChange={(e) => setDeposit(e.target.value)} />
                       {/* <span className="ct1-max"> MAX</span> */}
@@ -79,8 +79,8 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                         : <><div className="pool_approve back_grey fmsize" style={{ background: "rgb(122, 119, 110)" }}>Deposit</div> <div className="pool_approve  fmsize" >Approve</div></>
                       }
                     </div>
-                    <p className="text_grey fsmall margin25 text_center">Min. deposit 1 LKD, Max. deposit 5000 LKD </p>
-                    <p className="text_grey fsmall text_center">Deposit fee 0%</p>
+                    <p className="text_grey fsmall margin25 text_center" style={{margin:0,marginTop:'1rem'}}>Min. deposit 1 LKD, Max. deposit 5000 LKD </p>
+                    <p className="text_grey fsmall text_center" style={{margin:0}}>Deposit fee 0%</p>
 
                   </div>
 
