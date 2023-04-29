@@ -20,43 +20,48 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
     <div>
       <div className='container-xxl flex-grow-1 container-p-y'>
         <div className='row'>
-          <div className="card mb-4" onClick={() => setIsActive(!isActive)}>
-            <div className='card-header' style={{display:"flex",justifyContent:"space-between"}}>
-              <div>
-              <h5 style={{marginBottom:0}}>{token}</h5>
-              <p style={{marginBottom:0}}><em>Stake LKD - Earn LKD</em></p>
+          <div className="card mb-4">
+            <div onClick={() => setIsActive(!isActive)}>
+              <div className='card-header' style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>
+                  <h5 style={{ marginBottom: 0 }}>{token}</h5>
+                  <p style={{ marginBottom: 0 }}><em>Stake LKD - Earn LKD</em></p>
+                </div>
+                <div style={{maxHeight:'4rem'}}>
+                  <img src={img} alt="sample" role="presentation"
+                    className="jcssp311"
+                    width="100"
+                    height="100" />
+                </div>
               </div>
-              <div>
-                <img src="" alt="sample"/>
-              </div>
-            </div>
-            <div className="card-body">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="row g-3">
-                    <div className="col-12 col-md-2">
-                      <div>{wallet} LKD</div>
-                      <div className="text_grey">Wallet</div>
-                    </div>
-                    <div className="col-12 col-md-2">
-                      <div>{wallet} LKD</div>
-                      <div className="text_grey">Deposited</div>
-                    </div>
-                    <div className="col-12 col-md-2">
-                      <div>{wallet} LKD</div>
-                      <div className="text_grey">APR</div>
-                    </div>
-                    <div className="col-12 col-md-2">
-                      <div>{wallet} LKD</div>
-                      <div className="text_grey">LKD Reward</div>
-                    </div>
-                    <div className="col-12 col-md-2">
-                      <div>{wallet} LKD</div>
-                      <div className="text_grey">TVL</div>
-                    </div>
-                    <div className="col-12 col-md-2">
-                      <div className="ml" style={{textAlign:"end"}}>
-                        {isActive ? <AiFillCaretUp /> : <AiFillCaretDown />}
+              <div className="card-body">
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="row g-3">
+                      <div className="col-12 col-md-2">
+                        <div>{wallet} LKD</div>
+                        <div className="text_grey">Wallet</div>
+                      </div>
+                      <div className="col-12 col-md-2">
+                        <div>{wallet} LKD</div>
+                        <div className="text_grey">Deposited</div>
+                      </div>
+                      <div className="col-12 col-md-2">
+                        <div>{wallet} LKD</div>
+                        <div className="text_grey">APR</div>
+                      </div>
+                      <div className="col-12 col-md-2">
+                        <div>{wallet} LKD</div>
+                        <div className="text_grey">LKD Reward</div>
+                      </div>
+                      <div className="col-12 col-md-2">
+                        <div>{wallet} LKD</div>
+                        <div className="text_grey">TVL</div>
+                      </div>
+                      <div className="col-12 col-md-2">
+                        <div className="ml" style={{ textAlign: "start" }}>
+                          {isActive ? <AiFillCaretUp /> : <AiFillCaretDown />}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -79,8 +84,8 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                         : <><div className="pool_approve back_grey fmsize" style={{ background: "rgb(122, 119, 110)" }}>Deposit</div> <div className="pool_approve  fmsize" >Approve</div></>
                       }
                     </div>
-                    <p className="text_grey fsmall margin25 text_center" style={{margin:0,marginTop:'1rem'}}>Min. deposit 1 LKD, Max. deposit 5000 LKD </p>
-                    <p className="text_grey fsmall text_center" style={{margin:0}}>Deposit fee 0%</p>
+                    <p className="text_grey fsmall margin25 text_center" style={{ margin: 0, marginTop: '1rem' }}>Min. deposit 1 LKD, Max. deposit 5000 LKD </p>
+                    <p className="text_grey fsmall text_center" style={{ margin: 0 }}>Deposit fee 0%</p>
 
                   </div>
 
@@ -88,7 +93,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                     <div className="claimdiv">
                       <div className="ct1-inputpool" style={{ flexBasis: '50%', lineHeight: '1.3rem' }}>
                         <p>LKD Earned</p>
-                        <p style={{ marginTop: '1.8rem', fontSize: '1.9rem' }}>{profit}</p>
+                        <p style={{ fontSize: '1.9rem' }}>{profit}</p>
                         <p style={{ fontSize: "smaller", color: "#9a9ab4", marginTop: '0.8rem' }}>${parseFloat(price * profit).toFixed(3)}</p>
                       </div>
                       {/* <ReactSlider/> */}
@@ -98,17 +103,17 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                       </div>
                     </div>
                     <p className="text_grey fsmall margin25 text_center">After deposit, you can withdraw every 30 days up to {month} month!</p>
-                    <p className="text_grey fsmall text_center">Withdraw fee 0%</p>
+                    <p className="text_grey fsmall text_center" style={{ margin: 0 }}>Withdraw fee 0%</p>
                   </div>
 
                   <div className="jssp2052 margintop25">
                     <div className="ct1-inputpool width100pool">
 
-                      <p className="lkdpara"><span>Pool Limit</span> <span>100,000.00 LKD</span></p>
-                      <p className="lkdpara"><span>LKD Staked</span> <span>{totalStaked} LKD</span></p>
-                      <p><a className="text_grey" href="https://pancakeswap.finance/swap?inputCurrency=0xaf027427dc6d31a3e7e162a710a5fe27e63e275f">Buy token <FiExternalLink style={{ color: "#00e2c8" }} /></a></p>
-                      <p><a className="text_grey" href={contract}>View Contract <FiExternalLink style={{ color: "#00e2c8" }} /></a></p>
-                      <p><a className="text_grey" href="https://github.com/blocksafu111/audit/blob/main/LinkDaoStaking-Audit-by-BlockSAFU.pdf">View Audit <FiExternalLink style={{ color: "#00e2c8" }} /></a></p>
+                      <p className="lkdpara" style={{ margin: 0 }}><span>Pool Limit</span> <span>100,000.00 LKD</span></p>
+                      <p className="lkdpara" style={{ margin: 0 }}><span>LKD Staked</span> <span>{totalStaked} LKD</span></p>
+                      <p style={{ margin: 0 }}><a className="text_grey" href="https://pancakeswap.finance/swap?inputCurrency=0xaf027427dc6d31a3e7e162a710a5fe27e63e275f">Buy token <FiExternalLink style={{ color: "#03c3ec" }} /></a></p>
+                      <p style={{ margin: 0 }}><a className="text_grey" href={contract}>View Contract <FiExternalLink style={{ color: "#03c3ec" }} /></a></p>
+                      <p style={{ margin: 0 }}><a className="text_grey" href="https://github.com/blocksafu111/audit/blob/main/LinkDaoStaking-Audit-by-BlockSAFU.pdf">View Audit <FiExternalLink style={{ color: "#03c3ec" }} /></a></p>
                     </div>
 
                   </div>

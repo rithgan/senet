@@ -1,3 +1,5 @@
+import LKD from '../images/LKD.svg'
+
 export const data = [
     {
         token:"Recurring Pool A",
@@ -5,7 +7,7 @@ export const data = [
         daily:"0.416",
         tvl:"-",
         network:"linkdao.network",
-        img:"",
+        img:LKD,
         pool:"",
         poolAbi:"",
         contract:"https://bscscan.com/address/0x68b7ee70ab8c692605f0f2345008398c0ec1a20b#code",
