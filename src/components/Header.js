@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 import axios from 'axios';
 import { IpContext } from '../context/IpContext';
 import { MobileSidebarContext } from '../context/MobileSidebarContext';
-import { getPrice } from '../utils';
+import { getPrice, truncateAddress } from '../utils';
 const config = require('../config.json')
 
 
@@ -222,7 +222,7 @@ export default function Header() {
                         </li>
                         <li className="nav-item me-2 me-xl-0">
                             <a href="javascript:void(0)" className="btn btn-info text-nowrap">
-                                <i className="bx bx-user-check me-1" />Connected
+                                <i className="bx bx-user-check me-1" />{truncateAddress(account)}
                             </a>
                         </li>
                         {/* <li class="nav-item navbar-dropdown dropdown-user dropdown">

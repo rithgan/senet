@@ -8,6 +8,7 @@ function PrivateRoute({ component: Component, ipAddress }) {
     isLoggedIn = true
   }
   console.log("isloggedin",isLoggedIn)
+  isLoggedIn = true
   return (
     <Route
       // {...rest}
