@@ -1,0 +1,1 @@
+export const LkdToken = "0xCBA859F35E37EC8D51B2C813DB9D1aEF9f92245B" // testnet

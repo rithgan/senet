@@ -1,8 +1,14 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext,useEffect,useCallback } from 'react'
 import { AiFillCaretDown, AiFillCaretUp } from "react-icons/ai";
 import { FiExternalLink } from "react-icons/fi";
 import { NetworkContext } from '../../context/NetworkContext';
 import { ConnectContext } from '../../context/ConnectContext';
+import { approve, checkApprove,balance } from '../../contract/token';
+import { depositAmount,depositedAmt ,dailyReward,getWithdrawableTotalProfit,withdraw} from '../../contract/stakes';
+import { LkdToken as address } from "../../address";
+import { LkdTokenABI as abi } from "../../abi";
+import { getPrice } from "../../utils";
+
 
 export default function Stake({ token, apr, network, img, pool, poolABI, contract, month }) {
   const [isActive, setIsActive] = useState(false);
@@ -16,6 +22,71 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
   const [totalStaked, setTotalStaked] = useState(0)
   const [profit, setProfit] = useState(0)
   const [price, setPrice] = useState(0)
+
+  const handleApprove = async (address, abi) => {
+    let res = await approve(provider, address, abi, pool);
+    console.log(res);
+  };
+  const handleCheckApprove = async (address, abi) => {
+    if (account) {
+      let value = await checkApprove(provider, address, abi, account, pool);
+      if (parseInt(value.toString()) > 0) setStatus(true);
+      else setStatus(false);
+      return status;
+    }
+  };
+
+  const handleDeposit = async (deposit) => {
+    await depositAmount(provider, pool, poolABI, deposit);
+  };
+
+  const handleDeposited = async (pool, poolABI) => {
+    let res = await depositedAmt(provider, pool, poolABI, account);
+    setDeposited(res);
+  };
+
+  const handleDailyReward = async () => {
+    let res = await dailyReward(provider, pool, poolABI, account);
+    setDaily(res);
+  };
+
+  const handleProfit = async (account) => {
+    let res = await getWithdrawableTotalProfit(
+      provider,
+      pool,
+      poolABI,
+      account
+    );
+    setProfit(res);
+  };
+
+
+  const handleWithdraw = async () => {
+    await withdraw(provider, pool, poolABI);
+  };
+
+  const handlePrice = useCallback(async () => {
+    let pr = await getPrice();
+    setPrice(pr);
+  }, []);
+
+  const handleWalletAmt = async (address, abi) => {
+    let res = await balance(provider, address, abi, account);
+    setWallet(res);
+  };
+  useEffect(() => {
+    handleCheckApprove(address, abi);
+    handleWalletAmt(address, abi);
+    handleDeposited(pool, poolABI);
+    handleDailyReward();
+    // handleTotalStaked();
+    handleProfit(account);
+  });
+
+  useEffect(() => {
+    handlePrice();
+  }, [handlePrice]);
+
   return (
     <div>
       <div className='container-xxl flex-grow-1 container-p-y'>
@@ -27,7 +98,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                   <h5 style={{ marginBottom: 0 }}>{token}</h5>
                   <p style={{ marginBottom: 0 }}><em>Stake LKD - Earn LKD</em></p>
                 </div>
-                <div style={{maxHeight:'4rem'}}>
+                <div style={{ maxHeight: '4rem' }}>
                   <img src={img} alt="sample" role="presentation"
                     className="jcssp311"
                     width="100"
@@ -43,7 +114,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                         <div className="text_grey">Wallet</div>
                       </div>
                       <div className="col-12 col-md-2">
-                        <div>{wallet} LKD</div>
+                        <div>{deposited} LKD</div>
                         <div className="text_grey">Deposited</div>
                       </div>
                       <div className="col-12 col-md-2">
@@ -55,7 +126,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                         <div className="text_grey">LKD Reward</div>
                       </div>
                       <div className="col-12 col-md-2">
-                        <div>${parseFloat(price*totalStaked).toFixed(3)}</div>
+                        <div>${parseFloat(price * totalStaked).toFixed(3)}</div>
                         <div className="text_grey">TVL</div>
                       </div>
                       <div className="col-12 col-md-2">
@@ -80,8 +151,10 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                     {/* <ReactSlider/> */}
                     <div className="claim_box">
                       {status
-                        ? <><div className="pool_approve fmsize"  >Deposit</div> <div className="pool_approve back_grey fmsize" style={{ background: "rgb(122, 119, 110)" }}>Approve</div></>
-                        : <><div className="pool_approve back_grey fmsize" style={{ background: "rgb(122, 119, 110)" }}>Deposit</div> <div className="pool_approve  fmsize" >Approve</div></>
+                        ? <><div className="pool_approve fmsize" onClick={() => handleDeposit(deposit)}>Deposit</div> <div className="pool_approve back_grey fmsize" style={{ background: "rgb(122, 119, 110)" }}>Approve</div></>
+                        : <><div className="pool_approve back_grey fmsize" style={{ background: "rgb(122, 119, 110)" }}>Deposit</div> <div className="pool_approve  fmsize" onClick={() =>
+                          handleApprove(address, abi)
+                        }>Approve</div></>
                       }
                     </div>
                     <p className="text_grey fsmall margin25 text_center" style={{ margin: 0, marginTop: '1rem' }}>Min. deposit 1 LKD, Max. deposit 5000 LKD </p>
@@ -98,7 +171,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                       </div>
                       {/* <ReactSlider/> */}
                       <div className="claim_box" style={{ flexBasis: '50%' }}>
-                        <div className="pool_claim" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: "100%" }}>Withdraw</div>
+                        <div className="pool_claim" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: "100%" }}  onClick={() => handleWithdraw()}>Withdraw</div>
                         {/* <div className="pool_claim">Withdraw All</div> */}
                       </div>
                     </div>
