@@ -52,12 +52,12 @@ export default function Support({ipAddress, loginData}) {
 
     return (
         <>
-                <div class="layout-container">
+                <div className="layout-container">
                     <Menu />
-                    <div class="layout-page">
+                    <div className="layout-page">
                         <Header />
-                        <div class="content-wrapper">
-                            <div class="container-xxl flex-grow-1 container-p-y">
+                        <div className="content-wrapper">
+                            <div className="container-xxl flex-grow-1 container-p-y">
                                 <div>
                                     <div className="row">
                                         <div className="col-12">
