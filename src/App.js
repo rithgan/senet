@@ -11,6 +11,7 @@ import Request from "./pages/Request";
 import Support from "./pages/Support";
 import Wallet from "./pages/Wallet";
 import NotFound from './pages/NotFound';
+import Ticket from './pages/Ticket';
 import PrivateRoute from './pages/PrivateRoute';
 import { IpContext } from './context/IpContext';
 import { NetworkProvider } from './context/NetworkContext';
@@ -41,6 +42,7 @@ function App() {
                   <PrivateRoute exact path="/wallet" component={Wallet} />
                   <PrivateRoute exact path="/support" component={Support} />
                   <PrivateRoute exact path="/stake" component={Stakes} />
+                  <PrivateRoute exact path="/ticket" component={Ticket} />
                   <Route path="*">
                     <NotFound/>
                   </Route>

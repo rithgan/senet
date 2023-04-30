@@ -116,7 +116,7 @@ export default function Menu() {
         {/* Layouts */}
         <li className="menu-item active open">
           <Link to="javascript:void(0);" className="menu-link menu-toggle">
-            <i className="menu-icon tf-icons bx bx-layout" />
+            <i className="menu-icon tf-icons bx bx-user" />
             <div data-i18n="Layouts">Profile</div>
           </Link>
           <ul className="menu-sub">
@@ -139,13 +139,13 @@ export default function Menu() {
         </li>
         <li className="menu-item ">
           <Link to="/stake" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-envelope" />
+            <i className="menu-icon tf-icons bx bx-money" />
             <div data-i18n="Kanban">Stake</div>
           </Link>
         </li>
         <li className="menu-item ">
           <Link to="/income" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-envelope" />
+            <i className="menu-icon tf-icons bx bx-calendar-heart" />
             <div data-i18n="Invoice">Awards/Rewards</div>
           </Link>
         </li>
@@ -187,13 +187,13 @@ export default function Menu() {
           </li>
         </ul>
       </li> */}
-        <li className="menu-item">
+        <li className="menu-item active open">
           <Link to="javascript:void(0);" className="menu-link menu-toggle">
-            <i className="menu-icon tf-icons bx bx-user" />
+            <i className="menu-icon tf-icons bx bx-layout" />
             <div data-i18n="Users">Wallet</div>
           </Link>
           <ul className="menu-sub">
-            <li className="menu-item">
+            <li className="menu-item active">
               <Link to="/wallet" className="menu-link">
                 <div data-i18n="List">View</div>
               </Link>
@@ -207,13 +207,19 @@ export default function Menu() {
         </li>
         <li className="menu-item ">
           <Link to="/support" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-envelope" />
+            <i className="menu-icon tf-icons bx bx-support" />
             <div data-i18n="Roles & Permissions">Support</div>
           </Link>
         </li>
         <li className="menu-item ">
+          <Link to="/ticket" className="menu-link">
+            <i className="menu-icon tf-icons bx bx-help-circle" />
+            <div data-i18n="Roles & Permissions">Ticket</div>
+          </Link>
+        </li>
+        <li className="menu-item ">
           <Link onClick={() => handleLogout()} to="/" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-envelope" />
+            <i className="menu-icon tf-icons bx bx-exit" />
             <div data-i18n="Login">Disconnect</div>
           </Link>
         </li>

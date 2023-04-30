@@ -1,6 +1,122 @@
-import React from 'react'
+import React,{useCallback,useContext,useEffect,useState} from 'react'
+import { ethers } from 'ethers';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { NetworkContext } from '../context/NetworkContext';
+import { ConnectContext } from '../context/ConnectContext';
+import web3Modal from ".././modal";
+import Swal from 'sweetalert2'
+import axios from 'axios';
+import { IpContext } from '../context/IpContext';
+import { getPrice } from '../utils';
+const config = require('../config.json')
+
+
 
 export default function Header() {
+    const [account, setAccount] = useContext(NetworkContext);
+    const [provider, setProvider] = useContext(ConnectContext)
+    const history = useHistory();
+    const [ipAddress, setIpAddress] = useContext(IpContext)
+    const [price, setPrice] = useState(0);
+
+
+
+    const handlePrice = useCallback(async () => {
+        let pr = await getPrice();
+        setPrice(pr);
+      }, []);
+
+    const connectWallet = useCallback(async () => {
+        try {
+            console.log("Wallet connect called");
+            const instance = await web3Modal().connect();
+            // setInstance(instance);
+            let provider = new ethers.providers.Web3Provider(instance);
+            setProvider(provider);
+            const accounts = await provider.listAccounts();
+            if (accounts) {
+                setAccount(accounts[0]);
+            }
+        } catch (error) {
+            console.error(error?.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: error?.message
+              })
+        }
+    }, [setAccount, setProvider]);
+
+    useEffect(() => {
+        if (web3Modal().cachedProvider) {
+            connectWallet();
+        }
+    },[]);
+
+    useEffect(() => {
+        handlePrice();
+      }, [handlePrice]);
+
+    const handleLogout =useCallback( async () => {
+        // disconnectWallet()
+        try {
+          const loginData = JSON.parse(localStorage.getItem('loginData'));
+          let data = JSON.stringify({
+            "address": account,
+            "ip": ipAddress,
+            "ulid": loginData?.ulid
+          });
+    
+          let axiosConfig = {
+            method: 'post',
+            url: `${config.baseUrl}/api/logout`,
+            headers: {
+              'address': account,
+              'ip': ipAddress,
+              'ulid': '6049090',
+              'auth': loginData?.auth,
+              'token': loginData?.token,
+              'Content-Type': 'application/json'
+            },
+            data: data
+          };
+          let response = await axios.request(axiosConfig)
+          response = response.data
+          console.log('logging out')
+          console.log(response)
+          localStorage.removeItem('loginData'); 
+          history.push('/');
+    
+        } catch (error) {
+          console.error(error)
+        }
+      },[account, history, ipAddress]);
+
+    useEffect(() => {
+        console.log(provider)
+        if (provider?.on) {
+            const handleAccountsChanged = (accounts) => {
+                console.log("accountsChanged", accounts);
+                if (accounts) {setAccount(accounts[0]);
+                handleLogout()
+                }
+            };
+
+            //   const handleDisconnect = () => {
+            //     console.log("disconnect", error);
+            //     disconnectWallet();
+            //   };
+            provider.on("accountsChanged", handleAccountsChanged);
+            //   provider.on("disconnect", handleDisconnect);
+
+            return () => {
+                if (provider.removeListener) {
+                    provider.removeListener("accountsChanged", handleAccountsChanged);
+                    //   provider.removeListener("disconnect", handleDisconnect);
+                }
+            };
+        }
+    }, [handleLogout, provider, setAccount]);
     return (
         <>
             <nav className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
@@ -12,7 +128,7 @@ export default function Header() {
                 <div className="navbar-nav align-items-center">
                     <div className="nav-item navbar-search-wrapper mb-0">
                         <a className="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
-                            <span className="d-none d-md-inline-block text-info">Live Price LKD/USD : </span>
+                            <span className="d-none d-md-inline-block text-info">LKD/USD : {price}/{} </span>
                         </a>
                     </div>
                 </div>
