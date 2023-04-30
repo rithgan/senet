@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Swal from 'sweetalert2'
 const config = require('../config.json')
 
-export default function Login({ ipAddress,onLogin }) {
+export default function Login({ ipAddress, onLogin }) {
     const [account, setAccount] = useContext(NetworkContext);
     const [provider, setProvider] = useContext(ConnectContext)
     // const history = useContext(HistoryContext)
@@ -26,21 +26,38 @@ export default function Login({ ipAddress,onLogin }) {
             if (accounts) {
                 setAccount(accounts[0]);
             }
+            console.log(account)
         } catch (error) {
             console.error(error?.message);
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
                 text: error?.message
-              })
+            })
         }
     }, [setAccount, setProvider]);
+
+    const refreshState = useCallback(() => {
+        setAccount();
+    }, [setAccount]);
+
+    const disconnectWallet = useCallback(async () => {
+        try {
+            console.log("Wallet disconnect called");
+            web3Modal().clearCachedProvider();
+            //   setAccount([])
+            refreshState();
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+        }
+    }, [refreshState]);
 
     useEffect(() => {
         if (web3Modal().cachedProvider) {
             connectWallet();
         }
-    },[]);
+    }, [connectWallet]);
 
     useEffect(() => {
         if (provider?.on) {
@@ -49,22 +66,21 @@ export default function Login({ ipAddress,onLogin }) {
                 if (accounts) setAccount(accounts[0]);
             };
 
-            //   const handleDisconnect = () => {
-            //     console.log("disconnect", error);
-            //     disconnectWallet();
-            //   };
-
+            const handleDisconnect = () => {
+                console.log("disconnect");
+                disconnectWallet();
+            };
             provider.on("accountsChanged", handleAccountsChanged);
-            //   provider.on("disconnect", handleDisconnect);
+            provider.on("disconnect", handleDisconnect);
 
             return () => {
                 if (provider.removeListener) {
                     provider.removeListener("accountsChanged", handleAccountsChanged);
-                    //   provider.removeListener("disconnect", handleDisconnect);
+                    provider.removeListener("disconnect", handleDisconnect);
                 }
             };
         }
-    }, [provider, setAccount]);
+    }, [disconnectWallet, provider, setAccount]);
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -79,11 +95,11 @@ export default function Login({ ipAddress,onLogin }) {
                 icon: 'error',
                 title: 'Oops...',
                 text: err?.message
-              })
+            })
         }
     }
 
-    const login =async ()=>{
+    const login = async () => {
         let address = account, ip = ipAddress
         let data = JSON.stringify({
             "address": address,
@@ -109,18 +125,17 @@ export default function Login({ ipAddress,onLogin }) {
             history.push('/dash');
             console.log('going to dash')
         }
-        else if(response.code === 30)
-        {
+        else if (response.code === 30) {
             Swal.fire({
                 icon: 'info',
                 title: 'Oops...',
                 text: response?.message
-              }).then(()=>{
+            }).then(() => {
                 history.push('/register');
-              })
+            })
         }
     };
-    function setLoginData (loginData){
+    function setLoginData(loginData) {
         localStorage.setItem('loginData', JSON.stringify(loginData));
     }
     return (

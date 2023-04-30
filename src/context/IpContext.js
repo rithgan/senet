@@ -1,4 +1,6 @@
 import { useState, createContext, useEffect } from "react";
+import Swal from 'sweetalert2'
+
 
 export const IpContext = createContext();
 
@@ -10,6 +12,11 @@ export const IpProvider = ({ children }) => {
             setIpAddress(data.ip);
         } catch (err) {
             console.log("Unable to get your ip address, please disable adblocker if any")
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "Unable to get your ip address, please disable adblocker if any"
+            })
         }
     };
     const [ipAddress, setIpAddress] = useState();
