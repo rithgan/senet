@@ -5,14 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { IpProvider } from './context/IpContext';
 import { HistoryProvider } from './context/HistoryContext';
+import { MobileSidebarProvider } from './context/MobileSidebarContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <IpProvider>
-        <HistoryProvider>
-        <App />
-        </HistoryProvider>
+      <HistoryProvider>
+        <MobileSidebarProvider>
+          <App />
+        </MobileSidebarProvider>
+      </HistoryProvider>
     </IpProvider>
   </React.StrictMode>
 );

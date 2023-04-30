@@ -7,6 +7,7 @@ import web3Modal from ".././modal";
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import { IpContext } from '../context/IpContext';
+import { MobileSidebarContext } from '../context/MobileSidebarContext';
 import { getPrice } from '../utils';
 const config = require('../config.json')
 
@@ -18,8 +19,7 @@ export default function Header() {
     const history = useHistory();
     const [ipAddress, setIpAddress] = useContext(IpContext)
     const [price, setPrice] = useState(0);
-
-
+    const [mobileOpen, setMobileOpen] = useContext(MobileSidebarContext)
 
     const handlePrice = useCallback(async () => {
         let pr = await getPrice();
@@ -121,31 +121,31 @@ export default function Header() {
         <>
             <nav className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
                 <div className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none ">
-                    <a className="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                    <span onClick={()=>setMobileOpen(true)} className="nav-item nav-link px-0 me-xl-4" style={{zIndex:9000}}>
                         <i className="bx bx-menu bx-sm" />
-                    </a>
+                    </span >
                 </div>
                 <div className="navbar-nav align-items-center">
                     <div className="nav-item navbar-search-wrapper mb-0">
-                        <a className="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
-                            <span className="d-none d-md-inline-block text-info">LKD/USD : {price}/{} </span>
-                        </a>
+                        <span className="nav-item nav-link search-toggler px-0">
+                            <span className="d-none d-md-inline-block text-info">LKD/USD : {price} </span>
+                        </span>
                     </div>
                 </div>
                 <div className="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
                     <ul className="navbar-nav flex-row align-items-center ms-auto">
                         {/* Style Switcher */}
                         <li className="nav-item me-2 me-xl-0">
-                            <a className="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                            <span className="nav-link style-switcher-toggle hide-arrow">
                                 <i className="bx bx-sm" />
-                            </a>
+                            </span>
                         </li>
                         {/*/ Style Switcher */}
                         {/* Quick links  */}
                         <li className="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
-                            <a className="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            {/* <a className="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                 <i className="bx bx-grid-alt bx-sm" />
-                            </a>
+                            </a> */}
                             <div className="dropdown-menu dropdown-menu-end py-0">
                                 <div className="dropdown-menu-header border-bottom">
                                     <div className="dropdown-header d-flex align-items-center py-3">

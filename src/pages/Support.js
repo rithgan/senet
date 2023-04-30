@@ -52,7 +52,6 @@ export default function Support({ipAddress, loginData}) {
 
     return (
         <>
-        <div className="layout-wrapper layout-content-navbar  ">
                 <div class="layout-container">
                     <Menu />
                     <div class="layout-page">
@@ -136,10 +135,6 @@ export default function Support({ipAddress, loginData}) {
                         </div>
                     </div>
                 </div>
-        </div>
-                <div className="layout-overlay layout-menu-toggle"></div>
-                <div className="drag-target"></div>
-           
         </>
     );
 }

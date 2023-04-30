@@ -66,7 +66,6 @@ export default function Ticket({ipAddress, loginData}) {
     
     return (
         <>
-            <div className="layout-wrapper layout-content-navbar  ">
                 <div className="layout-container">
                     <Menu />
                     <div className="layout-page">
@@ -139,9 +138,6 @@ export default function Ticket({ipAddress, loginData}) {
                         </div>
                     </div>
                 </div>
-                <div className="layout-overlay layout-menu-toggle"></div>
-                <div className="drag-target"></div>
-            </div>
         </>
     );
 }

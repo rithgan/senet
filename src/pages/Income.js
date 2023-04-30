@@ -6,7 +6,6 @@ import Menu from '../components/Menu';
 export default function Income() {
     return (
         <>
-            <div className="layout-wrapper layout-content-navbar  ">
                 <div className="layout-container">
                     <Menu />
                     <div className="layout-page">
@@ -161,9 +160,6 @@ export default function Income() {
                         </div>
                     </div>
                 </div>
-                <div className="layout-overlay layout-menu-toggle"></div>
-                <div className="drag-target"></div>
-            </div>
         </>
     );
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useCallback, useEffect } from 'react'
+import React, { useContext, useCallback, useEffect,useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { ConnectContext } from '../context/ConnectContext';
 import { NetworkContext } from '../context/NetworkContext';
@@ -6,16 +6,18 @@ import { IpContext } from '../context/IpContext';
 import web3Modal from ".././modal";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
+import { MobileSidebarContext } from '../context/MobileSidebarContext';
 const config = require('../config.json')
 
 export default function Menu() {
   const [account, setAccount] = useContext(NetworkContext);
   const [provider, setProvider] = useContext(ConnectContext)
+  const [isOpen, setIsOpen] = useState(false);
+  const [isSubMenuOpen,setIsSubMenuOpen] = useState(false)
   const [ipAddress] = useContext(IpContext);
+  const [mobileOpen, setMobileOpen] = useContext(MobileSidebarContext)
 
   const history = useHistory();
-
-
   const refreshState = useCallback(() => {
     setAccount();
   }, [setAccount]);
@@ -83,26 +85,79 @@ export default function Menu() {
       response = response.data
       console.log('logging out')
       console.log(response)
-      localStorage.removeItem('loginData'); 
+      localStorage.removeItem('loginData');
       history.push('/');
 
     } catch (error) {
       console.error(error)
     }
   };
+
+  const handleMouseEnter = () => {
+    if (window.innerWidth > 1199.98) {
+      setIsOpen(true);
+    }
+    setTimeout(()=>setIsSubMenuOpen(true),100)
+    
+  };
+
+  const handleMouseLeave = () => {
+    if (window.innerWidth > 1199.98) {
+      setIsOpen(false);
+    }
+    setIsSubMenuOpen(false)
+  };
+  let sidebarStyle = {}
+  if (window.innerWidth > 1199.98) {
+  sidebarStyle = {
+    // display: isOpen ? 'block' : 'none',
+    width:isOpen?'16.25rem':'5rem'
+
+    // Add other styles as needed
+  }}else{
+    if (mobileOpen){
+      sidebarStyle = {
+      // display: isOpen ? 'block' : 'none',
+      transform: 'translate3d(0, 0, 0)'
+      // Add other styles as needed
+    }
+    }else{
+      sidebarStyle = {
+        // display: isOpen ? 'block' : 'none',
+        transform: 'translate3d(-100%, 0, 0)'
+        // Add other styles as needed
+      }
+    }
+    
+  }
+  
+  const subMenuStyle= {
+    display: isSubMenuOpen ? 'block' : 'none',
+  }
+
+  useEffect(()=>{
+    console.log(mobileOpen)
+    if(mobileOpen){
+      setIsOpen(true)
+      setIsSubMenuOpen(true)
+    }else{
+      setIsOpen(false)
+      setIsSubMenuOpen(false)
+    }
+  },[mobileOpen])
   return (
 
-    <aside id="layout-menu" className="layout-menu menu-vertical menu bg-menu-theme">
+    <aside id="layout-menu" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} className="layout-menu menu-vertical menu bg-menu-theme" style={sidebarStyle}>
       <div className="app-brand demo ">
         <Link to="/dash" className="app-brand-link">
           <span className="app-brand-logo demo">
             <img src="assets/ficon.svg" style={{ height: '40px', width: 'auto' }} alt='ficon' />
           </span>
-          <span className="app-brand-text demo menu-text fw-bolder ms-2">LKD</span>
+          {isOpen?<span className="app-brand-text demo menu-text fw-bolder ms-2">LKD</span>:''}
         </Link>
-        <Link to="javascript:void(0);" className="layout-menu-toggle menu-link text-large ms-auto">
+        {isOpen?<span className="layout-menu-toggle menu-link text-large ms-auto">
           <i className="bx bx-chevron-left bx-sm align-middle" />
-        </Link>
+        </span>:""}
       </div>
       <div className="menu-inner-shadow" />
       <ul className="menu-inner py-1">
@@ -110,27 +165,27 @@ export default function Menu() {
         <li className="menu-item ">
           <Link to="/dash" className="menu-link">
             <i className="menu-icon tf-icons bx bx-envelope" />
-            <div data-i18n="Dashboards">Dashboards</div>
+            {isOpen?<div data-i18n="Dashboards">Dashboards</div>:""}
           </Link>
         </li>
         {/* Layouts */}
-        <li className="menu-item active open">
-          <Link to="javascript:void(0);" className="menu-link menu-toggle">
+        <li className="menu-item active open" style={sidebarStyle}>
+          <span  className={`menu-link ${isOpen?'menu-toggle':''}`}>
             <i className="menu-icon tf-icons bx bx-user" />
-            <div data-i18n="Layouts">Profile</div>
-          </Link>
-          <ul className="menu-sub">
+            {isOpen?<div data-i18n="Layouts">Profile</div>:''}
+          </span>
+          <ul className="menu-sub" style={subMenuStyle}>
             <li className="menu-item active">
               <Link to="/profile" className="menu-link ">
                 <div data-i18n="Collapsed menu">View</div>
               </Link>
             </li>
-            <li className="menu-item">
+            <li className="menu-item active">
               <Link to="/downline" className="menu-link">
                 <div data-i18n="Content navbar">DownLine</div>
               </Link>
             </li>
-            <li className="menu-item">
+            <li className="menu-item active">
               <Link to="/business" className="menu-link">
                 <div data-i18n="Content nav + Sidebar">Business</div>
               </Link>
@@ -140,13 +195,13 @@ export default function Menu() {
         <li className="menu-item ">
           <Link to="/stake" className="menu-link">
             <i className="menu-icon tf-icons bx bx-money" />
-            <div data-i18n="Kanban">Stake</div>
+            {isOpen?<div data-i18n="Kanban">Stake</div>:''}
           </Link>
         </li>
         <li className="menu-item ">
           <Link to="/income" className="menu-link">
             <i className="menu-icon tf-icons bx bx-calendar-heart" />
-            <div data-i18n="Invoice">Awards/Rewards</div>
+            {isOpen?<div data-i18n="Invoice">Awards/Rewards</div>:''}
           </Link>
         </li>
         {/*  <li class="menu-item">
@@ -187,18 +242,18 @@ export default function Menu() {
           </li>
         </ul>
       </li> */}
-        <li className="menu-item active open">
-          <Link to="javascript:void(0);" className="menu-link menu-toggle">
+        <li className="menu-item active open" style={sidebarStyle}>
+          <span  className={`menu-link ${isOpen?'menu-toggle':''}`}>
             <i className="menu-icon tf-icons bx bx-layout" />
-            <div data-i18n="Users">Wallet</div>
-          </Link>
-          <ul className="menu-sub">
+            {isOpen?<div data-i18n="Users">Wallet</div>:''}
+          </span>
+          <ul className="menu-sub" style={subMenuStyle}>
             <li className="menu-item active">
               <Link to="/wallet" className="menu-link">
                 <div data-i18n="List">View</div>
               </Link>
             </li>
-            <li className="menu-item">
+            <li className="menu-item active">
               <Link to="/request" className="menu-link">
                 <div data-i18n="Billing & Plans">Withdrawl Request</div>
               </Link>
@@ -208,19 +263,19 @@ export default function Menu() {
         <li className="menu-item ">
           <Link to="/support" className="menu-link">
             <i className="menu-icon tf-icons bx bx-support" />
-            <div data-i18n="Roles & Permissions">Support</div>
+            {isOpen?<div data-i18n="Roles & Permissions">Support</div>:''}
           </Link>
         </li>
-        <li className="menu-item ">
+        {/* <li className="menu-item ">
           <Link to="/ticket" className="menu-link">
             <i className="menu-icon tf-icons bx bx-help-circle" />
-            <div data-i18n="Roles & Permissions">Ticket</div>
+            {isOpen?<div data-i18n="Roles & Permissions">Ticket</div>:''}
           </Link>
-        </li>
+        </li> */}
         <li className="menu-item ">
           <Link onClick={() => handleLogout()} to="/" className="menu-link">
             <i className="menu-icon tf-icons bx bx-exit" />
-            <div data-i18n="Login">Disconnect</div>
+            {isOpen?<div data-i18n="Login">Disconnect</div>:''}
           </Link>
         </li>
       </ul>
