@@ -143,9 +143,9 @@ export default function Header() {
                         {/*/ Style Switcher */}
                         {/* Quick links  */}
                         <li className="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
-                            {/* <a className="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                            <span className="nav-link dropdown-toggle hide-arrow" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                 <i className="bx bx-grid-alt bx-sm" />
-                            </a> */}
+                            </span>
                             <div className="dropdown-menu dropdown-menu-end py-0">
                                 <div className="dropdown-menu-header border-bottom">
                                     <div className="dropdown-header d-flex align-items-center py-3">
