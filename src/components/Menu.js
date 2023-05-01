@@ -98,7 +98,7 @@ export default function Menu() {
 
   const handleMouseEnter = () => {
     if (width > 1199.98) {
-      setIsOpen(true);
+      setTimeout(()=>setIsOpen(true),100)
     }
     // setTimeout(()=>setIsSubMenuOpen(true),100)
     
@@ -106,7 +106,7 @@ export default function Menu() {
 
   const handleMouseLeave = () => {
     if (width > 1199.98) {
-      setIsOpen(false);
+      setTimeout(()=>setIsOpen(false),100)
     }
     // setIsSubMenuOpen(false)
   };

@@ -6,8 +6,11 @@ const contract = async (provider, poolAddress, poolABI) => {
     return contract;
 };
 
-export const depositAmount = async (provider, poolAddress, poolABI, amount) => {
+export const depositAmount = async (provider, poolAddress, poolABI, amount,wallet) => {
     let cont = await contract(provider, poolAddress, poolABI)
+    if(amount === wallet){
+        amount = amount-1
+    }
     await cont.investAmount(ethers.utils.parseEther(amount.toString()))
 }
 

@@ -164,7 +164,34 @@ export default function Request({ipAddress, loginData}) {
                         <Header />
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
+                                <div>
+                                <div className="col-md-12  mb-3">
+                                    <div className="card ">
+                                      <div className="card-body align-items-center p-3">
+                                        <div className="d-flex align-items-center justify-content-between">
+                                          <div className="card-title mb-0">
+                                          <p className="m-0 me-2">0.00</p>   
+                                            <small className="text-muted">USDT</small>
+                                          </div>
+                                          <div className="">
+                                            <p className="m-0 me-2">0.00</p>   
+                                            <small className="text-muted">LKD</small>
+                                          </div>
+                                        </div>
+                                        <div className='mt-4' style={{textAlign:"center"}}>
+                                          <button className='btn  btn-info' >Withdraw</button>
+                                          <button className='btn  btn-info ms-3'>Re-Stake</button>
+                                        </div>
+                                        <div className=' mt-4' style={{textAlign:"center"}}>
+                                          <small className="text-light text-center mb-0">Withdrawl Fee @10%, Minimum withdraw $10 </small><br/>
+                                          <small className="text-info fsmall text_center" style={{ margin: 0 }}>Re-Stake don't have any Fee or Fedication </small>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                                 <div className="row">
+                                  <div className='col-md-12'>
                                     <div className="card mb-4">
                                         <h5 className="card-header">Withdrawl Request</h5>
                                         <div className="card-body">
@@ -198,7 +225,9 @@ export default function Request({ipAddress, loginData}) {
                                             </form>
                                         </div>
                                     </div>
+                                    </div>
                                 </div>
+
                             </div>
                             <Footer />
                         </div>
