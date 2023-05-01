@@ -7,6 +7,7 @@ import web3Modal from ".././modal";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
 import { MobileSidebarContext } from '../context/MobileSidebarContext';
+import useWindowDimensions from '../hooks/useWindowDimensions';
 const config = require('../config.json')
 
 export default function Menu() {
@@ -14,8 +15,10 @@ export default function Menu() {
   const [provider, setProvider] = useContext(ConnectContext)
   const [isOpen, setIsOpen] = useState(false);
   const [isSubMenuOpen,setIsSubMenuOpen] = useState(false)
+  const [isSubWalletOpen,setIsSubWalletOpen] = useState(false)
   const [ipAddress] = useContext(IpContext);
   const [mobileOpen, setMobileOpen] = useContext(MobileSidebarContext)
+  const { height, width } = useWindowDimensions();
 
   const history = useHistory();
   const refreshState = useCallback(() => {
@@ -94,21 +97,21 @@ export default function Menu() {
   };
 
   const handleMouseEnter = () => {
-    if (window.innerWidth > 1199.98) {
+    if (width > 1199.98) {
       setIsOpen(true);
     }
-    setTimeout(()=>setIsSubMenuOpen(true),100)
+    // setTimeout(()=>setIsSubMenuOpen(true),100)
     
   };
 
   const handleMouseLeave = () => {
-    if (window.innerWidth > 1199.98) {
+    if (width > 1199.98) {
       setIsOpen(false);
     }
-    setIsSubMenuOpen(false)
+    // setIsSubMenuOpen(false)
   };
   let sidebarStyle = {}
-  if (window.innerWidth > 1199.98) {
+  if (width > 1199.98) {
   sidebarStyle = {
     // display: isOpen ? 'block' : 'none',
     width:isOpen?'16.25rem':'5rem'
@@ -134,15 +137,18 @@ export default function Menu() {
   const subMenuStyle= {
     display: isSubMenuOpen ? 'block' : 'none',
   }
+  const subWalletStyle= {
+    display: isSubWalletOpen ? 'block' : 'none',
+  }
 
   useEffect(()=>{
-    console.log(mobileOpen)
+    console.log("mobile open",mobileOpen)
     if(mobileOpen){
       setIsOpen(true)
-      setIsSubMenuOpen(true)
+      // setIsSubMenuOpen(true)
     }else{
       setIsOpen(false)
-      setIsSubMenuOpen(false)
+      // setIsSubMenuOpen(false)
     }
   },[mobileOpen])
   return (
@@ -169,9 +175,9 @@ export default function Menu() {
           </Link>
         </li>
         {/* Layouts */}
-        <li className="menu-item active open" style={sidebarStyle}>
+        <li className="menu-item active open" style={sidebarStyle} onClick={()=>setIsSubMenuOpen(!isSubMenuOpen)}>
           <span  className={`menu-link ${isOpen?'menu-toggle':''}`}>
-            <i className="menu-icon tf-icons bx bx-user" />
+            <i className="menu-icon tf-icons bx bx-user"  />
             {isOpen?<div data-i18n="Layouts">Profile</div>:''}
           </span>
           <ul className="menu-sub" style={subMenuStyle}>
@@ -242,12 +248,12 @@ export default function Menu() {
           </li>
         </ul>
       </li> */}
-        <li className="menu-item active open" style={sidebarStyle}>
+        <li className="menu-item active open" style={sidebarStyle} onClick={()=>setIsSubWalletOpen(!isSubWalletOpen)}>
           <span  className={`menu-link ${isOpen?'menu-toggle':''}`}>
             <i className="menu-icon tf-icons bx bx-layout" />
             {isOpen?<div data-i18n="Users">Wallet</div>:''}
           </span>
-          <ul className="menu-sub" style={subMenuStyle}>
+          <ul className="menu-sub" style={subWalletStyle}>
             <li className="menu-item active">
               <Link to="/wallet" className="menu-link">
                 <div data-i18n="List">View</div>

@@ -221,9 +221,9 @@ export default function Header() {
                             </div>
                         </li>
                         <li className="nav-item me-2 me-xl-0">
-                            <a href="javascript:void(0)" className="btn btn-info text-nowrap">
+                            <span className="btn btn-info text-nowrap">
                                 <i className="bx bx-user-check me-1" />{truncateAddress(account)}
-                            </a>
+                            </span>
                         </li>
                         {/* <li class="nav-item navbar-dropdown dropdown-user dropdown">
 							    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">

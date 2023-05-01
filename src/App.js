@@ -17,26 +17,15 @@ import { IpContext } from './context/IpContext';
 import { NetworkProvider } from './context/NetworkContext';
 import { ConnectProvider } from "./context/ConnectContext";
 import Stakes from './pages/Stakes/Stakes';
-import { MobileSidebarContext } from './context/MobileSidebarContext';
 
 
 function App() {
   const [ipAddress] = useContext(IpContext);
   const [token, setToken] = useState('');
-  const [mobileOpen, setMobileOpen] = useContext(MobileSidebarContext)
-
   const handleLogin = (token) => {
     setToken(token);
   };
-let bgDisplay ={
-}
-  if (mobileOpen){
-    bgDisplay ={
-      display:'block'
-    }
-  }
   return (
-    <div className="layout-wrapper layout-content-navbar">
     <BrowserRouter>
       <NetworkProvider>
         <ConnectProvider>
@@ -60,9 +49,6 @@ let bgDisplay ={
         </ConnectProvider>
       </NetworkProvider>
     </BrowserRouter>
-    <div className="layout-overlay layout-menu-toggle" style={bgDisplay} onClick={()=>setMobileOpen(false)}></div>
-    <div className="drag-target"></div>
-  </div>
   );
 }
 
