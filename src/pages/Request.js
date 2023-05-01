@@ -73,7 +73,7 @@ export default function Request({ipAddress, loginData}) {
     
       useEffect(() => {
         handlePrice()
-      })
+      },[])
 
       const handelAmount =(e)=>{
         let amt = e.target.value
