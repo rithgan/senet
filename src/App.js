@@ -41,7 +41,7 @@ function App() {
                   <PrivateRoute exact path="/wallet" component={Wallet} />
                   <PrivateRoute exact path="/support" component={Support} />
                   <PrivateRoute exact path="/stake" component={Stakes} />
-                  {/* <PrivateRoute exact path="/ticket" component={Ticket} /> */}
+                  <PrivateRoute exact path="/ticket" component={Ticket} />
                   <Route path="*">
                     <NotFound/>
                   </Route>

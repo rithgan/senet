@@ -107,6 +107,8 @@ export default function Menu() {
   const handleMouseLeave = () => {
     if (width > 1199.98) {
       setTimeout(()=>setIsOpen(false),100)
+      setIsSubMenuOpen(false)
+      setIsSubWalletOpen(false)
     }
     // setIsSubMenuOpen(false)
   };
