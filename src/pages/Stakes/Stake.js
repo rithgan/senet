@@ -129,7 +129,7 @@ export default function Stake() {
 
   useEffect(() => {
     handleInvestments(pool, poolABI)
-  }, [handleInvestments, pool, poolABI])
+  }, [handleInvestments])
 
   return (
     <div className="layout-container">
