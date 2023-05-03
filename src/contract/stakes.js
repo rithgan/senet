@@ -53,3 +53,43 @@ export const totalRewardsPaid = async (provider, pool, poolABI) => {
     let res = await cont.totalReward()
     return parseFloat(ethers.utils.formatUnits(res, 18)).toFixed(2)
 }
+
+export const reInvest = async(provider, pool, poolABI) => {
+    let cont = await contract(provider, pool, poolABI)
+    let res = await cont.reinvestReward()
+    return parseFloat(ethers.utils.formatUnits(res, 18)).toFixed(2)
+}
+
+export const getUserInvestmentsByPackage = async(provider, pool, poolABI,account,index) => {
+    let cont = await contract(provider, pool, poolABI)
+    let res = await cont.getUserInvestmentsByPackage(account,index)
+    return parseFloat(ethers.utils.formatUnits(res, 18))
+}
+
+export const getRewards = async(provider, pool, poolABI,account)=>{
+    let cont = await contract(provider, pool, poolABI)
+    let investments = await cont.getUserInvestments(account)
+    let obj = {
+        6:0,
+        8:0,
+        10:0,
+        12:0
+    }
+    let max = {
+        6:0,
+        8:0,
+        10:0,
+        12:0
+    }
+    let maxReward = 0
+    investments.map(async(inv)=>{
+        inv = parseInt(inv)
+        let {roiPercentage,totalReward,maxReward} = await cont.investments(inv)
+        roiPercentage = parseInt(ethers.utils.formatUnits(roiPercentage, 2))
+        totalReward = parseInt(ethers.utils.formatUnits(totalReward, 18))
+        maxReward = parseInt(ethers.utils.formatUnits(maxReward, 18))
+        obj[roiPercentage]+=totalReward
+        max[roiPercentage]+=maxReward
+    })
+    return [obj,max]
+}
