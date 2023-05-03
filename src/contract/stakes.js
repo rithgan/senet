@@ -11,7 +11,9 @@ export const depositAmount = async (provider, poolAddress, poolABI, amount,walle
     if(amount === wallet){
         amount = amount-1
     }
-    await cont.investAmount(ethers.utils.parseEther(amount.toString()))
+    let res =  await cont.investAmount(ethers.utils.parseEther(amount.toString()))
+    let conf = await res.wait()
+    return conf
 }
 
 export const depositedAmt = async (provider, pool, poolABI, userAddress) => {

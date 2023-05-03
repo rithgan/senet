@@ -40,7 +40,7 @@ function App() {
             <PrivateRoute exact path="/wallet" component={Wallet} />
             <PrivateRoute exact path="/support" component={Support} />
             <PrivateRoute exact path="/stake" component={Stake} />
-            <PrivateRoute exact path="/ticket" component={Ticket} />
+            <PrivateRoute exact path="/ticket" component={Ticket} ipAddress={ipAddress} />
             <Route path="*">
               <NotFound />
             </Route>
