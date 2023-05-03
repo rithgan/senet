@@ -98,7 +98,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
             <div className="card">
               <div className="card-header align-items-center ">
                 <div className="card-title mb-0">
-                  <h3 className="m-0 me-2 text-center">Stake Statics</h3>
+                  <h3 className="m-0 me-2 text-center">Stake Statistics</h3>
                 </div>
               </div>
             </div>
@@ -113,7 +113,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                 </div>
                 <div className="">
                   <p className="m-0 me-2">{wallet} LKD</p>   
-                  <small className="text-muted">{wallet*busdPrice} USDT</small>
+                  <small className="text-muted">{parseFloat(wallet*price).toFixed(3)} USDT</small>
                 </div>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
                 </div>
                 <div className="">
                   <p className="m-0 me-2">{price} LKD</p>   
-                  <small className="text-muted">{price*busdPrice} USDT</small>
+                  <small className="text-muted">{busdPrice} USDT</small>
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
               <div className="d-flex align-items-center justify-content-between">
                 
                   <input type="text" className="form-control" placeholder="USDT" value={deposit} onChange={(e) => setDeposit(e.target.value)} />
-                  <input type="text" disabled className="form-control ms-3" placeholder="LKD" value={deposit*price + ' LKD'} />
+                  <input type="text" disabled className="form-control ms-3" placeholder="LKD" value={parseFloat(deposit*price).toFixed(3) + ' LKD'} />
                 
               </div>
               <div className='text-center mt-4'>
@@ -230,6 +230,45 @@ export default function Stake({ token, apr, network, img, pool, poolABI, contrac
             </div>
           </div>
         </div>
+
+        <div className="col-md-6  mb-3">
+          <div className="card h-100">
+            <div className="card-header d-flex align-items-center justify-content-between">
+              <div className="card-title mb-0">
+                <h5 className="mb-2 me-2 text-info">Basic Stake <span className='text-light' style={{fontSize:"14px"}}>($25-$99)</span></h5>
+                <small className="">01 May 2023 - 23:23:55</small>
+              </div>
+              
+            </div>
+            <div className="card-body">
+              <div className="d-flex flex-wrap gap-2  mt-2">
+                <div className="d-flex flex-column w-50 me-2">
+                  <h6 className="text-nowrap d-block mb-2">Deposit</h6>
+                  <p className="mb-0">{deposited} USDT</p>
+                  
+                </div>
+                <div className="d-flex flex-column" style={{textAlign:"right"}}>
+                  <h6 className="text-nowrap d-block mb-2">Reward</h6>
+                  <p className="mb-0" >{daily} USDT</p>
+                </div>
+              </div>
+              <div className="d-flex flex-wrap gap-2 py-3">
+                
+                <div className="d-flex flex-column flex-grow-1">
+                  <small className="text-muted text-nowrap d-block mb-2">Return in Progress</small>
+                  <div className="d-flex align-items-center">
+                    <div className="progress w-100 me-3" style={{height: "8px"}}>
+                      <div className="progress-bar bg-info" role="progressbar" style={{width: "60%"}} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small>75%</small>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+
         <div className="col-md-6  mb-3">
           <div className="card h-100">
             <div className="card-header d-flex align-items-center justify-content-between">
