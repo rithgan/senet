@@ -334,7 +334,7 @@ export default function Stake({ ipAddress, loginData }) {
                               <div className="progress w-100 me-3" style={{ height: "8px" }}>
                                 <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(investments[6] / max[6]) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
-                              <small>{(investments[6] / max[6]) * 100}%</small>
+                              <small>{parseInt((investments[6] / max[6]) * 100)}%</small>
                             </div>
                           </div>
                         </div>
@@ -371,7 +371,7 @@ export default function Stake({ ipAddress, loginData }) {
                               <div className="progress w-100 me-3" style={{ height: "8px" }}>
                                 <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(investments[8] / max[8]) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
-                              <small>{(investments[8] / max[8]) * 100}%</small>
+                              <small>{parseInt((investments[8] / max[8]) * 100)}%</small>
                             </div>
                           </div>
                         </div>
@@ -408,7 +408,7 @@ export default function Stake({ ipAddress, loginData }) {
                               <div className="progress w-100 me-3" style={{ height: "8px" }}>
                                 <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(investments[10] / max[10]) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
-                              <small>{(investments[10] / max[10]) * 100}%</small>
+                              <small>{parseInt((investments[10] / max[10]) * 100)}%</small>
                             </div>
                           </div>
                         </div>
@@ -446,7 +446,7 @@ export default function Stake({ ipAddress, loginData }) {
                               <div className="progress w-100 me-3" style={{ height: "8px" }}>
                                 <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(investments[12] / max[12]) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
-                              <small>{(investments[12] / max[12]) * 100}%</small>
+                              <small>{parseInt((investments[12] / max[12]) * 100)}%</small>
                             </div>
                           </div>
                         </div>
