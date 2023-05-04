@@ -85,15 +85,27 @@ export const getRewards = async(provider, pool, poolABI,account)=>{
         10:0,
         12:0
     }
+    const options= {
+        year: "numeric",
+  month: "long",
+  day: "numeric",
+  hour:'numeric', minute:'numeric', second:'numeric', hour12:false
+    }
     let maxReward = 0
-    investments.map(async(inv)=>{
+    let det = Promise.all(investments.map(async(inv)=>{
         inv = parseInt(inv)
-        let {roiPercentage,totalReward,maxReward} = await cont.investments(inv)
+        let {roiPercentage,totalReward,maxReward,startDate,totalInvestment} = await cont.investments(inv)
         roiPercentage = parseInt(ethers.utils.formatUnits(roiPercentage, 2))
         totalReward = parseInt(ethers.utils.formatUnits(totalReward, 18))
         maxReward = parseInt(ethers.utils.formatUnits(maxReward, 18))
+        startDate = new Date(parseInt(ethers.utils.formatUnits(startDate, 0))*1000)
+        startDate = startDate.toLocaleString('en-GB',options)
+        totalInvestment = parseInt(ethers.utils.formatUnits(totalInvestment))
         obj[roiPercentage]+=totalReward
         max[roiPercentage]+=maxReward
-    })
-    return [obj,max]
+        return {roiPercentage,totalReward,maxReward,startDate,totalInvestment}
+    }))
+    // console.log(det)
+    // return [obj,max]
+    return det
 }

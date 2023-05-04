@@ -5,7 +5,7 @@ import { approve, checkApprove, balance } from '../../contract/token';
 import { depositAmount, depositedAmt, dailyReward, getWithdrawableTotalProfit, withdraw, reInvest, getUserInvestmentsByPackage, getRewards } from '../../contract/stakes';
 import { LkdToken as address, pool } from "../../address";
 import { LkdTokenABI as abi, poolABI } from "../../abi";
-import { getPrice, getBusdPrice,uploadStake } from "../../utils";
+import { getPrice, getBusdPrice, uploadStake } from "../../utils";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Menu from '../../components/Menu';
@@ -26,33 +26,24 @@ export default function Stake({ ipAddress, loginData }) {
   const [profit, setProfit] = useState(0)
   const [price, setPrice] = useState(0)
   const [busdPrice, setBusdPrice] = useState(0)
-  const [packages, setPackages] = useState([0, 0, 0, 0])
-  const [investments, setInvestments] = useState({
-    6: 0,
-    8: 0,
-    10: 0,
-    12: 0
-  })
-  const [max, setMax] = useState({
-    6: 1,
-    8: 1,
-    10: 1,
-    12: 1
-  })
+  const [packages, setPackages] = useState([])
 
-  const handlePackages = async (pool, poolABI) => {
-    let arr = [0, 1, 2, 3]
-    let packages = await Promise.all(arr.map(async (i) => {
-      return await getUserInvestmentsByPackage(provider, pool, poolABI, account, i)
-    }))
-    setPackages(packages)
-  }
+  // const handlePackages = async (pool, poolABI) => {
+  //   let arr = [0, 1, 2, 3]
+  //   let packages = await Promise.all(arr.map(async (i) => {
+  //     return await getUserInvestmentsByPackage(provider, pool, poolABI, account, i)
+  //   }))
+  //   setPackages(packages)
+  // }
 
   const handleInvestments = useCallback(async (pool, poolABI) => {
-    let investments = await getRewards(provider, pool, poolABI, account)
-    console.log(investments)
-    setInvestments(investments[0])
-    setMax(investments[1])
+    // let investments = await getRewards(provider, pool, poolABI, account)
+    // console.log(investments)
+    // setInvestments(investments[0])
+    // setMax(investments[1])
+    let packages = await getRewards(provider, pool, poolABI, account)
+    console.log(packages)
+    setPackages(packages)
   }, [account, provider])
 
   const handleApprove = async (address, abi) => {
@@ -72,11 +63,11 @@ export default function Stake({ ipAddress, loginData }) {
     let conf = await depositAmount(provider, pool, poolABI, deposit);
     console.log(conf)
     let txnHash = conf?.transactionHash
-    await uploadStake(txnHash,deposit,account,ipAddress,loginData,price)
+    await uploadStake(txnHash, deposit, account, ipAddress, loginData, price)
     setDeposit(0)
 
   };
-  
+
 
   const handleDeposited = async (pool, poolABI) => {
     let res = await depositedAmt(provider, pool, poolABI, account);
@@ -106,7 +97,7 @@ export default function Stake({ ipAddress, loginData }) {
   const handleReInvest = async () => {
     let conf = await reInvest(provider, pool, poolABI);
     let txnHash = conf?.transactionHash
-    await uploadStake(txnHash,price * profit,account,ipAddress,loginData,price)
+    await uploadStake(txnHash, price * profit, account, ipAddress, loginData, price)
   };
 
   const handlePrice = useCallback(async () => {
@@ -130,7 +121,7 @@ export default function Stake({ ipAddress, loginData }) {
     handleDeposited(pool, poolABI);
     handleDailyReward();
     handleProfit(account);
-    handlePackages(pool, poolABI)
+    // handlePackages(pool, poolABI)
   });
 
   useEffect(() => {
@@ -248,167 +239,61 @@ export default function Stake({ ipAddress, loginData }) {
                 </div>
               </div>
               {/* setting the card of pacakges */}
-              {packages.map((val, index) => {
-                if (val > 0) {
-
-                  if (index === 0) return (<div className="col-md-6  mb-3">
-                    <div key={index} className="card h-100">
-                      <div className="card-header d-flex align-items-center justify-content-between">
-                        <div className="card-title mb-0">
-                          <h5 className="mb-2 me-2 text-info">Basic Stake <span className='text-light' style={{ fontSize: "14px" }}>($25-$99)</span></h5>
-                          <small className="">01 May 2023 - 23:23:55</small>
-                        </div>
-
-                      </div>
-                      <div className="card-body">
-                        <div className="d-flex flex-wrap gap-2  mt-2">
-                          <div className="d-flex flex-column w-50 me-2">
-                            <h6 className="text-nowrap d-block mb-2">Deposit</h6>
-                            <p className="mb-0">{val} USDT</p>
-
-                          </div>
-                          <div className="d-flex flex-column" style={{ textAlign: "right" }}>
-                            <h6 className="text-nowrap d-block mb-2">Reward</h6>
-                            <p className="mb-0" >{investments[6]} USDT</p>
-                          </div>
-                        </div>
-                        <div className="d-flex flex-wrap gap-2 py-3">
-
-                          <div className="d-flex flex-column flex-grow-1">
-                            <small className="text-muted text-nowrap d-block mb-2">Return in Progress</small>
-                            <div className="d-flex align-items-center">
-                              <div className="progress w-100 me-3" style={{ height: "8px" }}>
-                                <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(investments[6] / max[6]) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                              <small>{parseInt((investments[6] / max[6]) * 100)}%</small>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>)
-                  if (index === 1) return (<div key={index} className="col-md-6  mb-3">
-                    <div className="card h-100">
-                      <div className="card-header d-flex align-items-center justify-content-between">
-                        <div className="card-title mb-0">
-                          <h5 className="mb-2 me-2 text-info">Standred Stake <span className='text-light ' style={{ fontSize: "14px" }}>($100-$199)</span></h5>
-                          <small className="">01 May 2023 - 23:23:55</small>
-                        </div>
-
-                      </div>
-                      <div className="card-body">
-                        <div className="d-flex flex-wrap gap-2  mt-2">
-                          <div className="d-flex flex-column w-50 me-2">
-                            <h6 className="text-nowrap d-block mb-2">Deposit</h6>
-                            <p className="mb-0">{val}  USDT</p>
-
-                          </div>
-                          <div className="d-flex flex-column" style={{ textAlign: "right" }}>
-                            <h6 className="text-nowrap d-block mb-2">Reward</h6>
-                            <p className="mb-0" >{investments[8]} USDT</p>
-                          </div>
-                        </div>
-                        <div className="d-flex flex-wrap gap-2 py-3">
-
-                          <div className="d-flex flex-column flex-grow-1">
-                            <small className="text-muted text-nowrap d-block mb-2">Return in Progress</small>
-                            <div className="d-flex align-items-center">
-                              <div className="progress w-100 me-3" style={{ height: "8px" }}>
-                                <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(investments[8] / max[8]) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                              <small>{parseInt((investments[8] / max[8]) * 100)}%</small>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>)
-                  if (index === 2) return (<div key={index} className="col-md-6  mb-3">
-                    <div className="card h-100">
-                      <div className="card-header d-flex align-items-center justify-content-between">
-                        <div className="card-title mb-0">
-                          <h5 className="mb-2 me-2 text-info">Super Stake <span className='text-light' style={{ fontSize: "14px" }}>($200-$499)</span></h5>
-                          <small className="">01 May 2023 - 23:23:55</small>
-                        </div>
-
-                      </div>
-                      <div className="card-body">
-                        <div className="d-flex flex-wrap gap-2  mt-2">
-                          <div className="d-flex flex-column w-50 me-2">
-                            <h6 className="text-nowrap d-block mb-2">Deposit</h6>
-                            <p className="mb-0">{val}  USDT</p>
-
-                          </div>
-                          <div className="d-flex flex-column" style={{ textAlign: "right" }}>
-                            <h6 className="text-nowrap d-block mb-2">Reward</h6>
-                            <p className="mb-0" >{investments[10]} USDT</p>
-                          </div>
-                        </div>
-                        <div className="d-flex flex-wrap gap-2 py-3">
-
-                          <div className="d-flex flex-column flex-grow-1">
-                            <small className="text-muted text-nowrap d-block mb-2">Return in Progress</small>
-                            <div className="d-flex align-items-center">
-                              <div className="progress w-100 me-3" style={{ height: "8px" }}>
-                                <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(investments[10] / max[10]) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                              <small>{parseInt((investments[10] / max[10]) * 100)}%</small>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>)
-
-                  if (index === 3) return (<div key={index} className="col-md-6  mb-3">
-                    <div className="card h-100">
-                      <div className="card-header d-flex align-items-center justify-content-between">
-                        <div className="card-title mb-0">
-                          <h5 className="mb-2 me-2 text-info">Premium Stake <span className='text-light' style={{ fontSize: "14px" }}>($500 and Above)</span></h5>
-                          <small className="">01 May 2023 - 23:23:55</small>
-                        </div>
-
-                      </div>
-                      <div className="card-body">
-                        <div className="d-flex flex-wrap gap-2  mt-2">
-                          <div className="d-flex flex-column w-50 me-2">
-                            <h6 className="text-nowrap d-block mb-2">Deposit</h6>
-                            <p className="mb-0">{val}  USDT</p>
-
-                          </div>
-                          <div className="d-flex flex-column" style={{ textAlign: "right" }}>
-                            <h6 className="text-nowrap d-block mb-2">Reward</h6>
-                            <p className="mb-0" >{investments[12]} USDT</p>
-                          </div>
-                        </div>
-                        <div className="d-flex flex-wrap gap-2 py-3">
-
-                          <div className="d-flex flex-column flex-grow-1">
-                            <small className="text-muted text-nowrap d-block mb-2">Return in Progress</small>
-                            <div className="d-flex align-items-center">
-                              <div className="progress w-100 me-3" style={{ height: "8px" }}>
-                                <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(investments[12] / max[12]) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                              </div>
-                              <small>{parseInt((investments[12] / max[12]) * 100)}%</small>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>)
+              {packages.map(({ roiPercentage, totalReward, maxReward, startDate, totalInvestment }) => {
+                let plan = "", offer = ""
+                if (roiPercentage === 6) {
+                  plan = "Basic Stake"
+                  offer = "($25-$99)"
+                } if (roiPercentage === 8) {
+                  plan = "Standard Stake"
+                  offer = "($25-$99)"
+                } if (roiPercentage === 10) {
+                  plan = "Super Stake"
+                  offer = "($25-$99)"
+                } if (roiPercentage === 12) {
+                  plan = "Premium Stake"
+                  offer = "($25-$99)"
                 }
-                return <></>
+
+                return (<div className="col-md-6  mb-3">
+                  <div key={startDate} className="card h-100">
+                    <div className="card-header d-flex align-items-center justify-content-between">
+                      <div className="card-title mb-0">
+                        <h5 className="mb-2 me-2 text-info">{plan} <span className='text-light' style={{ fontSize: "14px" }}>{offer}</span></h5>
+                        <small className="">{startDate}</small>
+                      </div>
+
+                    </div>
+                    <div className="card-body">
+                      <div className="d-flex flex-wrap gap-2  mt-2">
+                        <div className="d-flex flex-column w-50 me-2">
+                          <h6 className="text-nowrap d-block mb-2">Deposit</h6>
+                          <p className="mb-0">{totalInvestment} USDT</p>
+
+                        </div>
+                        <div className="d-flex flex-column" style={{ textAlign: "right" }}>
+                          <h6 className="text-nowrap d-block mb-2">Reward</h6>
+                          <p className="mb-0" >{totalReward} USDT</p>
+                        </div>
+                      </div>
+                      <div className="d-flex flex-wrap gap-2 py-3">
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <small className="text-muted text-nowrap d-block mb-2">Return in Progress</small>
+                          <div className="d-flex align-items-center">
+                            <div className="progress w-100 me-3" style={{ height: "8px" }}>
+                              <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(totalInvestment / maxReward) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small>{parseInt((totalInvestment / maxReward) * 100)}%</small>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>)
+                // return <></>
               })}
-
-
-
-
-
-
               {/* end the card of pacakges */}
             </div>
 
