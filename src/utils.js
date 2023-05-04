@@ -1,4 +1,5 @@
 import axios from "axios"
+import Swal from "sweetalert2"
 const url = "https://api.linkdao.network"
 const config = require('./config.json')
 
@@ -24,7 +25,7 @@ export const getBusdPrice = async () => { //get busd price
 }
 
 
-export const uploadStake = async (txnHash,deposit,account,ipAddress,loginData,price ) => {
+export const uploadStake = async (txnHash, deposit, account, ipAddress, loginData, price) => {
 
   const currentDate = Date.now()
 
@@ -50,7 +51,7 @@ export const uploadStake = async (txnHash,deposit,account,ipAddress,loginData,pr
     "ulid": loginData.ulid,
     "packId": packId,
     "thash": txnHash,
-    "tokenlkd": deposit/price,
+    "tokenlkd": deposit / price,
     "price": price,
     "usd": deposit,
     "tranTime": currentDate
@@ -74,6 +75,12 @@ export const uploadStake = async (txnHash,deposit,account,ipAddress,loginData,pr
   try {
     let response = await axios.request(axiosConfig)
     console.log(response.data)
+    Swal.fire({
+      icon: 'success',
+      title: 'Transaction successful',
+      text: `${deposit} USDT deposited`,
+      footer: `<a href='https://testnet.bscscan.com/tx/${txnHash}' target='_blank'>View transaction</a>`
+    })
   } catch (err) {
     console.error(err)
   }

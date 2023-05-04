@@ -105,7 +105,7 @@ export const getRewards = async(provider, pool, poolABI,account)=>{
         max[roiPercentage]+=maxReward
         return {roiPercentage,totalReward,maxReward,startDate,totalInvestment}
     }))
-    // console.log(det)
     // return [obj,max]
+    // console.log((await det).sort((a,b)=>b.startDate - a.startDate))
     return det
 }

@@ -2,16 +2,14 @@ import React, { useState, useContext, useEffect, useCallback } from 'react'
 import { NetworkContext } from '../../context/NetworkContext';
 import { ConnectContext } from '../../context/ConnectContext';
 import { approve, checkApprove, balance } from '../../contract/token';
-import { depositAmount, depositedAmt, dailyReward, getWithdrawableTotalProfit, withdraw, reInvest, getUserInvestmentsByPackage, getRewards } from '../../contract/stakes';
+import { depositAmount, depositedAmt, dailyReward, getWithdrawableTotalProfit, withdraw, reInvest, getRewards } from '../../contract/stakes';
 import { LkdToken as address, pool } from "../../address";
 import { LkdTokenABI as abi, poolABI } from "../../abi";
 import { getPrice, getBusdPrice, uploadStake } from "../../utils";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Menu from '../../components/Menu';
-import axios from 'axios';
 import "./Stake.css";
-const config = require('../../config.json')
 
 
 
@@ -27,6 +25,7 @@ export default function Stake({ ipAddress, loginData }) {
   const [price, setPrice] = useState(0)
   const [busdPrice, setBusdPrice] = useState(0)
   const [packages, setPackages] = useState([])
+  const [txn,setTxn] = useState("")
 
   // const handlePackages = async (pool, poolABI) => {
   //   let arr = [0, 1, 2, 3]
@@ -42,6 +41,7 @@ export default function Stake({ ipAddress, loginData }) {
     // setInvestments(investments[0])
     // setMax(investments[1])
     let packages = await getRewards(provider, pool, poolABI, account)
+    packages.reverse()
     console.log(packages)
     setPackages(packages)
   }, [account, provider])
@@ -65,7 +65,7 @@ export default function Stake({ ipAddress, loginData }) {
     let txnHash = conf?.transactionHash
     await uploadStake(txnHash, deposit, account, ipAddress, loginData, price)
     setDeposit(0)
-
+    handleInvestments(pool, poolABI)
   };
 
 
@@ -98,6 +98,7 @@ export default function Stake({ ipAddress, loginData }) {
     let conf = await reInvest(provider, pool, poolABI);
     let txnHash = conf?.transactionHash
     await uploadStake(txnHash, price * profit, account, ipAddress, loginData, price)
+    handleInvestments(pool, poolABI)
   };
 
   const handlePrice = useCallback(async () => {
