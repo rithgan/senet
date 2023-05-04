@@ -33,14 +33,14 @@ function App() {
             <Route path="/register"><Register ipAddress={ipAddress} /></Route>
             <PrivateRoute exact path="/dash" component={Dash} />
             <PrivateRoute exact path="/business" component={Business} />
-            <PrivateRoute exact path="/downline" component={Downline} ipAddress={ipAddress} />
+            <PrivateRoute exact path="/downline" component={Downline} />
             <PrivateRoute exact path="/income" component={Income} />
             <PrivateRoute exact path="/profile" component={Profile} />
             <PrivateRoute exact path="/request" component={Request} />
             <PrivateRoute exact path="/wallet" component={Wallet} />
             <PrivateRoute exact path="/support" component={Support} />
             <PrivateRoute exact path="/stake" component={Stake} />
-            <PrivateRoute exact path="/ticket" component={Ticket} ipAddress={ipAddress} />
+            <PrivateRoute exact path="/ticket" component={Ticket}  />
             <Route path="*">
               <NotFound />
             </Route>

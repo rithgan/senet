@@ -5,7 +5,7 @@ import { approve, checkApprove, balance } from '../../contract/token';
 import { depositAmount, depositedAmt, dailyReward, getWithdrawableTotalProfit, withdraw, reInvest, getUserInvestmentsByPackage, getRewards } from '../../contract/stakes';
 import { LkdToken as address, pool } from "../../address";
 import { LkdTokenABI as abi, poolABI } from "../../abi";
-import { getPrice, getBusdPrice } from "../../utils";
+import { getPrice, getBusdPrice,uploadStake } from "../../utils";
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Menu from '../../components/Menu';
@@ -72,65 +72,11 @@ export default function Stake({ ipAddress, loginData }) {
     let conf = await depositAmount(provider, pool, poolABI, deposit);
     console.log(conf)
     let txnHash = conf?.transactionHash
-    await uploadStake(txnHash)
+    await uploadStake(txnHash,deposit,account,ipAddress,loginData,price)
+    setDeposit(0)
 
   };
-
-  const uploadStake = async (txnHash) => {
-
-    const currentDate = new Date();
-
-    const options = { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
-    const indianDateTimeFormat = currentDate.toLocaleString('en-IN', options);
-
-    console.log('Indian Date and Time:', indianDateTimeFormat);
-    let packId = 0
-    if (deposit > 99) {
-      packId = 1
-    }
-    else if (deposit > 199) {
-      packId = 2
-    }
-    else if (deposit > 499) {
-      packId = 3
-    }
-
-
-    let data = JSON.stringify({
-      "address": account,
-      "ip": ipAddress,
-      "ulid": loginData.ulid,
-      "packId": packId,
-      "thash": txnHash,
-      "tokenlkd": deposit,
-      "price": price,
-      "usd": busdPrice,
-      "tranTime": indianDateTimeFormat
-    });
-
-    let axiosConfig = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: `${config.baseUrl}/api/stake`,
-      headers: {
-        'address': account,
-        'ip': ipAddress,
-        'ulid': loginData.ulid,
-        'auth': loginData.auth,
-        'token': loginData.token,
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
-    console.log(axiosConfig)
-    try {
-      let response = await axios.request(axiosConfig)
-      console.log(response.data)
-    } catch (err) {
-      console.error(err)
-    }
-
-  }
+  
 
   const handleDeposited = async (pool, poolABI) => {
     let res = await depositedAmt(provider, pool, poolABI, account);
@@ -158,7 +104,9 @@ export default function Stake({ ipAddress, loginData }) {
   };
 
   const handleReInvest = async () => {
-    await reInvest(provider, pool, poolABI);
+    let conf = await reInvest(provider, pool, poolABI);
+    let txnHash = conf?.transactionHash
+    await uploadStake(txnHash,price * profit,account,ipAddress,loginData,price)
   };
 
   const handlePrice = useCallback(async () => {
@@ -202,7 +150,7 @@ export default function Stake({ ipAddress, loginData }) {
         <div className="content-wrapper">
           <div className='container-xxl flex-grow-1 container-p-y'>
             <div className='row'>
-              <div class="col-md-12  mb-3">
+              <div className="col-md-12  mb-3">
                 <div className="card">
                   <div className="card-header align-items-center ">
                     <div className="card-title mb-0">
@@ -213,7 +161,7 @@ export default function Stake({ ipAddress, loginData }) {
               </div>
             </div>
             <div className='row'>
-              <div class="col-md-6 mb-3">
+              <div className="col-md-6 mb-3">
                 <div className="card ">
                   <div className="card-header d-flex align-items-center justify-content-between">
                     <div className="card-title mb-0">
@@ -234,8 +182,8 @@ export default function Stake({ ipAddress, loginData }) {
                       <h6 className="m-0 me-2">Live price</h6>
                     </div>
                     <div className="">
-                      <p className="m-0 me-2">{price} LKD</p>
-                      <small className="text-muted">{busdPrice} USDT</small>
+                      <p className="m-0 me-2">{price} USDT</p>
+                      <small className="text-muted">{busdPrice} LKD</small>
                     </div>
                   </div>
                 </div>
@@ -252,7 +200,7 @@ export default function Stake({ ipAddress, loginData }) {
                     <div className="d-flex align-items-center justify-content-between">
 
                       <input type="text" className="form-control" placeholder="USDT" value={deposit} onChange={(e) => setDeposit(e.target.value)} />
-                      <input type="text" disabled className="form-control ms-3" placeholder="LKD" value={parseFloat(deposit * price).toFixed(3) + ' LKD'} />
+                      <input type="text" disabled className="form-control ms-3" placeholder="LKD" value={parseFloat(deposit / price).toFixed(3) + ' LKD'} />
 
                     </div>
                     <div className='text-center mt-4'>
@@ -282,12 +230,10 @@ export default function Stake({ ipAddress, loginData }) {
                   <div className="card-body align-items-center p-3">
                     <div className="d-flex align-items-center justify-content-between">
                       <div className="card-title mb-0">
-                        <p className="m-0 me-2">{parseFloat(price * profit).toFixed(3)}</p>
-                        <small className="text-muted">{parseFloat(price * profit * busdPrice).toFixed(3)} USDT</small>
+                        <p >{parseFloat(price * profit * busdPrice).toFixed(3)} USDT</p>
                       </div>
                       <div className="">
-                        <p className="m-0 me-2">{profit}</p>
-                        <small className="text-muted">{parseFloat(profit * price).toFixed(3)} LKD</small>
+                        <p>{parseFloat(profit).toFixed(3)} LKD</p>
                       </div>
                     </div>
                     <div className='text-center mt-4'>
@@ -318,7 +264,7 @@ export default function Stake({ ipAddress, loginData }) {
                         <div className="d-flex flex-wrap gap-2  mt-2">
                           <div className="d-flex flex-column w-50 me-2">
                             <h6 className="text-nowrap d-block mb-2">Deposit</h6>
-                            <p className="mb-0">{val * price} USDT</p>
+                            <p className="mb-0">{val} USDT</p>
 
                           </div>
                           <div className="d-flex flex-column" style={{ textAlign: "right" }}>
@@ -355,7 +301,7 @@ export default function Stake({ ipAddress, loginData }) {
                         <div className="d-flex flex-wrap gap-2  mt-2">
                           <div className="d-flex flex-column w-50 me-2">
                             <h6 className="text-nowrap d-block mb-2">Deposit</h6>
-                            <p className="mb-0">{val * price}  USDT</p>
+                            <p className="mb-0">{val}  USDT</p>
 
                           </div>
                           <div className="d-flex flex-column" style={{ textAlign: "right" }}>
@@ -392,7 +338,7 @@ export default function Stake({ ipAddress, loginData }) {
                         <div className="d-flex flex-wrap gap-2  mt-2">
                           <div className="d-flex flex-column w-50 me-2">
                             <h6 className="text-nowrap d-block mb-2">Deposit</h6>
-                            <p className="mb-0">{val * price}  USDT</p>
+                            <p className="mb-0">{val}  USDT</p>
 
                           </div>
                           <div className="d-flex flex-column" style={{ textAlign: "right" }}>
@@ -430,7 +376,7 @@ export default function Stake({ ipAddress, loginData }) {
                         <div className="d-flex flex-wrap gap-2  mt-2">
                           <div className="d-flex flex-column w-50 me-2">
                             <h6 className="text-nowrap d-block mb-2">Deposit</h6>
-                            <p className="mb-0">{val * price}  USDT</p>
+                            <p className="mb-0">{val}  USDT</p>
 
                           </div>
                           <div className="d-flex flex-column" style={{ textAlign: "right" }}>
@@ -455,6 +401,7 @@ export default function Stake({ ipAddress, loginData }) {
                     </div>
                   </div>)
                 }
+                return <></>
               })}
 
 

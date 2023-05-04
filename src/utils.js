@@ -1,5 +1,6 @@
 import axios from "axios"
 const url = "https://api.linkdao.network"
+const config = require('./config.json')
 
 
 export const getPrice = async () => { //get lkd price
@@ -20,4 +21,60 @@ export const getBusdPrice = async () => { //get busd price
   let res = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=BUSDUSDT')
   let price = res.data['price']
   return price
+}
+
+
+export const uploadStake = async (txnHash,deposit,account,ipAddress,loginData,price ) => {
+
+  const currentDate = Date.now()
+
+  // const options = { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  // const indianDateTimeFormat = currentDate.toLocaleString('en-IN', options);
+
+  // console.log('Indian Date and Time:', indianDateTimeFormat);
+  let packId = 0
+  if (deposit > 99) {
+    packId = 1
+  }
+  else if (deposit > 199) {
+    packId = 2
+  }
+  else if (deposit > 499) {
+    packId = 3
+  }
+
+
+  let data = JSON.stringify({
+    "address": account,
+    "ip": ipAddress,
+    "ulid": loginData.ulid,
+    "packId": packId,
+    "thash": txnHash,
+    "tokenlkd": deposit/price,
+    "price": price,
+    "usd": deposit,
+    "tranTime": currentDate
+  });
+
+  let axiosConfig = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: `${config.baseUrl}/api/stake`,
+    headers: {
+      'address': account,
+      'ip': ipAddress,
+      'ulid': loginData.ulid,
+      'auth': loginData.auth,
+      'token': loginData.token,
+      'Content-Type': 'application/json'
+    },
+    data: data
+  };
+  console.log(axiosConfig)
+  try {
+    let response = await axios.request(axiosConfig)
+    console.log(response.data)
+  } catch (err) {
+    console.error(err)
+  }
 }

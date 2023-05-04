@@ -59,7 +59,9 @@ export const totalRewardsPaid = async (provider, pool, poolABI) => {
 export const reInvest = async(provider, pool, poolABI) => {
     let cont = await contract(provider, pool, poolABI)
     let res = await cont.reinvestReward()
-    return parseFloat(ethers.utils.formatUnits(res, 18)).toFixed(2)
+    // return parseFloat(ethers.utils.formatUnits(res, 18)).toFixed(2)
+    let conf = await res.wait()
+    return conf
 }
 
 export const getUserInvestmentsByPackage = async(provider, pool, poolABI,account,index) => {

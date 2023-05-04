@@ -1,11 +1,14 @@
 import { useContext } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { MobileSidebarContext } from '../context/MobileSidebarContext';
+import { IpContext } from '../context/IpContext';
 
-function PrivateRoute({ component: Component, ipAddress }) {
+function PrivateRoute({ component: Component }) {
   let isLoggedIn = false
   const loginData = JSON.parse(localStorage.getItem('loginData'));
   const [mobileOpen, setMobileOpen] = useContext(MobileSidebarContext)
+  const [ipAddress] = useContext(IpContext);
+
 
   if (loginData && loginData.auth.length > 0) {
     isLoggedIn = true
