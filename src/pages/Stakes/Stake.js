@@ -283,9 +283,9 @@ export default function Stake({ ipAddress, loginData }) {
                           <small className="text-muted text-nowrap d-block mb-2">Return in Progress</small>
                           <div className="d-flex align-items-center">
                             <div className="progress w-100 me-3" style={{ height: "8px" }}>
-                              <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(totalInvestment / maxReward) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(totalReward / maxReward) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
-                            <small>{parseInt((totalInvestment / maxReward) * 100)}%</small>
+                            <small>{parseInt((totalReward / maxReward) * 100)}%</small>
                           </div>
                         </div>
                       </div>
