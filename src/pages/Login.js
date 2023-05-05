@@ -7,6 +7,7 @@ import { NetworkContext } from '../context/NetworkContext';
 import { ethers } from "ethers";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Swal from 'sweetalert2'
+import { checkStakeInfo } from '../utils';
 const config = require('../config.json')
 
 export default function Login({ ipAddress, onLogin }) {
@@ -122,7 +123,12 @@ export default function Login({ ipAddress, onLogin }) {
             console.log(loginData)
             setLoginData(loginData)
             onLogin(response.data)
-            history.push('/dash');
+            let res = checkStakeInfo(ipAddress,loginData)
+            if (res===true){
+                history.push('/dash');
+            }else{
+                history.push('/stake');
+            }
             console.log('going to dash')
         }
         else if (response.code === 30) {

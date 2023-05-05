@@ -85,3 +85,37 @@ export const uploadStake = async (txnHash, deposit, account, ipAddress, loginDat
     console.error(err)
   }
 }
+
+
+export const checkStakeInfo = async(ipAddress,loginData)=>{
+  let data = JSON.stringify({
+    "address": loginData.address,
+    "ip": ipAddress,
+    "ulid": loginData.ulid
+  });
+  
+  let axiosConfig = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: `${config.baseUrl}/api/stakeinfo`,
+    headers: { 
+      'address': '7314380', 
+      'ip': '1:1:1:1', 
+      'auth': 'b0b4ac9458450ea7a16a7c5ac3ed4dad', 
+      'token': '0f983c29e28ba3eb93fe7c50949bd8ea', 
+      'ulid': 'ADMIN', 
+      'Content-Type': 'application/json'
+    },
+    data : data
+  };
+  
+  axios.request(axiosConfig)
+  .then((response) => {
+    console.log(JSON.stringify(response.data));
+    let res = JSON.stringify(response.data)
+    return res.status
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+}

@@ -256,7 +256,7 @@ export default function Stake({ ipAddress, loginData }) {
                   offer = "($25-$99)"
                 }
 
-                return (<div className="col-md-6  mb-3">
+                return (<div key={startDate} className="col-md-6  mb-3">
                   <div key={startDate} className="card h-100">
                     <div className="card-header d-flex align-items-center justify-content-between">
                       <div className="card-title mb-0">
