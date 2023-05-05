@@ -5,7 +5,7 @@ import Menu from '../components/Menu';
 import { NetworkContext } from '../context/NetworkContext';
 import { ConnectContext } from '../context/ConnectContext';
 import { withdraw, reInvest, getWithdrawableTotalProfit } from '../contract/stakes';
-import { getBusdPrice } from '../utils';
+import { getBusdPrice, uploadStake } from '../utils';
 import { pool } from '../address';
 import { poolABI } from '../abi';
 import axios from 'axios';
@@ -186,7 +186,9 @@ export default function Request({ ipAddress, loginData }) {
   };
 
   const handleReInvest = async () => {
-    await reInvest(provider, pool, poolABI);
+    let conf = await reInvest(provider, pool, poolABI);
+    let txnHash = conf?.transactionHash
+    await uploadStake(txnHash, price * profit, account, ipAddress, loginData, price)
   };
   return (
     <>
