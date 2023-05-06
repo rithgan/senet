@@ -1,9 +1,52 @@
-import React from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Menu from '../components/Menu';
+import { depositedAmt, getWithdrawableTotalProfit} from '../contract/stakes';
+import { ConnectContext } from '../context/ConnectContext';
+import { pool } from '../address';
+import { poolABI } from '../abi';
+import { NetworkContext } from '../context/NetworkContext';
+import { getPrice } from '../utils';
 
 export default function Dash() {
+  const [provider] = useContext(ConnectContext)
+  const [deposited, setDeposited] = useState(0)
+  const [account] = useContext(NetworkContext)
+  const [profit, setProfit] = useState(0)
+  const [price, setPrice] = useState(0)
+
+
+  const handlePrice = useCallback(async () => {
+    let pr = await getPrice();
+    setPrice(parseFloat(pr).toFixed(2));
+  }, []);
+
+  const handleDeposited = async (pool, poolABI) => {
+    let res = await depositedAmt(provider, pool, poolABI, account);
+    setDeposited(parseFloat(res).toFixed(2));
+  };
+  const handleProfit = async (pool,poolABI) => {
+    let res = await getWithdrawableTotalProfit(
+      provider,
+      pool,
+      poolABI,
+      account
+    );
+    setProfit(parseFloat(res).toFixed(2));
+  };
+
+
+  useEffect(()=>{
+    handleDeposited(pool, poolABI);
+    handleProfit(pool, poolABI);
+  })
+
+  useEffect(()=>{
+    handlePrice()
+  },[handlePrice])
+  
+
     return (
         <>
                 <div className="layout-container">
@@ -87,6 +130,48 @@ export default function Dash() {
                                                             <small className="text-success">(+42%)</small>
                                                         </div>
                                                         <small>Last Week Analytics</small>
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-success rounded p-2">
+                                                            <i className="bx bx-user bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text">Total Staked</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <h4 className="card-title mb-0 me-2">{deposited*price} USDT</h4>
+                                                            {/* <small className="text-success"></small> */}
+                                                        </div>
+                                                        {/* <small>Last Week Analytics</small> */}
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-success rounded p-2">
+                                                            <i className="bx bx-user bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
+                                        <div className="card">
+                                            <div className="card-body">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text">Total Withdrawn</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <h4 className="card-title mb-0 me-2">{profit*price} USDT</h4>
+                                                            {/* <small className="text-success">(+42%)</small> */}
+                                                        </div>
+                                                        {/* <small>Last Week Analytics</small> */}
                                                     </div>
                                                     <div className="card-icon">
                                                         <span className="badge bg-label-success rounded p-2">

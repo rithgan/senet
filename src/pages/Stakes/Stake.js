@@ -13,19 +13,17 @@ import "./Stake.css";
 
 
 
-export default function Stake({ ipAddress, loginData }) {
+function Stake({ ipAddress, loginData }) {
   const [status, setStatus] = useState(false)
   const [account] = useContext(NetworkContext)
   const [provider] = useContext(ConnectContext)
   const [deposit, setDeposit] = useState(0)
-  const [deposited, setDeposited] = useState(0)
   const [wallet, setWallet] = useState(0)
   const [daily, setDaily] = useState(0)
   const [profit, setProfit] = useState(0)
   const [price, setPrice] = useState(0)
   const [busdPrice, setBusdPrice] = useState(0)
   const [packages, setPackages] = useState([])
-  const [txn,setTxn] = useState("")
 
   // const handlePackages = async (pool, poolABI) => {
   //   let arr = [0, 1, 2, 3]
@@ -34,6 +32,7 @@ export default function Stake({ ipAddress, loginData }) {
   //   }))
   //   setPackages(packages)
   // }
+  // setLoading(true
 
   const handleInvestments = useCallback(async (pool, poolABI) => {
     // let investments = await getRewards(provider, pool, poolABI, account)
@@ -68,11 +67,6 @@ export default function Stake({ ipAddress, loginData }) {
     handleInvestments(pool, poolABI)
   };
 
-
-  const handleDeposited = async (pool, poolABI) => {
-    let res = await depositedAmt(provider, pool, poolABI, account);
-    setDeposited(res);
-  };
 
   const handleDailyReward = async () => {
     let res = await dailyReward(provider, pool, poolABI, account);
@@ -119,10 +113,8 @@ export default function Stake({ ipAddress, loginData }) {
   useEffect(() => {
     handleCheckApprove(address, abi);
     handleWalletAmt(address, abi);
-    handleDeposited(pool, poolABI);
     handleDailyReward();
     handleProfit(account);
-    // handlePackages(pool, poolABI)
   });
 
   useEffect(() => {
@@ -305,3 +297,6 @@ export default function Stake({ ipAddress, loginData }) {
     </div>
   )
 }
+
+
+export default Stake
