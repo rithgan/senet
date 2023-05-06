@@ -7,6 +7,8 @@ import { ConnectContext } from '../context/ConnectContext';
 import { pool } from '../address';
 import { poolABI } from '../abi';
 import { NetworkContext } from '../context/NetworkContext';
+import { LoadingContext } from '../context/LoadingContext';
+import { TailSpin } from 'react-loader-spinner';
 import { getPrice } from '../utils';
 
 export default function Dash() {
@@ -15,18 +17,20 @@ export default function Dash() {
   const [account] = useContext(NetworkContext)
   const [profit, setProfit] = useState(0)
   const [price, setPrice] = useState(0)
+  const [loading, setLoading] = useContext(LoadingContext)
 
 
   const handlePrice = useCallback(async () => {
     let pr = await getPrice();
     setPrice(parseFloat(pr).toFixed(2));
-  }, []);
+    setLoading(false)
+  }, [setLoading]);
 
-  const handleDeposited = async (pool, poolABI) => {
+  const handleDeposited =useCallback( async (pool, poolABI) => {
     let res = await depositedAmt(provider, pool, poolABI, account);
     setDeposited(parseFloat(res).toFixed(2));
-  };
-  const handleProfit = async (pool,poolABI) => {
+  },[account, provider])
+  const handleProfit = useCallback( async (pool,poolABI) => {
     let res = await getWithdrawableTotalProfit(
       provider,
       pool,
@@ -34,17 +38,14 @@ export default function Dash() {
       account
     );
     setProfit(parseFloat(res).toFixed(2));
-  };
+  },[account, provider])
 
 
   useEffect(()=>{
     handleDeposited(pool, poolABI);
     handleProfit(pool, poolABI);
-  })
-
-  useEffect(()=>{
     handlePrice()
-  },[handlePrice])
+  },[handleDeposited, handlePrice, handleProfit])
   
 
     return (
@@ -53,6 +54,16 @@ export default function Dash() {
                     <Menu />
                     <div className="layout-page">
                         <Header />
+                        {loading ? <><TailSpin
+          height="80"
+          width="80"
+          color="#ffffff"
+          ariaLabel="tail-spin-loading"
+          radius="1"
+          wrapperStyle={{margin:'auto'}}
+          wrapperClass=""
+          visible={true}
+        /></> :
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
                                 <div className="row">
@@ -185,7 +196,7 @@ export default function Dash() {
                                 </div>
                             </div>
                             <Footer />
-                        </div>
+                        </div>}
                     </div>
                 </div>
         </>

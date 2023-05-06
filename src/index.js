@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { IpProvider } from './context/IpContext';
 import { HistoryProvider } from './context/HistoryContext';
 import { MobileSidebarProvider } from './context/MobileSidebarContext';
+import { LoadingProvider } from './context/LoadingContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <IpProvider>
       <HistoryProvider>
+        <LoadingProvider>
         <MobileSidebarProvider>
           <App />
         </MobileSidebarProvider>
+        </LoadingProvider>
       </HistoryProvider>
     </IpProvider>
   </React.StrictMode>

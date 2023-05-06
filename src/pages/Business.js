@@ -4,15 +4,18 @@ import Footer from '../components/Footer';
 import Menu from '../components/Menu';
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
+import { LoadingContext } from '../context/LoadingContext';
+import { TailSpin } from 'react-loader-spinner';
 const config = require('../config.json')
 
 export default function Business({ipAddress, loginData}) {
     const [account, setAccount] = useContext(NetworkContext);
   const [business,setBusiness] = useState({});
+  const [loading, setLoading] = useContext(LoadingContext)
   const [businessTable,setBusinessTable] = useState({});
   
   const handleBusiness = useCallback(() => {
-    
+    setLoading(true)
     let data = JSON.stringify({
       "address": account,
       "ip": ipAddress,
@@ -40,12 +43,12 @@ export default function Business({ipAddress, loginData}) {
       // setDownline(config.downline)
       setBusinessTable(response.data.info)
       console.log(response.data); 
-      
+      setLoading(false)
     })
     .catch((error) => {
       console.log(error);
     });
-  },[account, ipAddress, loginData.auth, loginData.token, loginData.ulid])
+  },[account, ipAddress, loginData.auth, loginData.token, loginData.ulid, setLoading])
 
   useEffect(() => {
     
@@ -57,6 +60,16 @@ export default function Business({ipAddress, loginData}) {
                     <Menu />
                     <div className="layout-page">
                         <Header />
+                        {loading ? <><TailSpin
+          height="80"
+          width="80"
+          color="#ffffff"
+          ariaLabel="tail-spin-loading"
+          radius="1"
+          wrapperStyle={{margin:'auto'}}
+          wrapperClass=""
+          visible={true}
+        /></> :
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
                                 <div className="row">
@@ -170,7 +183,7 @@ export default function Business({ipAddress, loginData}) {
                                 </div>
                             </div>
                             <Footer />
-                        </div>
+                        </div>}
                     </div>
                 </div>
         </>

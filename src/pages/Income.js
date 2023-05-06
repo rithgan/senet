@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Menu from '../components/Menu';
+import { LoadingContext } from '../context/LoadingContext';
+import { TailSpin } from 'react-loader-spinner';
 
 export default function Income() {
+  const [loading, setLoading] = useContext(LoadingContext)
     return (
         <>
                 <div className="layout-container">

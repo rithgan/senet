@@ -4,6 +4,8 @@ import Footer from '../components/Footer';
 import Menu from '../components/Menu';
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
+import { LoadingContext } from '../context/LoadingContext';
+import { TailSpin } from 'react-loader-spinner';
 const config = require('../config.json')
 
 
@@ -11,8 +13,11 @@ export default function Downline({ ipAddress, loginData }) {
   const [account, setAccount] = useContext(NetworkContext);
   const [downline,setDownline] = useState({});
   const [downlineTable,setDownlineTable] = useState({});
+  const [loading, setLoading] = useContext(LoadingContext)
+
   const level = [1, 2, 3, 4, 5, 6,7, 8,9,10,11,13,14,15,16,17,18,19,20,21]
   const handleDownline = useCallback(() => {
+    setLoading(true)
     let data = JSON.stringify({
       "address": account,
       "ip": ipAddress,
@@ -40,7 +45,7 @@ export default function Downline({ ipAddress, loginData }) {
       // setDownline(config.downline)
       setDownlineTable(response.data.downList)
       console.log(response.data); 
-      
+      setLoading(false)
     })
     .catch((error) => {
       console.log(error);
@@ -57,6 +62,16 @@ export default function Downline({ ipAddress, loginData }) {
           <Menu />
           <div className="layout-page">
             <Header />
+            {loading ? <><TailSpin
+          height="80"
+          width="80"
+          color="#ffffff"
+          ariaLabel="tail-spin-loading"
+          radius="1"
+          wrapperStyle={{margin:'auto'}}
+          wrapperClass=""
+          visible={true}
+        /></> :
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
                 <div>
@@ -199,7 +214,7 @@ export default function Downline({ ipAddress, loginData }) {
                 </div>
               </div>
               <Footer />
-            </div>
+            </div>}
           </div>
         </div>
         
