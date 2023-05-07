@@ -10,7 +10,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import Menu from '../../components/Menu';
 import { LoadingContext } from '../../context/LoadingContext';
-import { TailSpin } from 'react-loader-spinner';
+import ReactLoader from '../../components/ReactLoader';
 import "./Stake.css";
 
 
@@ -130,16 +130,7 @@ function Stake({ ipAddress, loginData }) {
       <Menu />
       <div className="layout-page">
         <Header />
-        {loading ? <><TailSpin
-          height="80"
-          width="80"
-          color="#ffffff"
-          ariaLabel="tail-spin-loading"
-          radius="1"
-          wrapperStyle={{margin:'auto'}}
-          wrapperClass=""
-          visible={true}
-        /></> :
+        {loading ? <><ReactLoader/></> :
           <div className="content-wrapper">
             <div className='container-xxl flex-grow-1 container-p-y'>
               <div className='row'>

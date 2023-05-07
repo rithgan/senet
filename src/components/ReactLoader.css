@@ -1,0 +1,114 @@
+.rotate-animation {
+    -webkit-animation: rotate 4s linear infinite;
+    -moz-animation: rotate 4s linear infinite;
+    -o-animation: rotate 4s linear infinite;
+    animation: rotate 4s linear infinite;
+  }
+  
+  @-webkit-keyframes rotate {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-moz-keyframes rotate {
+    0% {
+      -moz-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @-o-keyframes rotate {
+    0% {
+      -o-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -o-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+
+
+  .pulse-animation {
+    -webkit-animation: pulse 2s ease-in-out infinite;
+    -moz-animation: pulse 2s ease-in-out infinite;
+    -o-animation: pulse 2s ease-in-out infinite;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  @-webkit-keyframes pulse {
+    0% {
+      -webkit-transform: scale(0.7);
+      transform: scale(0.7);
+    }
+    50% {
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+    100% {
+      -webkit-transform: scale(0.7);
+      transform: scale(0.7);
+    }
+  }
+  
+  @-moz-keyframes pulse {
+    0% {
+      -moz-transform: scale(0.7);
+      transform: scale(0.7);
+    }
+    50% {
+      -moz-transform: scale(1);
+      transform: scale(1);
+    }
+    100% {
+      -moz-transform: scale(0.7);
+      transform: scale(0.7);
+    }
+  }
+  
+  @-o-keyframes pulse {
+    0% {
+      -o-transform: scale(0.7);
+      transform: scale(0.7);
+    }
+    50% {
+      -o-transform: scale(1);
+      transform: scale(1);
+    }
+    100% {
+      -o-transform: scale(0.7);
+      transform: scale(0.7);
+    }
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0.7);
+    }
+    50% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0.7);
+    }
+  }
