@@ -11,6 +11,7 @@ import { LoadingContext } from '../context/LoadingContext';
 import ReactLoader from '../components/ReactLoader';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { getPrice } from '../utils';
+import RadialGauge from '../components/RadialGauge';
 
 export default function Dash() {
   const [provider] = useContext(ConnectContext)
@@ -20,6 +21,7 @@ export default function Dash() {
   const [price, setPrice] = useState(0)
   const [loading, setLoading] = useContext(LoadingContext)
   const [referall, setReferall] = useState("Add referall link here")
+  const [growth,setGrowth] = useState(70)
 
 
   const handlePrice = useCallback(async () => {
@@ -82,7 +84,23 @@ export default function Dash() {
                                         </div>
                                     </div>
                                 </div>
-                                
+                                <div className="row">
+                                    <div className="col-md-12  mb-3">
+                                        <div className="card h-100">
+                                            <div className="card-header align-items-center" style={{padding :"4% 5% 5% 5%"}}>
+                                                <div className="col-md-12">
+                                                    <div className='row d-flex justify-content-between'>
+                                                        <div className='col-12 text-center'>
+                                                                <RadialGauge series={growth}/>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
                                         <div class="card">
