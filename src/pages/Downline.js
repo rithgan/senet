@@ -88,7 +88,7 @@ export default function Downline({ ipAddress, loginData }) {
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-6 col-sm-6 mb-3">
-                        <div class="card">
+                        <div className="card">
                             <div className="card-body dashinc">
                                 <div className="d-flex justify-content-between">
                                     <div className="card-info">
@@ -108,7 +108,7 @@ export default function Downline({ ipAddress, loginData }) {
                         </div>
                     </div>
                     <div className="col-lg-4 col-md-6 col-sm-6 mb-3">
-                        <div class="card">
+                        <div className="card">
                             <div className="card-body dashinc">
                                 <div className="d-flex justify-content-between">
                                     <div className="card-info">

@@ -227,17 +227,17 @@ export default function Header() {
                                 <i className="bx bx-user-check me-1" />{truncateAddress(account)}
                             </span>
                         </li>
-                        {/* <li class="nav-item navbar-dropdown dropdown-user dropdown">
-							    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-							      <div class="avatar avatar-online">
-							        <img src="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
+                        {/* <li className="nav-item navbar-dropdown dropdown-user dropdown">
+							    <a className="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+							      <div className="avatar avatar-online">
+							        <img src="assets/img/avatars/1.png" alt className="w-px-40 h-auto rounded-circle">
 							      </div>
 							    </a>
-							    <ul class="dropdown-menu dropdown-menu-end">
+							    <ul className="dropdown-menu dropdown-menu-end">
 							      <li>
-							        <a class="dropdown-item" href="login.php" target="_blank">
-							          <i class="bx bx-power-off me-2"></i>
-							          <span class="align-middle">Log Out</span>
+							        <a className="dropdown-item" href="login.php" target="_blank">
+							          <i className="bx bx-power-off me-2"></i>
+							          <span className="align-middle">Log Out</span>
 							        </a>
 							      </li>
 							    </ul>

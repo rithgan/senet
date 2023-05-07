@@ -76,7 +76,7 @@ export default function Business({ipAddress, loginData}) {
                                 </div>
                                 <div className='row'>
                                     <div className="col-lg-6 col-md-6 col-sm-6 mb-3">
-                                        <div class="card">
+                                        <div className="card">
                                             <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
@@ -88,7 +88,7 @@ export default function Business({ipAddress, loginData}) {
                                                     </div>
                                                     <div className="card-icon">
                                                         <span className="badge bg-label-info rounded p-2">
-                                                            <i class='bx bx-user-circle bx-sm'></i>
+                                                            <i className='bx bx-user-circle bx-sm'></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -96,7 +96,7 @@ export default function Business({ipAddress, loginData}) {
                                         </div>
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-6 mb-3">
-                                        <div class="card">
+                                        <div className="card">
                                             <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
@@ -108,7 +108,7 @@ export default function Business({ipAddress, loginData}) {
                                                     </div>
                                                     <div className="card-icon">
                                                         <span className="badge bg-label-info rounded p-2">
-                                                            <i class='bx bx-dollar-circle bx-sm'></i>
+                                                            <i className='bx bx-dollar-circle bx-sm'></i>
                                                         </span>
                                                     </div>
                                                 </div>

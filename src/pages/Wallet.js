@@ -70,7 +70,7 @@ export default function Wallet({ipAddress, loginData}) {
                                     </div>
                                     <div className="row">
                                         <div className="col-lg-6 col-md-6 col-sm-6 mb-2">
-                                            <div class="card">
+                                            <div className="card">
                                                 <div className="card-body dashinc">
                                                     <div className="d-flex justify-content-between">
                                                         <div className="card-info">
@@ -91,7 +91,7 @@ export default function Wallet({ipAddress, loginData}) {
                                             </div>
                                         </div>
                                         <div className="col-lg-6 col-md-6 col-sm-6 mb-2">
-                                            <div class="card">
+                                            <div className="card">
                                                 <div className="card-body dashinc">
                                                     <div className="d-flex justify-content-between">
                                                         <div className="card-info">
