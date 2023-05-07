@@ -1,7 +1,10 @@
 import axios from "axios"
 import Swal from "sweetalert2"
+import 'sweetalert2/dist/sweetalert2.min.css';
+import './css/sweetalert-dark-theme.css';
 const url = "https://api.linkdao.network"
 const config = require('./config.json')
+
 
 
 export const getPrice = async () => { //get lkd price

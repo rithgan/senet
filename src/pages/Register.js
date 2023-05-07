@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
+import '../css/sweetalert-dark-theme.css';
 import web3Modal from ".././modal";
 import { ethers } from "ethers";
 import { ConnectContext } from '../context/ConnectContext';

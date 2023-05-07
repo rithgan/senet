@@ -5,6 +5,8 @@ import { NetworkContext } from '../context/NetworkContext';
 import { ConnectContext } from '../context/ConnectContext';
 import web3Modal from ".././modal";
 import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
+import '../css/sweetalert-dark-theme.css';
 import axios from 'axios';
 import { IpContext } from '../context/IpContext';
 import { MobileSidebarContext } from '../context/MobileSidebarContext';

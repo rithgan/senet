@@ -1,0 +1,40 @@
+/* sweetalet2-dark-mode.css */
+
+.swal2-popup {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .swal2-title {
+    color: #fff;
+  }
+  
+  .swal2-content {
+    color: #fff;
+  }
+  
+  .swal2-actions button {
+    background-color: #555;
+    color: #fff;
+  }
+  
+  .swal2-actions button:hover {
+    background-color: #777;
+  }
+  
+  .swal2-confirm {
+    background-color: #007bff;
+  }
+  
+  .swal2-confirm:hover {
+    background-color: #0069d9;
+  }
+  
+  .swal2-cancel {
+    background-color: #dc3545;
+  }
+  
+  .swal2-cancel:hover {
+    background-color: #c82333;
+  }
+  

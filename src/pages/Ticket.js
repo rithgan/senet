@@ -5,6 +5,8 @@ import Menu from '../components/Menu';
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
+import '../css/sweetalert-dark-theme.css';
 const config = require('../config.json')
 
 export default function Ticket({ipAddress, loginData}) {
