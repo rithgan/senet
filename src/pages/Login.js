@@ -7,6 +7,8 @@ import { NetworkContext } from '../context/NetworkContext';
 import { ethers } from "ethers";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Swal from 'sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css';
+import '../css/sweetalert-dark-theme.css';
 import { checkStakeInfo } from '../utils';
 const config = require('../config.json')
 
@@ -157,12 +159,12 @@ export default function Login({ ipAddress, onLogin }) {
                                     <span className="app-brand-logo demo">
                                         <img src="assets/ficon.svg" style={{ height: '40px', width: 'auto' }} alt='ficon' />
                                     </span>
-                                    <span className="app-brand-text demo text-body fw-bolder">LinkDao Defi</span>
+                                    <span className="app-brand-text demo text-body fw-bolder" style={{textTransform : "initial"}}>LinkDao</span>
                                 </Link>
                             </div>
                             {/* /Logo */}
-                            <h4 className="mb-2">Login Staker 🔒</h4>
-                            <p className="mb-4">Explore the multiple possibilites with our unique token</p>
+                            <h4 className="mb-2">Login 🔒</h4>
+                            <p className="mb-4">Explore the multiple possibilites with our unique Eco-System.</p>
                             {/* Connect with lkd form and action, go to dash.php */}
                             {/* <form id="formAuthentication" className="mb-3" action="/dash" method="POST"> */}
                             <form id="formAuthentication" className="mb-3" onSubmit={handleLogin}>
@@ -171,8 +173,8 @@ export default function Login({ ipAddress, onLogin }) {
                             <div className="text-center">
                                 {/* registeration button */}
                                 <Link to="/register" className="d-flex align-items-center justify-content-center">
-                                    <i className="bx bx-chevron-left scaleX-n1-rtl bx-sm" />
-                                    New Staker? Click
+                                    
+                                     Register
                                 </Link>
                             </div>
                         </div>

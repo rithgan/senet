@@ -61,70 +61,86 @@ export default function Support({ipAddress, loginData}) {
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
                                 <div>
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <div className="card mb-4">
-                                                <div className="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
-                                                    <div className="flex-grow-1 mt-3 mt-sm-5">
-                                                        <div className="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start mx-4 flex-md-row flex-column gap-4">
-                                                            <div className="user-profile-info">
-                                                                <h4>Your Support Tickets</h4>
-                                                            </div>
-                                                            <Link to="/ticket" className="btn btn-info text-nowrap">
-                                                                <i className="bx bx-user-check me-1" />Add New Ticket
-                                                            </Link>
-                                                        </div>
-                                                    </div>
+                                    
+                                    <div className='row'>
+                                        <div className="col-md-12  mb-2">
+                                            <div className="card">
+                                            <div className="card-header align-items-center ">
+                                                <div className="card-title mb-0">
+                                                    <h6 className="m-0 text-center text-info">Your Support Tickets</h6>
                                                 </div>
+                                                <div className='text-center mt-3'>
+                                                <Link to="/ticket" className="btn btn-info text-nowrap btn-sm">
+                                                        <i className="bx bx-user-check me-1" />Add New Ticket
+                                                    </Link>
+                                                </div>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="row">
-                                        { ticket?.info?.map((list) =>{
+                                        { ticket?.info?.map((list, i) =>{
                                                 console.log(list)
                                                 return(
-                                                    
-                                                         <div className="col-xl-4 col-lg-6 col-md-6">
-                                                            <div className="card mt-4">
-                                                                <div className="card-header">
-                                                                    <div className="d-flex align-items-start">
-                                                                        <div className="d-flex align-items-start">
-                                                                            <div className="avatar me-3">
-                                                                                <img src="assets/img/icons/brands/social-label.png" alt="Avatar" className="rounded-circle" />
-                                                                            </div>
-                                                                            <div className="me-2">
-                                                                                <h5 className="mb-1"><span className="h5 stretched-link text-info">Support Ticket</span></h5>
-                                                                                <div className="client-info d-flex align-items-center">
-                                                                                    <h6 className="mb-0 me-1">Subject:</h6><br/><span>{list.user_subject}</span>
-                                                                                </div>
-                                                                            </div>
+                                                    <>
+                                                    <div className="col-md-4  mb-1" id={i}>
+                                                        <div className="card h-100">
+                                                            <div className="card-header align-items-center" style={{padding :"3% 5% 3% 5%"}}>
+                                                                <div className="col-md-12">
+                                                                    <div className='row d-flex justify-content-between'>
+                                                                        <div className='col-6 text-left'>
+                                                                            <span className="text-white text-sm">Date</span>
+                                                                        </div>
+                                                                        <div className='col-6' style={{textAlignLast:"end"}}>
+                                                                            <span className={'text-info text-sm'} style={{fontSize:"14px"}}>{list.adate}</span>
                                                                         </div>
                                                                     </div>
-                                                                </div>
-                                                                <div className="card-body">
-                                                                    <div className="d-flex align-items-center flex-wrap">
-                                                                        <div className="bg-lighter p-2 rounded me-auto mb-3">
-                                                                            <h6 className="mb-1">Start Date: <span className="text-body fw-normal">{list.adate}</span></h6>
-                                                                            <span>{list.status}</span>
+                                                                    <div className='row d-flex justify-content-between'>
+                                                                        <div className='col-12 text-left'>
+                                                                            <small className="text-sm text-info">Subject </small>
                                                                         </div>
-                                                                        
-                                                                    </div>
-                                                                    <h6>Message</h6>
-                                                                    <p className="mb-0">{list.user_message}</p>
-                                                                </div>
-                                                                <div className="card-body border-top">
-                                                                <div className="d-flex align-items-center flex-wrap">
-                                                                        <div className="bg-lighter p-2 rounded me-auto mb-3">
-                                                                            <h6 className="mb-1">Complition Date: <span className="text-body fw-normal">{list.rdate}</span></h6>
-                                                                            <span>{list.status}</span>
+                                                                        <div className='col-12 text-left'>
+                                                                            <small className="text-sm">{list.user_subject} </small>
                                                                         </div>
-                                                                        
                                                                     </div>
-                                                                    <h6>Replay</h6>
-                                                                    <p className="mb-0">{list.reply}</p>
+                                                                    <div className='row d-flex justify-content-between'>
+                                                                        <div className='col-12 text-left'>
+                                                                            <small className="text-sm text-info">Message </small>
+                                                                        </div>
+                                                                        <div className='col-12 text-left'>
+                                                                            <small className="text-sm">{list.user_message} </small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className='row d-flex justify-content-between'>
+                                                                        <div className='col-6 text-left'>
+                                                                            <small className="text-sm">Status </small>
+                                                                        </div>
+                                                                        <div className='col-6' style={{textAlignLast:"end"}}>
+                                                                            <small className="text-sm">{list.status} </small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className='row d-flex justify-content-between'>
+                                                                        <div className='col-6 text-left'>
+                                                                            <small className="text-sm">Date of Response</small>
+                                                                        </div>
+                                                                        <div className='col-6' style={{textAlignLast:"end"}}>
+                                                                        <small className="text-sm">{list.rdate}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className='row d-flex justify-content-between'>
+                                                                        <div className='col-12 text-left'>
+                                                                            <small className="text-sm text-info">Response </small>
+                                                                        </div>
+                                                                        <div className='col-12 text-left'>
+                                                                            <small className="text-sm">{list.reply} </small>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    </>
+                                                         
                                                    
                                                 )
                                             }) }

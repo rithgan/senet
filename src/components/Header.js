@@ -123,14 +123,14 @@ export default function Header() {
         <>
             <nav className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
                 <div className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0   d-xl-none ">
-                    <span onClick={()=>setMobileOpen(true)} className="nav-item nav-link px-0 me-xl-4" style={{zIndex:9000}}>
+                    <span onClick={()=>setMobileOpen(true)} className="nav-item nav-link px-0 me-xl-4 " style={{zIndex:9000}}>
                         <i className="bx bx-menu bx-sm" />
                     </span >
                 </div>
                 <div className="navbar-nav align-items-center">
                     <div className="nav-item navbar-search-wrapper mb-0">
                         <span className="nav-item nav-link search-toggler px-0">
-                            <span className="d-none d-md-inline-block text-info">LKD/USD : {price} </span>
+                            <span className=" text-info text-sm d-flex">Live Price ${price} </span>
                         </span>
                     </div>
                 </div>
@@ -223,7 +223,7 @@ export default function Header() {
                             </div>
                         </li>
                         <li className="nav-item me-2 me-xl-0">
-                            <span className="btn btn-info text-nowrap">
+                            <span className="btn btn-info text-nowrap btn-sm text-sm">
                                 <i className="bx bx-user-check me-1" />{truncateAddress(account)}
                             </span>
                         </li>

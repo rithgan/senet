@@ -12,7 +12,14 @@ import Support from "./pages/Support";
 import Wallet from "./pages/Wallet";
 import NotFound from './pages/NotFound';
 import Ticket from './pages/Ticket';
+import Performance from './pages/earning/perform';
+import Top from './pages/earning/top';
+import Passive from './pages/earning/passive';
+import Vip from './pages/earning/vip';
+import Star from './pages/earning/start';
+import Award from './pages/earning/award';
 import PrivateRoute from './pages/PrivateRoute';
+import Leverage from './pages/leverage';
 import { IpContext } from './context/IpContext';
 import { NetworkProvider } from './context/NetworkContext';
 import { ConnectProvider } from "./context/ConnectContext";
@@ -41,6 +48,13 @@ function App() {
             <PrivateRoute exact path="/support" component={Support} />
             <PrivateRoute exact path="/stake" component={Stake} />
             <PrivateRoute exact path="/ticket" component={Ticket}  />
+            <PrivateRoute exact path="/perform" component={Performance}  />
+            <PrivateRoute exact path="/top" component={Top}  />
+            <PrivateRoute exact path="/passive" component={Passive}  />
+            <PrivateRoute exact path="/vip" component={Vip}  />
+            <PrivateRoute exact path="/star" component={Star}  />
+            <PrivateRoute exact path="/award" component={Award}  />
+            <PrivateRoute exact path="/refule" component={Leverage}  />
             <Route path="*">
               <NotFound />
             </Route>

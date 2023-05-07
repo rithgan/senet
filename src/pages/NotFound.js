@@ -1,9 +1,9 @@
 import React from 'react'
 import { useEffect } from 'react'
 import Swal from 'sweetalert2'
+import Link from 'react-router-dom'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import 'sweetalert2/dist/sweetalert2.min.css';
-import '../css/sweetalert-dark-theme.css';
+
 
 export default function NotFound() {
   const history = useHistory()
@@ -16,9 +16,9 @@ export default function NotFound() {
       timerProgressBar:true
     })
     setTimeout(()=>{
-      history.goBack('/dash')
+      history.push('/dash')
     },2000)
-  },[history])
+  },[])
   return (
     <>
     <h2>404</h2>

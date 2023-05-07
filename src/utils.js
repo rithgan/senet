@@ -1,10 +1,7 @@
 import axios from "axios"
 import Swal from "sweetalert2"
-import 'sweetalert2/dist/sweetalert2.min.css';
-import './css/sweetalert-dark-theme.css';
 const url = "https://api.linkdao.network"
 const config = require('./config.json')
-
 
 
 export const getPrice = async () => { //get lkd price
@@ -100,13 +97,13 @@ export const checkStakeInfo = async(ipAddress,loginData)=>{
   let axiosConfig = {
     method: 'post',
     maxBodyLength: Infinity,
-    url: `${config.baseUrl}/api/stakeinfo`,
+    url: `${config.baseUrl}/api/isstake`,
     headers: { 
-      'address': '7314380', 
-      'ip': '1:1:1:1', 
-      'auth': 'b0b4ac9458450ea7a16a7c5ac3ed4dad', 
-      'token': '0f983c29e28ba3eb93fe7c50949bd8ea', 
-      'ulid': 'ADMIN', 
+      'address': loginData.address,
+      'ip': ipAddress,
+      'ulid': loginData.ulid,
+      'auth': loginData.auth,
+      'token': loginData.token,
       'Content-Type': 'application/json'
     },
     data : data

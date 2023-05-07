@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Menu from '../components/Menu';
 import { LoadingContext } from '../context/LoadingContext';
 
+
 export default function Income() {
   const [loading, setLoading] = useContext(LoadingContext)
     return (

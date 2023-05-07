@@ -58,20 +58,41 @@ export default function Dash() {
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
                                 <div className="row">
-                                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                                        <div className="card">
-                                            <div className="card-body">
+                                    <div className="col-md-12  mb-3">
+                                        <div className="card h-100">
+                                            <div className="card-header align-items-center" style={{padding :"4% 5% 5% 5%"}}>
+                                                <div className="col-md-12">
+                                                    <div className='row d-flex justify-content-between'>
+                                                        <div className='col-12 text-center'>
+                                                                <p className="card-text m-0 text-info text-md">Welcome</p>
+                                                                <p className="card-text m-0 text-white text-sm">Dear Name</p>
+                                                                <p className="card-text m-0 text-white text-sm">Your Reffral Code : 0000000</p>
+                                                                <p className="card-text m-0 text-white text-sm">Total Staked : $0000.000</p>
+                                                                <button type="submit" className="btn btn-info btn-sm text-sm me-sm-3 mt-2">Copy Referral Link</button>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div className="row">
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text">Session</p>
+                                                        <p className="card-text m-0 text-info text-sm">Staking Reward</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">58,352</h4>
-                                                            <small className="text-success">(+29%)</small>
+                                                            <small className="text-white ">$ 12345.000</small>
                                                         </div>
-                                                        <small>Last Week Analytics</small>
+                                                        
                                                     </div>
                                                     <div className="card-icon">
-                                                        <span className="badge bg-label-primary rounded p-2">
+                                                        <span className="badge bg-label-info rounded p-2">
                                                             <i className="bx bx-trending-up bx-sm" />
                                                         </span>
                                                     </div>
@@ -79,105 +100,286 @@ export default function Dash() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                                        <div className="card">
-                                            <div className="card-body">
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text">Time On Site</p>
+                                                        <p className="card-text m-0 text-info text-sm">Total Reffral Erraning</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">28m 14s</h4>
-                                                            <small className="text-success">(+18%)</small>
+                                                            <small className="text-white "> $12345</small>
                                                         </div>
-                                                        <small>Last Week Analytics</small>
+                                                        
                                                     </div>
                                                     <div className="card-icon">
                                                         <span className="badge bg-label-info rounded p-2">
-                                                            <i className="bx bx-time-five bx-sm" />
+                                                            {/* <i className="bx bx-user bx-sm" /> */}
+                                                            <i className='bx bx-dollar-circle bx-sm'></i>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                                        <div className="card">
-                                            <div className="card-body">
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text">Bounce Rate</p>
+                                                        <p className="card-text m-0 text-info text-sm">Todays's Reffral Erraning</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">62%</h4>
-                                                            <small className="text-danger">(-14%)</small>
+                                                            <small className="text-white "> $12345</small>
                                                         </div>
-                                                        <small>Last Week Analytics</small>
+                                                        
                                                     </div>
                                                     <div className="card-icon">
-                                                        <span className="badge bg-label-danger rounded p-2">
-                                                            <i className="bx bx-pie-chart-alt bx-sm" />
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            {/* <i className="bx bx-user bx-sm" /> */}
+                                                            <i className='bx bx-dollar-circle bx-sm'></i>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                                        <div className="card">
-                                            <div className="card-body">
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text">Users</p>
+                                                        <p className="card-text m-0 text-info text-sm">Performance Reward</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">18,472</h4>
-                                                            <small className="text-success">(+42%)</small>
+                                                            <small className="text-white ">$ 12345.000</small>
                                                         </div>
-                                                        <small>Last Week Analytics</small>
+                                                        
                                                     </div>
                                                     <div className="card-icon">
-                                                        <span className="badge bg-label-success rounded p-2">
-                                                            <i className="bx bx-user bx-sm" />
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-trending-up bx-sm" />
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                                        <div className="card">
-                                            <div className="card-body">
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text">Total Staked</p>
+                                                        <p className="card-text m-0 text-info text-sm">Top-Referral Reward</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">{deposited*price} USDT</h4>
-                                                            {/* <small className="text-success"></small> */}
+                                                            <small className="text-white ">$ 12345.000</small>
                                                         </div>
-                                                        {/* <small>Last Week Analytics</small> */}
+                                                        
                                                     </div>
                                                     <div className="card-icon">
-                                                        <span className="badge bg-label-success rounded p-2">
-                                                            <i className="bx bx-user bx-sm" />
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-trending-up bx-sm" />
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-3 col-md-6 col-sm-6 mb-4">
-                                        <div className="card">
-                                            <div className="card-body">
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc" >
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text">Total Withdrawn</p>
+                                                        <p className="card-text m-0 text-info text-sm">Passive Uni-Level Reward</p>
                                                         <div className="d-flex align-items-end mb-2">
-                                                            <h4 className="card-title mb-0 me-2">{profit*price} USDT</h4>
-                                                            {/* <small className="text-success">(+42%)</small> */}
+                                                            <small className="text-white ">$ 12345.000</small>
                                                         </div>
-                                                        {/* <small>Last Week Analytics</small> */}
+                                                        
                                                     </div>
                                                     <div className="card-icon">
-                                                        <span className="badge bg-label-success rounded p-2">
-                                                            <i className="bx bx-user bx-sm" />
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-trending-up bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc" >
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">VIP Uni-Level Reward</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white ">$ 12345.000</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-trending-up bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">LinkDao Star Royalty</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white ">$ 12345.000</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-trending-up bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">LinkDao Star Award</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white ">$ 12345.000</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-trending-up bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">Total Team</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white "> 12345</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-user-plus bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">Active Member</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white "> 12345</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-user-check bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">In-Active Member</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white "> 12345</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-user-x bx-sm" />
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">Reffral Wallet Balance</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white "> $12345</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            {/* <i className="bx bx-user bx-sm" /> */}
+                                                            <i className='bx bx-dollar-circle bx-sm'></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">Total Withdrawled</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white "> $12345</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            {/* <i className="bx bx-user bx-sm" /> */}
+                                                            <i className='bx bx-dollar-circle bx-sm'></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div class="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">Leverage Wallet</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white "> $12345</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            {/* <i className="bx bx-user bx-sm" /> */}
+                                                            <i className='bx bx-dollar-circle bx-sm'></i>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -187,9 +389,11 @@ export default function Dash() {
                                 </div>
                             </div>
                             <Footer />
-                        </div>}
+                        </div>
+                        }
                     </div>
                 </div>
+
         </>
     );
 }

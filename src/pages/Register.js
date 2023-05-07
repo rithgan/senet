@@ -193,19 +193,19 @@ export default function Register({ipAddress}) {
                                     <span className="app-brand-logo demo">
                                         <img src="assets/ficon.svg" style={{ height: '40px', width: 'auto' }} alt="ficon" />
                                     </span>
-                                    <span className="app-brand-text demo text-body fw-bolder" style={{ textTransform: 'capitalize' }}>LinkDao Defi</span>
+                                    <span className="app-brand-text demo text-body fw-bolder" style={{textTransform : "initial"}}>Link<span className='text-info'>Dao</span></span>
                                 </Link>
                             </div>
                             {/* /Logo */}
-                            <h4 className="mb-2">New Staker 🔒</h4>
-                            <p className="mb-4">Explore the multiple possibilites with our unique token</p>
+                            <h4 className="mb-2">New User 🔒</h4>
+                            <p className="mb-4">Explore the multiple possibilites with our unique Eco-System</p>
                             {/* Connect with lkd form and action, go to dash.php */}
                             <form id="formAuthentication" className="mb-3" onSubmit={handleRegister}>
                                 <div className="mb-3">
                                     <label htmlFor="email" className="form-label">Sponsor ID</label>
                                     <input type="text" className="form-control" id="splid" name="splid" placeholder="Enter Sponsor ID" value={splid} onChange={(e) => setSplid(e.target.value)} onBlur={handleSlid}/>
                                 </div>
-                                <button className="btn btn-primary d-grid w-100">Connect With LKD</button>
+                                <button className="btn btn-primary d-grid w-100">Connect Wallet</button>
                             </form>
                             <div className="text-center">
                                 {/* go back to login php */}

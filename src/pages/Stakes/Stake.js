@@ -135,19 +135,12 @@ function Stake({ ipAddress, loginData }) {
             <div className='container-xxl flex-grow-1 container-p-y'>
               <div className='row'>
                 <div className="col-md-12  mb-3">
-                  <div className="card">
-                    <div className="card-header align-items-center ">
-                      <div className="card-title mb-0">
-                        <h3 className="m-0 me-2 text-center">Stake Statistics</h3>
-                      </div>
+                <div className="card">
+                  <div className="card-header align-items-center ">
+                    <div className="card-title mb-2">
+                      <h6 className="m-0 me-2 text-center text-info">Stake Statistics</h6>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className='row'>
-                <div className="col-md-6 mb-3">
-                  <div className="card ">
-                    <div className="card-header d-flex align-items-center justify-content-between">
+                    <div className="card-header d-flex align-items-center justify-content-between p-0">
                       <div className="card-title mb-0">
                         <h6 className="m-0 me-2">My Wallet</h6>
                       </div>
@@ -158,21 +151,9 @@ function Stake({ ipAddress, loginData }) {
                     </div>
                   </div>
                 </div>
-
-                <div className="col-md-6  mb-3">
-                  <div className="card ">
-                    <div className="card-header d-flex align-items-center justify-content-between">
-                      <div className="card-title mb-0">
-                        <h6 className="m-0 me-2">Live price</h6>
-                      </div>
-                      <div className="">
-                        <p className="m-0 me-2">{price} USDT</p>
-                        <small className="text-muted">{busdPrice} LKD</small>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+              </div>
+              </div>
+              <div className='row'>
                 <div className="col-md-6  mb-3">
                   <div className="card ">
                     <div className="card-header align-items-center p-1 mt-3">
@@ -183,25 +164,27 @@ function Stake({ ipAddress, loginData }) {
                     <div className="card-body align-items-center p-3">
                       <div className="d-flex align-items-center justify-content-between">
 
-                        <input type="text" className="form-control" placeholder="USDT" value={deposit} onChange={(e) => setDeposit(e.target.value)} />
-                        <input type="text" disabled className="form-control ms-3" placeholder="LKD" value={parseFloat(deposit / price).toFixed(3) + ' LKD'} />
+                        <input type="text" className="form-control me-3" placeholder="USDT" value={deposit} onChange={(e) => setDeposit(e.target.value)} />
+                        <input type="text" disabled className="form-control " placeholder="LKD" value={parseFloat(deposit / price).toFixed(3) + ' LKD'} />
 
                       </div>
-                      <div className='text-center mt-4'>
+                      <div className='text-center mt-2'>
                         {status
                           ? <>
-                            <button className='btn  btn-info' onClick={() => handleDeposit(deposit, wallet)}>Deposit</button>
-                            <button className='btn  btn-secondary ms-3' >Approve</button>
+                            
+                            <button className='btn  btn-secondary ' >Approve</button>
+                            <button className='btn  btn-info ms-3' onClick={() => handleDeposit(deposit, wallet)}>Deposit</button>
                           </>
                           :
                           <>
-                            <button className='btn  btn-secondary' >Deposit</button>
+                            
                             <button className='btn  btn-info ms-3' onClick={() => handleApprove(address, abi)}>Approve</button>
+                            <button className='btn  btn-secondary' >Deposit</button>
                           </>
                         }
 
                       </div>
-                      <div className='text-center mt-4'>
+                      <div className='text-center mt-3'>
                         <small className="text-light  mb-0">Basic ($25-$99) @6% Monthly Return </small> <br /><small className="text-light">Standred ($100-$199) @8% Monthly Return   </small><br />
                         <small className="text-light  mb-0">Super ($200-$499) @10% Monthly Return </small><br /> <small className="text-light ">Premium ($500 & above) @12% Monthly Return   </small>
 
@@ -214,10 +197,11 @@ function Stake({ ipAddress, loginData }) {
                     <div className="card-body align-items-center p-3">
                       <div className="d-flex align-items-center justify-content-between">
                         <div className="card-title mb-0">
-                          <p >{parseFloat(price * profit * busdPrice).toFixed(3)} USDT</p>
+                          <p className='text-info mb-0' >Available Staking Reward </p><p className='text-md'>{parseFloat(price * profit * busdPrice).toFixed(3)} USDT</p>
                         </div>
                         <div className="">
-                          <p>{parseFloat(profit).toFixed(3)} LKD</p>
+                          <p className='mb-0'><br/></p>
+                          <p className='text-md'>{parseFloat(profit).toFixed(3)} LKD</p>
                         </div>
                       </div>
                       <div className='text-center mt-4'>
@@ -239,13 +223,13 @@ function Stake({ ipAddress, loginData }) {
                     offer = "($25-$99)"
                   } if (roiPercentage === 8) {
                     plan = "Standard Stake"
-                    offer = "($25-$99)"
+                    offer = "($100-$199)"
                   } if (roiPercentage === 10) {
                     plan = "Super Stake"
-                    offer = "($25-$99)"
+                    offer = "($200-$499)"
                   } if (roiPercentage === 12) {
                     plan = "Premium Stake"
-                    offer = "($25-$99)"
+                    offer = "($500  & Above)"
                   }
 
                   return (<div key={startDate} className="col-md-6  mb-3">

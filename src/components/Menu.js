@@ -161,7 +161,7 @@ export default function Menu() {
           <span className="app-brand-logo demo">
             <img src="assets/ficon.svg" style={{ height: '40px', width: 'auto' }} alt='ficon' />
           </span>
-          {isOpen?<span className="app-brand-text demo menu-text fw-bolder ms-2">LKD</span>:''}
+          {isOpen?<span className="app-brand-text demo menu-text fw-bolder ms-2" style={{textTransform : "initial"}}>Link<span className='text-info'>Dao</span></span>:''}
         </Link>
         {isOpen?<span className="layout-menu-toggle menu-link text-large ms-auto">
           <i className="bx bx-chevron-left bx-sm align-middle" />
@@ -171,117 +171,106 @@ export default function Menu() {
       <ul className="menu-inner py-1">
         {/* Dashboards */}
         <li className="menu-item " onClick={()=>setMobileOpen(false)}>
-          <Link to="/dash" className="menu-link">
+          <Link to="/dash" className="menu-link text-mid">
             <i className="menu-icon tf-icons bx bx-envelope" />
             {isOpen?<div data-i18n="Dashboards">Dashboards</div>:""}
           </Link>
         </li>
-        {/* Layouts */}
-        <li className="menu-item active open" style={sidebarStyle} onClick={()=>setIsSubMenuOpen(!isSubMenuOpen)}>
-          <span  className={`menu-link ${isOpen?'menu-toggle':''}`}>
-            <i className="menu-icon tf-icons bx bx-user"  />
-            {isOpen?<div data-i18n="Layouts">Profile</div>:''}
-          </span>
-          <ul className="menu-sub" style={subMenuStyle} >
-            <li className="menu-item active" onClick={()=>setMobileOpen(false)}>
-              <Link to="/profile" className="menu-link ">
-                <div data-i18n="Collapsed menu">View</div>
-              </Link>
-            </li>
-            <li className="menu-item active" onClick={()=>setMobileOpen(false)}>
-              <Link to="/downline" className="menu-link">
-                <div data-i18n="Content navbar">DownLine</div>
-              </Link>
-            </li>
-            <li className="menu-item active" onClick={()=>setMobileOpen(false)}>
-              <Link to="/business" className="menu-link">
-                <div data-i18n="Content nav + Sidebar">Business</div>
-              </Link>
-            </li>
-          </ul>
+        <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+          <Link to="/profile" className="menu-link text-mid">
+            <i className="menu-icon tf-icons bx bx-user" />
+            {isOpen?<div data-i18n="Layouts">Profile</div>:""}
+          </Link>
         </li>
         <li className="menu-item " onClick={()=>setMobileOpen(false)}>
-          <Link to="/stake" className="menu-link">
+          <Link to="/stake" className="menu-link text-mid">
             <i className="menu-icon tf-icons bx bx-money" />
             {isOpen?<div data-i18n="Kanban">Stake</div>:''}
           </Link>
         </li>
         <li className="menu-item " onClick={()=>setMobileOpen(false)}>
-          <Link to="/income" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-calendar-heart" />
-            {isOpen?<div data-i18n="Invoice">Awards/Rewards</div>:''}
+          <Link to="/downline" className="menu-link text-mid">
+            <i className="menu-icon tf-icons bx bx-user" />
+            {isOpen?<div data-i18n="Kanban">Team</div>:''}
           </Link>
         </li>
-        {/*  <li class="menu-item">
-        <Link to="javascript:void(0);" class="menu-link menu-toggle">
-          <i class='menu-icon tf-icons bx bx-food-menu'></i>
-          <div data-i18n="Invoice">Awards</div>
-        </Link>
-        <ul class="menu-sub">
-          <li class="menu-item">
-            <Link to="app-invoice-list.html" class="menu-link">
-              <div data-i18n="List">Proformence Award</div>
-            </Link>
-          </li>
-          <li class="menu-item">
-            <Link to="app-invoice-preview.html" class="menu-link">
-              <div data-i18n="Preview">VIP Award</div>
-            </Link>
-          </li>
-          <li class="menu-item">
-            <Link to="app-invoice-edit.html" class="menu-link">
-              <div data-i18n="Edit">Passive reward</div>
-            </Link>
-          </li>
-          <li class="menu-item">
-            <Link to="app-invoice-add.html" class="menu-link">
-              <div data-i18n="Add">Top Refrral</div>
-            </Link>
-          </li>
-          <li class="menu-item">
-            <Link to="app-user-view-account.html" class="menu-link">
-              <div data-i18n="Account">Royalty</div>
-            </Link>
-          </li>
-          <li class="menu-item">
-            <Link to="app-user-view-account.html" class="menu-link">
-              <div data-i18n="Account">Royalty Award</div>
-            </Link>
-          </li>
-        </ul>
-      </li> */}
-        <li className="menu-item active open" style={sidebarStyle} onClick={()=>setIsSubWalletOpen(!isSubWalletOpen)}>
-          <span  className={`menu-link ${isOpen?'menu-toggle':''}`}>
+        <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+          <Link to="/business" className="menu-link text-mid">
+            <i className="menu-icon tf-icons bx bx-dollar" />
+            {isOpen?<div data-i18n="Layouts">Business</div>:""}
+          </Link>
+        </li>
+        {/* Layouts */}
+        <li className="menu-item" style={sidebarStyle} onClick={()=>setIsSubMenuOpen(!isSubMenuOpen)}>
+          <span  className={`menu-link text-mid ${isOpen?'menu-toggle':''}`}>
+            <i className="menu-icon tf-icons bx bx-calendar-heart"  />
+            {isOpen?<div data-i18n="Layouts">Earning</div>:''}
+          </span>
+          <ul className="menu-sub" style={subMenuStyle} >
+            
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/perform" className="menu-link text-mid">
+                <div data-i18n="Content navbar">Performance Reward</div>
+              </Link>
+            </li>
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/top" className="menu-link text-mid">
+                <div data-i18n="Content navbar">Top-Referral Reward</div>
+              </Link>
+            </li>
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/passive" className="menu-link text-mid">
+                <div data-i18n="Content navbar">Passive Uni-Level Reward</div>
+              </Link>
+            </li>
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/vip" className="menu-link text-mid">
+                <div data-i18n="Content navbar">VIP Uni-Level Reward</div>
+              </Link>
+            </li>
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/star" className="menu-link text-mid">
+                <div data-i18n="Content nav + Sidebar">Star Royalty</div>
+              </Link>
+            </li>
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/award" className="menu-link text-mid">
+                <div data-i18n="Content nav + Sidebar">Awards</div>
+              </Link>
+            </li>
+          </ul>
+        </li>
+        <li className="menu-item  " style={sidebarStyle} onClick={()=>setIsSubWalletOpen(!isSubWalletOpen)}>
+          <span  className={`menu-link text-mid ${isOpen?'menu-toggle':''}`}>
             <i className="menu-icon tf-icons bx bx-layout" />
             {isOpen?<div data-i18n="Users">Wallet</div>:''}
           </span>
           <ul className="menu-sub" style={subWalletStyle}>
-            <li className="menu-item active" onClick={()=>setMobileOpen(false)}>
-              <Link to="/wallet" className="menu-link">
-                <div data-i18n="List">View</div>
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/request" className="menu-link text-mid">
+                <div data-i18n="Billing & Plans">Withdrawl</div>
               </Link>
             </li>
-            <li className="menu-item active" onClick={()=>setMobileOpen(false)}>
-              <Link to="/request" className="menu-link">
-                <div data-i18n="Billing & Plans">Withdrawl Request</div>
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/wallet" className="menu-link text-mid">
+                <div data-i18n="Billing & Plans">Fund Transfer</div>
+              </Link>
+            </li>
+            <li className="menu-item " onClick={()=>setMobileOpen(false)}>
+              <Link to="/refule" className="menu-link text-mid">
+                <div data-i18n="Billing & Plans">Re-Buy Leverage</div>
               </Link>
             </li>
           </ul>
         </li>
         <li className="menu-item " onClick={()=>setMobileOpen(false)}>
-          <Link to="/support" className="menu-link">
+          <Link to="/support" className="menu-link text-mid">
             <i className="menu-icon tf-icons bx bx-support" />
             {isOpen?<div data-i18n="Roles & Permissions">Support</div>:''}
           </Link>
         </li>
-        {/* <li className="menu-item ">
-          <Link to="/ticket" className="menu-link">
-            <i className="menu-icon tf-icons bx bx-help-circle" />
-            {isOpen?<div data-i18n="Roles & Permissions">Ticket</div>:''}
-          </Link>
-        </li> */}
         <li className="menu-item " >
-          <Link onClick={() => handleLogout()} to="/" className="menu-link">
+          <Link onClick={() => handleLogout()} to="/" className="menu-link text-mid">
             <i className="menu-icon tf-icons bx bx-exit" />
             {isOpen?<div data-i18n="Login">Disconnect</div>:''}
           </Link>

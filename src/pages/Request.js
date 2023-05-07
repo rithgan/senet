@@ -37,6 +37,7 @@ export default function Request({ ipAddress, loginData }) {
   const handleBusdPrice = useCallback(async () => {
     let pr = await getBusdPrice();
     setBusdPrice(parseFloat(pr).toFixed(3));
+    setPrice(parseFloat(pr).toFixed(3));
   }, []);
 
   useEffect(() => {
@@ -81,26 +82,8 @@ export default function Request({ ipAddress, loginData }) {
     handleWallet()
   }, [handleWallet])
 
-  const handlePrice = (() => {
-
-    let axiosConfig = {
-      method: 'get',
-      url: `https://api.linkdao.network/api/tokenPrice`,
-    };
-    console.log(axiosConfig)
-    axios.request(axiosConfig)
-      .then((response) => {
-        console.log(response.data)
-        setPrice(response.data.data)
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  })
-
-
   useEffect(() => {
-    handlePrice()
+    
     handleBusdPrice()
   }, [handleBusdPrice])
 
@@ -200,70 +183,111 @@ export default function Request({ ipAddress, loginData }) {
           <Header />
           <div className="content-wrapper">
             <div className="container-xxl flex-grow-1 container-p-y">
-              <div>
-                <div className="col-md-12  mb-3">
+              <div className='row'>
+                <div className="col-md-6  mb-3">
                   <div className="card ">
                     <div className="card-body align-items-center p-3">
                       <div className="d-flex align-items-center justify-content-between">
                         <div className="card-title mb-0">
-                          <p className="m-0 me-2">{parseFloat(price * profit).toFixed(3)}</p>
-                          <small className="text-muted">{parseFloat(price * profit * busdPrice).toFixed(3)} USDT</small>
+                          <p className='text-info mb-0' >Available Staking Reward </p><p className='text-md'>{parseFloat(price * profit * busdPrice).toFixed(3)} USDT</p>
                         </div>
                         <div className="">
-                          <p className="m-0 me-2">{profit}</p>
-                          <small className="text-muted">{parseFloat(profit * price).toFixed(3)} LKD</small>
+                          <p className='mb-0'><br/></p>
+                          <p className='text-md'>{parseFloat(profit).toFixed(3)} LKD</p>
                         </div>
                       </div>
-                      <div className='mt-4' style={{ textAlign: "center" }}>
-                        <button className='btn  btn-info' onClick={() => handleWithdraw()} >Withdraw</button>
+                      <div className='text-center mt-4'>
+                        <button className='btn  btn-info' onClick={() => handleWithdraw()}>Withdraw</button>
                         <button className='btn  btn-info ms-3' onClick={() => handleReInvest()}>Re-Stake</button>
                       </div>
-                      <div className=' mt-4' style={{ textAlign: "center" }}>
+                      <div className='text-center mt-4'>
                         <small className="text-light text-center mb-0">Withdrawl Fee @10%, Minimum withdraw $10 </small><br />
                         <small className="text-info fsmall text_center" style={{ margin: 0 }}>Re-Stake don't have any Fee or Fedication </small>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="row">
-                <div className='col-md-12'>
-                  <div className="card mb-4">
-                    <h5 className="card-header">Withdrawl Request</h5>
-                    <div className="card-body">
-                      <form id="formAccountSettings" onSubmit={handelSubmit} className="fv-plugins-bootstrap5 fv-plugins-framework" noValidate="novalidate">
-                        <div className="row">
-                          <div className="mb-3 col-sm-4 fv-plugins-icon-container">
-                            <label htmlFor="companyName" className="form-label"> Wallet Address</label>
-                            <input type="text" id="companyName" name="companyName" className="form-control" placeholder="Address" value={account} readOnly />
-                          </div>
+                <div className="col-md-6  mb-3">
+                  <div className="card ">
+                    <div className="card-body align-items-center p-3">
+                      <div className="d-flex align-items-center justify-content-between">
+                        <div className="card-title mb-0">
+                          <p className='text-info mb-0' >Available Referral Reward </p><p className='text-md'>{balance} USDT</p>
+                        </div>
+                        <div className="">
+                          <p className='mb-0'><br/></p>
+                          <p className='text-md'>{balance/busdPrice} LKD</p>
+                        </div>
+                      </div>
+                      <div className="d-flex align-items-center justify-content-between">
 
-                          <div className="mb-3 col-sm-4">
-                            <label htmlFor="state" className="form-label">Live LKD</label>
-                            <input className="form-control" type="text" id="state" name="state" placeholder="Price" readOnly value={price} />
-                          </div>
-                          <div className="mb-3 col-sm-4">
-                            <label htmlFor="state" className="form-label">Wallet Balance USD</label>
-                            <input className="form-control" type="text" id="state" name="state" placeholder="Price" readOnly value={balance} />
-                          </div>
-                          <div className="mb-3 col-sm-4">
-                            <label htmlFor="state" className="form-label">Amount ( Min 10 USD)</label>
-                            <input className="form-control" type="text" id="state" name="state" placeholder="amount" value={amount} onChange={handelAmount} />
-                          </div>
-                          <div className="mb-3 col-sm-4">
-                            <label htmlFor="state" className="form-label">Recived LKD</label>
-                            <input className="form-control" type="text" id="state" name="state" placeholder="amount" readOnly value={token} />
-                          </div>
-                        </div>
-                        <div className="mt-2 text-center">
-                          <button type="submit" className="btn btn-info me-2">Process Request</button>
-                        </div>
-                      </form>
+                        <input type="text" className="form-control me-3" placeholder="USDT" value={amount} onChange={handelAmount} />
+                        <input type="text" disabled className="form-control " placeholder="LKD" value={token + ' LKD'} />
+
+                      </div>
+                      <div className='text-center mt-4'>
+                        <button className='btn  btn-info' onClick={() => handelSubmit()}>Withdraw</button>
+                      </div>
+                      <div className='text-center mt-4'>
+                        <small className="text-light text-center mb-0">Minimum withdraw $10 </small><br />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-
+              <div className='row'>
+                  <div className="col-md-12  mb-3">
+                      <div className="card">
+                      <div className="card-header align-items-center ">
+                          <div className="card-title mb-0">
+                          <h6 className="m-0 me-2 text-center text-info">Withdraw History</h6>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+              </div>
+              <div className='row'>
+                  <div className="col-md-4  mb-1" id={1}>
+                      <div className="card h-100">
+                          <div className="card-header align-items-center" style={{padding :"3% 5% 3% 5%"}}>
+                          <div className="col-md-12">
+                              <div className='row d-flex justify-content-between'>
+                                  <div className='col-6 text-left'>
+                                      <span className="text-white text-sm">Date</span>
+                                  </div>
+                                  <div className='col-6' style={{textAlignLast:"end"}}>
+                                      <span className={'text-info text-sm'} style={{fontSize:"14px"}}>2022-01-20</span>
+                                  </div>
+                              </div>
+                              <div className='row d-flex justify-content-between'>
+                                  <div className='col-6 text-left'>
+                                      <small className="text-sm">Amount</small>
+                                  </div>
+                                  <div className='col-6' style={{textAlignLast:"end"}}>
+                                      <small className="text-sm">$ 0.000 / 0.000 LKD </small>
+                                  </div>
+                              </div>
+                              <div className='row d-flex justify-content-between'>
+                                  <div className='col-6 text-left'>
+                                      <small className="text-sm">Status</small>
+                                  </div>
+                                  <div className='col-6' style={{textAlignLast:"end"}}>
+                                      <small className="text-sm"><span >Paid/Pendin/</span></small>
+                                  </div>
+                              </div>
+                              <div className='row d-flex justify-content-between'>
+                                  <div className='col-6 text-left'>
+                                      <small className="text-sm">Trx Hash</small>
+                                  </div>
+                                  <div className='col-6' style={{textAlignLast:"end"}}>
+                                      <small className="text-sm"><a href={'https://bscscan.com/tx/'} target='blank'>Click to View</a></small>
+                                  </div>
+                              </div>
+                          </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
             </div>
             <Footer />
           </div>
