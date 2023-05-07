@@ -16,9 +16,9 @@ export default function NotFound() {
       timerProgressBar:true
     })
     setTimeout(()=>{
-      history.push('/dash')
+      history.goBack('/dash')
     },2000)
-  },[])
+  },[history])
   return (
     <>
     <h2>404</h2>
