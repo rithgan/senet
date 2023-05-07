@@ -9,6 +9,7 @@ import { poolABI } from '../abi';
 import { NetworkContext } from '../context/NetworkContext';
 import { LoadingContext } from '../context/LoadingContext';
 import ReactLoader from '../components/ReactLoader';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { getPrice } from '../utils';
 
 export default function Dash() {
@@ -18,6 +19,7 @@ export default function Dash() {
   const [profit, setProfit] = useState(0)
   const [price, setPrice] = useState(0)
   const [loading, setLoading] = useContext(LoadingContext)
+  const [referall, setReferall] = useState("Add referall link here")
 
 
   const handlePrice = useCallback(async () => {
@@ -68,7 +70,9 @@ export default function Dash() {
                                                                 <p className="card-text m-0 text-white text-sm">Dear Name</p>
                                                                 <p className="card-text m-0 text-white text-sm">Your Reffral Code : 0000000</p>
                                                                 <p className="card-text m-0 text-white text-sm">Total Staked : $0000.000</p>
-                                                                <button type="submit" className="btn btn-info btn-sm text-sm me-sm-3 mt-2">Copy Referral Link</button>
+                                                                <CopyToClipboard text={referall}>
+                                                                <button className="btn btn-info btn-sm text-sm me-sm-3 mt-2">Copy Referral Link</button>
+                                                                </CopyToClipboard>
                                                         </div>
                                                         
                                                     </div>
@@ -243,7 +247,7 @@ export default function Dash() {
                                         </div>
                                     </div>
                                     <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
-                                        <div class="card">
+                                        <div class="carpd">
                                             <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
