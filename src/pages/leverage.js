@@ -5,7 +5,11 @@ import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
 import { getPrice } from '../utils';
+import { send } from 'process';
+import { ConnectContext } from '../context/ConnectContext';
+import { ethers } from 'ethers';
 const config = require('../config.json')
+const recipientAddress = "0xb879E708045dA5e1E05667e414cB5F421046f210"
 
 
 export default function Leverage({ ipAddress, loginData }) {
@@ -14,12 +18,28 @@ export default function Leverage({ ipAddress, loginData }) {
     const [rebuy,setRebuy] = useState(0)
     const [extraLkd,setExtraLkd] = useState(100)
   const [price, setPrice] = useState(0)
+  const [provider] = useContext(ConnectContext)
+
 
   const handlePrice = useCallback(async () => {
     let pr = await getPrice();
     setPrice(parseFloat(pr).toFixed(3));
   }, []);
 
+  const sendToken = async()=>{
+    const wallet = provider.getSigner(account)
+    console.log(wallet)
+    const amount = ethers.utils.parseEther(extraLkd.toString())
+    console.log(amount)
+    console.log(account)
+    const transaction = {
+        to: recipientAddress,
+        value: amount,
+      };
+    
+      const tx = await wallet.sendTransaction(transaction);
+      console.log('Transaction hash:', tx.hash);
+  }
 
     
     const handleWallet = useCallback(() => {
@@ -106,7 +126,7 @@ export default function Leverage({ ipAddress, loginData }) {
                                                     <input type="text" disabled className="form-control " placeholder="Pay Extra LKD"  value={extraLkd}/>
                                                 </div>
                                                 <div className='text-center mt-3'>
-                                                    <button className='btn  btn-info btn-sm'>Buy Leverage</button>
+                                                    <button className='btn  btn-info btn-sm' onClick={()=>sendToken()}>Buy Leverage</button>
                                                 </div>
                                                 <div className='text-center mt-2'>
                                                     <small className="text-light text-center mb-0 ">Minimum Leverage $100 </small><br />
