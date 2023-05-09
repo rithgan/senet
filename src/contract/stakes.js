@@ -94,16 +94,27 @@ export const getRewards = async(provider, pool, poolABI,account)=>{
     let maxReward = 0
     let det = Promise.all(investments.map(async(inv)=>{
         inv = parseInt(inv)
-        let {roiPercentage,totalReward,maxReward,startDate,totalInvestment} = await cont.investments(inv)
+//         let {roiPercentage,totalReward,maxReward,startDate,totalInvestment} = await cont.investments(inv)
+//         roiPercentage = parseInt(ethers.utils.formatUnits(roiPercentage, 2))
+//         totalReward = parseInt(ethers.utils.formatUnits(totalReward, 18))
+//         maxReward = parseInt(ethers.utils.formatUnits(maxReward, 18))
+//         startDate = new Date(parseInt(ethers.utils.formatUnits(startDate, 0))*1000)
+//         startDate = startDate.toLocaleString('en-GB',options)
+//         totalInvestment = parseInt(ethers.utils.formatUnits(totalInvestment))
+//         obj[roiPercentage]+=totalReward
+//         max[roiPercentage]+=maxReward
+//         return {roiPercentage,totalReward,maxReward,startDate,totalInvestment}
+        let {roiPercentage,totalReward,maxReward,startDate,totalInvestment, lkdPrice } = await cont.investments(inv)
+        lkdPrice    = parseFloat(ethers.utils.formatUnits(lkdPrice   , 18))
         roiPercentage = parseInt(ethers.utils.formatUnits(roiPercentage, 2))
-        totalReward = parseInt(ethers.utils.formatUnits(totalReward, 18))
-        maxReward = parseInt(ethers.utils.formatUnits(maxReward, 18))
+        totalReward = parseFloat(ethers.utils.formatUnits(totalReward, 18))* lkdPrice
+        maxReward = parseFloat(ethers.utils.formatUnits(maxReward, 18)) *lkdPrice
         startDate = new Date(parseInt(ethers.utils.formatUnits(startDate, 0))*1000)
         startDate = startDate.toLocaleString('en-GB',options)
-        totalInvestment = parseInt(ethers.utils.formatUnits(totalInvestment))
+        totalInvestment = parseFloat(ethers.utils.formatUnits(totalInvestment)) * lkdPrice
         obj[roiPercentage]+=totalReward
         max[roiPercentage]+=maxReward
-        return {roiPercentage,totalReward,maxReward,startDate,totalInvestment}
+        return {roiPercentage,totalReward,maxReward,startDate,totalInvestment, lkdPrice}
     }))
     // return [obj,max]
     // console.log((await det).sort((a,b)=>b.startDate - a.startDate))
