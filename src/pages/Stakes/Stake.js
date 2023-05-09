@@ -64,7 +64,8 @@ function Stake({ ipAddress, loginData }) {
   },[account, provider, status])
 
   const handleDeposit = async (deposit) => {
-    let conf = await depositAmount(provider, pool, poolABI, deposit);
+    let lkd = deposit/price;
+    let conf = await depositAmount(provider, pool, poolABI, lkd);
     console.log(conf)
     let txnHash = conf?.transactionHash
     await uploadStake(txnHash, deposit, account, ipAddress, loginData, price)
