@@ -94,27 +94,17 @@ export const getRewards = async(provider, pool, poolABI,account)=>{
     let maxReward = 0
     let det = Promise.all(investments.map(async(inv)=>{
         inv = parseInt(inv)
-//         let {roiPercentage,totalReward,maxReward,startDate,totalInvestment} = await cont.investments(inv)
-//         roiPercentage = parseInt(ethers.utils.formatUnits(roiPercentage, 2))
-//         totalReward = parseInt(ethers.utils.formatUnits(totalReward, 18))
-//         maxReward = parseInt(ethers.utils.formatUnits(maxReward, 18))
-//         startDate = new Date(parseInt(ethers.utils.formatUnits(startDate, 0))*1000)
-//         startDate = startDate.toLocaleString('en-GB',options)
-//         totalInvestment = parseInt(ethers.utils.formatUnits(totalInvestment))
-//         obj[roiPercentage]+=totalReward
-//         max[roiPercentage]+=maxReward
-//         return {roiPercentage,totalReward,maxReward,startDate,totalInvestment}
-        let {roiPercentage,totalReward,maxReward,startDate,totalInvestment, lkdPrice } = await cont.investments(inv)
-        lkdPrice    = parseFloat(ethers.utils.formatUnits(lkdPrice   , 18))
+        lkdPrice    = parseFloat(ethers.utils.formatUnits(lkdPrice, 2))
+        console.log(lkdPrice)
         roiPercentage = parseInt(ethers.utils.formatUnits(roiPercentage, 2))
         totalReward = parseFloat(ethers.utils.formatUnits(totalReward, 18))* lkdPrice
         maxReward = parseFloat(ethers.utils.formatUnits(maxReward, 18)) *lkdPrice
         startDate = new Date(parseInt(ethers.utils.formatUnits(startDate, 0))*1000)
         startDate = startDate.toLocaleString('en-GB',options)
-        totalInvestment = parseFloat(ethers.utils.formatUnits(totalInvestment)) * lkdPrice
+        totalInvestment = parseFloat(ethers.utils.formatUnits(totalInvestment, 18)) * lkdPrice
         obj[roiPercentage]+=totalReward
         max[roiPercentage]+=maxReward
-        return {roiPercentage,totalReward,maxReward,startDate,totalInvestment, lkdPrice}
+        return {roiPercentage,totalReward,maxReward,startDate,totalInvestment, lkdPrice, inv}
     }))
     // return [obj,max]
     // console.log((await det).sort((a,b)=>b.startDate - a.startDate))
