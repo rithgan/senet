@@ -53,6 +53,7 @@ function Stake({ ipAddress, loginData }) {
   const handleApprove = async (address, abi) => {
     let res = await approve(provider, address, abi, pool);
     console.log(res);
+    handleCheckApprove(address,abi)
   };
   const handleCheckApprove =useCallback( async (address, abi) => {
     if (account) {
@@ -217,21 +218,26 @@ function Stake({ ipAddress, loginData }) {
                   </div>
                 </div>
                 {/* setting the card of pacakges */}
-                {packages.map(({ roiPercentage, totalReward, maxReward, startDate, totalInvestment }) => {
+                {packages.map(({ roiPercentage, totalReward, maxReward, startDate, totalInvestment,days }) => {
                   let plan = "", offer = ""
                   if (roiPercentage === 6) {
                     plan = "Basic Stake"
                     offer = "($25-$99)"
+                    totalReward =  totalReward * days *  0.002
                   } if (roiPercentage === 8) {
                     plan = "Standard Stake"
                     offer = "($100-$199)"
+                    totalReward = totalReward * days *  0.00265
                   } if (roiPercentage === 10) {
                     plan = "Super Stake"
                     offer = "($200-$499)"
+                    totalReward = totalReward * days *  0.0033
                   } if (roiPercentage === 12) {
                     plan = "Premium Stake"
                     offer = "($500  & Above)"
+                    totalReward = totalReward * days *  0.004
                   }
+                  totalReward = totalReward < 200 ? totalReward : 200
 
                   return (<div key={startDate} className="col-md-6  mb-3">
                     <div key={startDate} className="card h-100">
@@ -260,9 +266,9 @@ function Stake({ ipAddress, loginData }) {
                             <small className="text-muted text-nowrap d-block mb-2">Return in Progress</small>
                             <div className="d-flex align-items-center">
                               <div className="progress w-100 me-3" style={{ height: "8px" }}>
-                                <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(totalReward / maxReward) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div className="progress-bar bg-info" role="progressbar" style={{ width: `${(totalReward / totalInvestment) * 100}%` }} aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                               </div>
-                              <small>{parseInt((totalReward / maxReward) * 100)}%</small>
+                              <small>{parseInt((totalReward / totalInvestment) * 100)}%</small>
                             </div>
                           </div>
                         </div>

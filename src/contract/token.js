@@ -9,7 +9,9 @@ const contract = async (provider,tokenAddress, tokenABI) => {
   export const approve = async(provider,tokenAddress,tokenAbi,spenderAddress)=>{
     let cont = await contract(provider,tokenAddress,tokenAbi)
     let value = 50000
-    return await cont.approve(spenderAddress,ethers.utils.parseEther(value.toString()))
+    let res =  await cont.approve(spenderAddress,ethers.utils.parseEther(value.toString()))
+    let conf = res.wait()
+    return conf
 }
 
 export const checkApprove = async (provider,tokenAddress,tokenAbi,userAddress,spenderAddress) => {

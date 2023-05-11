@@ -94,17 +94,21 @@ export const getRewards = async(provider, pool, poolABI,account)=>{
     let maxReward = 0
     let det = Promise.all(investments.map(async(inv)=>{
         inv = parseInt(inv)
-        lkdPrice    = parseFloat(ethers.utils.formatUnits(lkdPrice, 2))
-        console.log(lkdPrice)
+        let {roiPercentage,totalReward,maxReward,startDate,totalInvestment, lkdPrice } = await cont.investments(inv)
+        lkdPrice= parseFloat(ethers.utils.formatUnits(lkdPrice, 2))
         roiPercentage = parseInt(ethers.utils.formatUnits(roiPercentage, 2))
         totalReward = parseFloat(ethers.utils.formatUnits(totalReward, 18))* lkdPrice
         maxReward = parseFloat(ethers.utils.formatUnits(maxReward, 18)) *lkdPrice
+        let currDate = new Date(Date.now())
         startDate = new Date(parseInt(ethers.utils.formatUnits(startDate, 0))*1000)
+        let days = Math.abs(startDate- currDate)
+        days = Math.round(days/ (1000 * 60 * 60 * 24));
         startDate = startDate.toLocaleString('en-GB',options)
+        console.log(days,startDate)
         totalInvestment = parseFloat(ethers.utils.formatUnits(totalInvestment, 18)) * lkdPrice
         obj[roiPercentage]+=totalReward
         max[roiPercentage]+=maxReward
-        return {roiPercentage,totalReward,maxReward,startDate,totalInvestment, lkdPrice, inv}
+        return {roiPercentage,totalReward,maxReward,startDate,totalInvestment, lkdPrice, inv,days}
     }))
     // return [obj,max]
     // console.log((await det).sort((a,b)=>b.startDate - a.startDate))
