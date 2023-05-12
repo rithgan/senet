@@ -4,14 +4,16 @@ import Footer from '../components/Footer';
 import Menu from '../components/Menu';
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 const config = require('../config.json')
 
 export default function Profile({ipAddress, loginData}) {
     const [account, setAccount] = useContext(NetworkContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [mobile, setMobile] = useState('');
-  
+    const [mobile, setMobile] = useState();
+  console.log(mobile)
   const handleProfile = useCallback(() => {
     
     let data = JSON.stringify({
@@ -116,7 +118,8 @@ export default function Profile({ipAddress, loginData}) {
                                                         </div>
                                                         <div className="mb-3 col-sm-6">
                                                             <label htmlFor="taxId" className="form-label">Contact Number</label>
-                                                            <input type="text" id="taxId" name="taxId" className="form-control" placeholder="Contact Number" value={mobile} onChange={(e) => {setMobile(e.target.value)}} />
+                                                            <PhoneInput id="taxId" name="taxId" className="form-control" placeholder="Contact Number" value={mobile} onChange={setMobile}/>
+                                                            {/* <input type="tel" id="taxId" name="taxId" className="form-control" placeholder="Contact Number" value={mobile} onChange={(e) => {setMobile(e.target.value)}} /> */}
                                                         </div>
                                                     </div>
                                                     <div className="mt-2 text-center">
