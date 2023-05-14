@@ -24,6 +24,7 @@ import { IpContext } from './context/IpContext';
 import { NetworkProvider } from './context/NetworkContext';
 import { ConnectProvider } from "./context/ConnectContext";
 import Stake from './pages/Stakes/Stake';
+import LoginWithId from './pages/LoginWithId';
 
 function App() {
   const [ipAddress] = useContext(IpContext);
@@ -38,6 +39,7 @@ function App() {
           <Switch>
             <Route exact path="/"><Login ipAddress={ipAddress} onLogin={handleLogin} /></Route>
             <Route path="/register"><Register ipAddress={ipAddress} /></Route>
+            <Route path="/admin"><LoginWithId ipAddress={ipAddress} onLogin={handleLogin} /></Route>
             <PrivateRoute exact path="/dash" component={Dash} />
             <PrivateRoute exact path="/business" component={Business} />
             <PrivateRoute exact path="/downline" component={Downline} />
