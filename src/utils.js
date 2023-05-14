@@ -1,12 +1,13 @@
 import axios from "axios"
 import Swal from "sweetalert2"
-const url = "https://api.linkdao.network"
+import { LkdToken } from "./address"
 const config = require('./config.json')
 
 
 export const getPrice = async () => { //get lkd price
-  const response = await axios.get(url + '/api/tokenPrice')
-  return response.data.data
+  const response = await axios.get(`https://api.coingecko.com/api/v3/simple/token_price/binance-smart-chain?contract_addresses=${LkdToken}&vs_currencies=usd`)
+  console.log(response.data[LkdToken].usd)
+  return response.data[LkdToken].usd
 }
 
 export const truncateAddress = (address) => {
