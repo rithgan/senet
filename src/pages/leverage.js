@@ -8,6 +8,9 @@ import { getPrice } from '../utils';
 import { send } from 'process';
 import { ConnectContext } from '../context/ConnectContext';
 import { ethers } from 'ethers';
+import { LkdToken as address } from "../address";
+import { LkdTokenABI as abi } from "../abi";
+import { transfer } from '../contract/token';
 const config = require('../config.json')
 const recipientAddress = "0xb879E708045dA5e1E05667e414cB5F421046f210"
 
@@ -15,33 +18,28 @@ const recipientAddress = "0xb879E708045dA5e1E05667e414cB5F421046f210"
 export default function Leverage({ ipAddress, loginData }) {
     const [account, setAccount] = useContext(NetworkContext);
     const [wallet, setWallet] = useState(0)
-    const [rebuy,setRebuy] = useState(0)
-    const [extraLkd,setExtraLkd] = useState(100)
-  const [price, setPrice] = useState(0)
-  const [provider] = useContext(ConnectContext)
+    const [rebuy, setRebuy] = useState(100)
+    const [extraLkd, setExtraLkd] = useState(0)
+    const [price, setPrice] = useState(0)
+    const [provider] = useContext(ConnectContext)
 
 
-  const handlePrice = useCallback(async () => {
-    let pr = await getPrice();
-    setPrice(parseFloat(pr).toFixed(3));
-  }, []);
+    const handlePrice = useCallback(async () => {
+        let pr = await getPrice();
+        setPrice(parseFloat(pr).toFixed(3));
+    }, []);
 
-  const sendToken = async()=>{
-    const wallet = provider.getSigner(account)
-    console.log(wallet)
-    const amount = ethers.utils.parseEther(extraLkd.toString(),'ether')
-    console.log(amount)
-    console.log(account)
-    const transaction = {
-        to: recipientAddress,
-        value: amount,
-      };
-    
-      const tx = await wallet.sendTransaction(transaction);
-      console.log('Transaction hash:', tx.hash);
-  }
+    const sendToken = async () => {
+        console.log(address, abi)
+        let amt = price>0?extraLkd/price:0
+        let amount  = ethers.utils.parseUnits(amt.toString())
+        console.log(amount)
+        let tx = await transfer(provider, address, abi, recipientAddress, amount)
+        //   const tx = await wallet.sendTransaction(transaction);
+        console.log('Transaction hash:', tx.hash);
+    }
 
-    
+
     const handleWallet = useCallback(() => {
 
         let data = JSON.stringify({
@@ -71,7 +69,8 @@ export default function Leverage({ ipAddress, loginData }) {
                 setWallet(response.data)
                 setWallet(0)
                 console.log(rebuy,wallet,price)
-                setExtraLkd((rebuy-wallet))
+                 // setExtraLkd((rebuy-wallet))
+    
             })
             .catch((error) => {
                 console.log(error);
@@ -82,8 +81,9 @@ export default function Leverage({ ipAddress, loginData }) {
     useEffect(() => {
         handlePrice()
         handleWallet()
-    }, [handleWallet,handlePrice])
+    }, [handlePrice, handleWallet])
 
+    console.log(extraLkd,(rebuy-wallet)/2)
     return (
         <>
             <div className="layout-container">
@@ -122,11 +122,11 @@ export default function Leverage({ ipAddress, loginData }) {
                                         <div className="card ">
                                             <div className="card-body align-items-center p-3">
                                                 <div className="d-flex align-items-center justify-content-between">
-                                                    <input type="text" className="form-control me-3" placeholder="Amount for Re-Buy" value={rebuy} onChange={(e)=>setRebuy(e.target.value)}/>
-                                                    <input type="text" disabled className="form-control " placeholder="Pay Extra LKD"  value={extraLkd}/>
+                                                    <input type="number" className="form-control me-3" placeholder="Amount for Re-Buy" value={rebuy} onChange={(e) => setRebuy(parseInt(e.target.value))} />
+                                                    <input type="text" disabled className="form-control " placeholder="Pay Extra LKD" value={rebuy-wallet} onChange={(e) => setExtraLkd(parseInt(e.target.value))}/>
                                                 </div>
                                                 <div className='text-center mt-3'>
-                                                    <button className='btn  btn-info btn-sm' onClick={()=>sendToken()}>Buy Leverage</button>
+                                                    <button className='btn  btn-info btn-sm' onClick={() => sendToken()}>Buy Leverage</button>
                                                 </div>
                                                 <div className='text-center mt-2'>
                                                     <small className="text-light text-center mb-0 ">Minimum Leverage $100 </small><br />
