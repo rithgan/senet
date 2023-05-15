@@ -10,12 +10,11 @@ function PrivateRoute({ component: Component }) {
   const [ipAddress] = useContext(IpContext);
 
 
-  if (loginData && loginData.auth.length > 0) {
+  if (loginData && loginData?.auth.length > 0) {
     isLoggedIn = true
   }
   console.log("isloggedin",isLoggedIn)
-  isLoggedIn = true
-
+  // isLoggedIn = true
   let bgDisplay ={
   }
     if (mobileOpen){

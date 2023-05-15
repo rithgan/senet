@@ -71,7 +71,7 @@ export default function Leverage({ ipAddress, loginData }) {
                 setWallet(response.data)
                 setWallet(0)
                 console.log(rebuy,wallet,price)
-                setExtraLkd((rebuy-wallet)*price)
+                setExtraLkd((rebuy-wallet))
             })
             .catch((error) => {
                 console.log(error);
