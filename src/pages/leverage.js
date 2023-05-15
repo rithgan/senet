@@ -29,7 +29,7 @@ export default function Leverage({ ipAddress, loginData }) {
   const sendToken = async()=>{
     const wallet = provider.getSigner(account)
     console.log(wallet)
-    const amount = ethers.utils.parseEther(extraLkd.toString())
+    const amount = ethers.utils.parseEther(extraLkd.toString(),'ether')
     console.log(amount)
     console.log(account)
     const transaction = {
