@@ -5,6 +5,7 @@ import Menu from '../components/Menu';
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
 import Swal from 'sweetalert2'
+
 const config = require('../config.json')
 
 export default function Ticket({ipAddress, loginData}) {
@@ -14,43 +15,44 @@ export default function Ticket({ipAddress, loginData}) {
   const [message, setMessage] = useState('');
   const handleTicket = (e) => {
     e.preventDefault()
-    let data = JSON.stringify({
-      "address": account,
-      "ip": ipAddress,
-      "ulid": loginData.ulid,
-      "subject":subject,
-      "message":message
-    });
+    if(subject.length > 10 && message.length > 0)
+    {
+        let data = JSON.stringify({
+        "address": account,
+        "ip": ipAddress,
+        "ulid": loginData.ulid,
+        "subject":subject,
+        "message":message
+        });
     
-    let axiosConfig = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: `${config.baseUrl}/api/ticket`,
-      headers: { 
-        'address': account, 
-        'ip': ipAddress, 
-        'ulid': loginData.ulid, 
-        'auth': loginData.auth, 
-        'token': loginData.token, 
-        'Content-Type': 'application/json'
-      },
-      data : data
-    };
-    console.log(axiosConfig)
-    axios.request(axiosConfig)  
-    .then((response) => {
-        console.log(response.data)
-        let res = response.data
-        if(res.status)
-        {
-            Swal.fire({
-                icon: 'info',
-                    title: 'LinkDao Defi',
-                    text: res.message
-            });
-            setMessage('');
-            setSubject('')
-        }
+        let axiosConfig = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${config.baseUrl}/api/ticket`,
+        headers: { 
+            'address': account, 
+            'ip': ipAddress, 
+            'ulid': loginData.ulid, 
+            'auth': loginData.auth, 
+            'token': loginData.token, 
+            'Content-Type': 'application/json'
+        },
+        data : data
+        };
+        axios.request(axiosConfig)  
+        .then((response) => {
+            // console.log(response.data)
+            let res = response.data
+            if(res.status)
+            {
+                Swal.fire({
+                    icon: 'info',
+                        title: 'LinkDao Defi',
+                        text: res.message
+                });
+                setMessage('');
+                setSubject('')
+            }
         else{
             Swal.fire({
                 icon: 'warning',
@@ -58,10 +60,19 @@ export default function Ticket({ipAddress, loginData}) {
                     text: res.message
             });
         }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+        })
+        .catch((error) => {
+        console.log(error);
+        });
+    }
+    else
+    {
+        Swal.fire({
+            icon: 'warning',
+                title: 'LinkDao Defi',
+                text: "Please enter subject and message"
+        });
+    }
   }
     
     return (
@@ -71,7 +82,7 @@ export default function Ticket({ipAddress, loginData}) {
                     <div className="layout-page">
                         <Header />
                         <div className="content-wrapper">
-                            <div className="container-xxl flex-grow-1 container-p-y">
+                            <div className="container-xxl flex-grow-1 container-p-y pt-2">
                                 
                                 <div className="row">
                                     <div className='col-md-12'>
@@ -114,7 +125,7 @@ export default function Ticket({ipAddress, loginData}) {
                                                 </div>
                                             </div>
                                             <div className="mt-2 col-sm-12 text-center">
-                                                <button type="submit" className="btn btn-info me-2">
+                                                <button type="submit" className="btn btn-info btn-sm me-2">
                                                     Process Ticket
                                                 </button>
                                             </div>

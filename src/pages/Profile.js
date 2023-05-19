@@ -9,15 +9,15 @@ import PhoneInput from 'react-phone-number-input'
 const config = require('../config.json')
 
 export default function Profile({ipAddress, loginData}) {
-    const [account, setAccount] = useContext(NetworkContext);
+    const [account] = useContext(NetworkContext);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [mobile, setMobile] = useState();
-  console.log(mobile)
+  
   const handleProfile = useCallback(() => {
     
     let data = JSON.stringify({
-      "address": account,
+      "address": (loginData.address)?loginData.address:account,
       "ip": ipAddress,
       "ulid": loginData.ulid
     });
@@ -27,7 +27,7 @@ export default function Profile({ipAddress, loginData}) {
       maxBodyLength: Infinity,
       url: `${config.baseUrl}/api/profile`,
       headers: { 
-        'address': account, 
+        'address': (loginData.address)?loginData.address:account, 
         'ip': ipAddress, 
         'ulid': loginData.ulid, 
         'auth': loginData.auth, 
@@ -36,17 +36,18 @@ export default function Profile({ipAddress, loginData}) {
       },
       data : data
     };
-    console.log(axiosConfig)
+    // console.log(axiosConfig)
     axios.request(axiosConfig)  
     .then((response) => {
+      // console.log(response.data)
         setName(response.data.data?.uname)
         setEmail(response.data.data?.uemail)
         setMobile(response.data.data?.umobile)   
     })
     .catch((error) => {
-      console.log(error);
+      // console.log(error);
     });
-  },[account, ipAddress, loginData.auth, loginData.token, loginData.ulid])
+  },[account, ipAddress, loginData.address, loginData.auth, loginData.token, loginData.ulid])
 
   
   useEffect(() => {
@@ -54,10 +55,10 @@ export default function Profile({ipAddress, loginData}) {
     handleProfile()
   },[handleProfile])
 
-  const handleProfileEdit = () => {
-    
+  const handleProfileEdit = (e) => {
+    e.preventDefault()
     let data = JSON.stringify({
-      "address": account,
+      "address": (loginData.address)?loginData.address:account,
       "ip": ipAddress,
       "ulid": loginData.ulid,
       "uname" : name,
@@ -70,7 +71,7 @@ export default function Profile({ipAddress, loginData}) {
       maxBodyLength: Infinity,
       url: `${config.baseUrl}/api/profileedit`,
       headers: { 
-        'address': account, 
+        'address': (loginData.address)?loginData.address:account, 
         'ip': ipAddress, 
         'ulid': loginData.ulid, 
         'auth': loginData.auth, 
@@ -79,7 +80,7 @@ export default function Profile({ipAddress, loginData}) {
       },
       data : data
     };
-    console.log(axiosConfig)
+    // console.log(axiosConfig)
     axios.request(axiosConfig)  
     .then((response) => {
         setName(response.data.data?.uname)
@@ -118,8 +119,8 @@ export default function Profile({ipAddress, loginData}) {
                                                         </div>
                                                         <div className="mb-3 col-sm-6">
                                                             <label htmlFor="taxId" className="form-label">Contact Number</label>
-                                                            <PhoneInput id="taxId" name="taxId" className="form-control" placeholder="Contact Number" value={mobile} onChange={setMobile}/>
-                                                            {/* <input type="tel" id="taxId" name="taxId" className="form-control" placeholder="Contact Number" value={mobile} onChange={(e) => {setMobile(e.target.value)}} /> */}
+                                                            <PhoneInput id="taxId" name="taxId" className="form-control" defaultCountry="US" placeholder="Contact Number" value={mobile} onChange={setMobile}/>
+                                                            
                                                         </div>
                                                     </div>
                                                     <div className="mt-2 text-center">

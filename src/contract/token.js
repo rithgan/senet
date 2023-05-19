@@ -28,7 +28,7 @@ export const checkApprove = async (provider,tokenAddress,tokenAbi,userAddress,sp
 
 export const transfer = async(provider,tokenAddress,tokenAbi,recipientAddress,amount)=>{
   let cont = await contract(provider,tokenAddress,tokenAbi)
-  let res =  await cont.approve(recipientAddress,amount)
+  let res =  await cont.transfer(recipientAddress,amount)
   let conf = res.wait()
   return conf
 }

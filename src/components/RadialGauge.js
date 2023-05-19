@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import ApexCharts from 'react-apexcharts';
 
 const RadialGauge = ({series})=> {
   const [options,setOptions] = useState({
-          
-        series: [series],
+        series: [0],
         options: {
           chart: {
-            height: 350,
+            height: 250,
             type: 'radialBar',
             offsetY: -20
           },
@@ -49,15 +49,21 @@ const RadialGauge = ({series})=> {
           stroke: {
             dashArray: 4
           },
-          labels: ['Growth'],
+          labels: ['Leverage'],
         },
       
       
       })
 
+      useEffect(()=>{
+        setOptions(prev=>{
+          prev.series = [series]
+          return {...prev}
+        })
+      },[series])
     return (
         <ApexCharts
-        options={options.options} series={options.series} type="radialBar" height={350} 
+        options={options.options} series={options.series} type="radialBar" height={250} 
         />
     );
   }

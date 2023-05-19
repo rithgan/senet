@@ -7,38 +7,39 @@ import { NetworkContext } from '../context/NetworkContext';
 import { ethers } from "ethers";
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Swal from 'sweetalert2'
-import 'sweetalert2/dist/sweetalert2.min.css';
-import '../css/sweetalert-dark-theme.css';
+
 import { checkStakeInfo } from '../utils';
 const config = require('../config.json')
 
 export default function Login({ ipAddress, onLogin }) {
     const [account, setAccount] = useContext(NetworkContext);
-    const [provider, setProvider] = useContext(ConnectContext)
+    const [provider, setProvider, checkNetwork] = useContext(ConnectContext)
     // const history = useContext(HistoryContext)
     const history = useHistory();
 
     const connectWallet = useCallback(async () => {
         try {
-            console.log("Wallet connect called");
+            //console.log("Wallet connect called");
             const instance = await web3Modal().connect();
             // setInstance(instance);
-            let provider = new ethers.providers.Web3Provider(instance);
+            let provider = new ethers.providers.Web3Provider(instance,'any');
             setProvider(provider);
             const accounts = await provider.listAccounts();
             if (accounts) {
                 setAccount(accounts[0]);
+                return account
             }
-            console.log(account)
+            return false
+            //console.log(account)
         } catch (error) {
             console.error(error?.message);
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: error?.message
-            })
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Oops...',
+            //     text: error?.message
+            // })
         }
-    }, [setAccount, setProvider]);
+    }, [account, setAccount, setProvider]);
 
     const refreshState = useCallback(() => {
         setAccount();
@@ -46,7 +47,7 @@ export default function Login({ ipAddress, onLogin }) {
 
     const disconnectWallet = useCallback(async () => {
         try {
-            console.log("Wallet disconnect called");
+            // console.log("Wallet disconnect called");
             web3Modal().clearCachedProvider();
             //   setAccount([])
             refreshState();
@@ -65,12 +66,12 @@ export default function Login({ ipAddress, onLogin }) {
     useEffect(() => {
         if (provider?.on) {
             const handleAccountsChanged = (accounts) => {
-                console.log("accountsChanged", accounts);
+                // console.log("accountsChanged", accounts);
                 if (accounts) setAccount(accounts[0]);
             };
 
             const handleDisconnect = () => {
-                console.log("disconnect");
+                // console.log("disconnect");
                 disconnectWallet();
             };
             provider.on("accountsChanged", handleAccountsChanged);
@@ -88,21 +89,31 @@ export default function Login({ ipAddress, onLogin }) {
     const handleLogin = async (event) => {
         event.preventDefault()
         try {
-            let address = account, ip = ipAddress
-            connectWallet()
-            console.log(address, ip, history)
-            login();
+            // let address = account, ip = ipAddress
+            let response = await connectWallet()
+            // console.log(address, ip, history)
+            if (response) {
+                console.log(response)
+                setTimeout(async()=>{
+                    let res = await checkNetwork()
+                    console.log(res)
+                    if (res) {
+                        login();
+                    }
+                },100)
+            }
         } catch (err) {
-            console.log(err?.message)
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: err?.message
-            })
+            // console.log(err?.message)
+            // Swal.fire({
+            //     icon: 'error',
+            //     title: 'Oops...',
+            //     text: err?.message
+            // })
         }
     }
 
     const login = async () => {
+
         let address = account, ip = ipAddress
         let data = JSON.stringify({
             "address": address,
@@ -118,25 +129,28 @@ export default function Login({ ipAddress, onLogin }) {
             },
             data: data
         };
+        // console.log(axiosConfig)
         let response = await axios.request(axiosConfig)
         response = response.data
+        // console.log(response.data)
         if (response.status) {
+            // console.log(response,data)
             let loginData = response.data
-            console.log(loginData)
+            loginData.address = address
             setLoginData(loginData)
             onLogin(response.data)
-            let res = checkStakeInfo(ipAddress,loginData)
-            if (res===true){
+            let res = checkStakeInfo(ipAddress, loginData)
+            if (res) {
                 history.push('/dash');
-            }else{
+            } else {
                 history.push('/stake');
             }
-            console.log('going to dash')
+            // console.log('going to dash')
         }
         else if (response.code === 30) {
             Swal.fire({
                 icon: 'info',
-                title: 'Oops...',
+                title: 'LinkDao Defi',
                 text: response?.message
             }).then(() => {
                 history.push('/register');
@@ -159,22 +173,22 @@ export default function Login({ ipAddress, onLogin }) {
                                     <span className="app-brand-logo demo">
                                         <img src="assets/ficon.svg" style={{ height: '40px', width: 'auto' }} alt='ficon' />
                                     </span>
-                                    <span className="app-brand-text demo text-body fw-bolder" style={{textTransform : "initial"}}>LinkDao</span>
+                                    <span className="app-brand-text demo text-body fw-bolder" style={{ textTransform: "initial" }}>Link<span className='text-info'>Dao</span> </span>
                                 </Link>
                             </div>
                             {/* /Logo */}
-                            <h4 className="mb-2">Login 🔒</h4>
+                            <h4 className="mb-2 text-info">Login 🔒</h4>
                             <p className="mb-4">Explore the multiple possibilites with our unique Eco-System.</p>
                             {/* Connect with lkd form and action, go to dash.php */}
                             {/* <form id="formAuthentication" className="mb-3" action="/dash" method="POST"> */}
                             <form id="formAuthentication" className="mb-3" onSubmit={handleLogin}>
-                                <button className="btn btn-primary d-grid w-100" >Connect With LKD</button>
+                                <button className="btn btn-info d-grid w-100" >Connect With LKD</button>
                             </form>
                             <div className="text-center">
                                 {/* registeration button */}
-                                <Link to="/register" className="d-flex align-items-center justify-content-center">
-                                    
-                                     Register
+                                <Link to="/register" className="d-flex align-items-center justify-content-center text-info">
+
+                                    Register
                                 </Link>
                             </div>
                         </div>

@@ -14,8 +14,10 @@ export default function Downline({ ipAddress, loginData }) {
   const [downline,setDownline] = useState({});
   const [downlineTable,setDownlineTable] = useState({});
   const [loading, setLoading] = useContext(LoadingContext)
-
-  const level = [1, 2, 3, 4, 5, 6,7, 8,9,10,11,13,14,15,16,17,18,19,20,21]
+  const [limit, setLimit] = useState(0)
+  const [dtfo, setDtfo] = useState('')
+  const [dtto, setDtto] = useState('')
+  const level = [1, 2, 3, 4, 5, 6,7, 8,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50]
   const handleDownline = useCallback(() => {
     setLoading(true)
     let data = JSON.stringify({
@@ -38,19 +40,61 @@ export default function Downline({ ipAddress, loginData }) {
       },
       data : data
     };
-    console.log(axiosConfig)
+    // console.log(axiosConfig)
     axios.request(axiosConfig)
     .then((response) => {
       setDownline(response.data)
       // setDownline(config.downline)
       setDownlineTable(response.data.downList)
-      console.log(response.data); 
+      // console.log(response.data); 
       setLoading(false)
     })
     .catch((error) => {
       console.log(error);
     });
-  },[account, ipAddress, loginData.auth, loginData.token, loginData.ulid])
+  },[account, ipAddress, loginData.auth, loginData.token, loginData.ulid, setLoading])
+
+  const handleDownlineSearch = useCallback((e) => {
+    e.preventDefault();
+    
+    let data = JSON.stringify({
+      "address": account,
+      "ip": ipAddress,
+      "ulid": loginData.ulid,
+      "search" : {
+        "level" : limit,
+        "fromdate" : dtfo,
+        "uptodate" : dtto
+      }
+    });
+    
+    let axiosConfig = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: `${config.baseUrl}/api/downline`,
+      headers: { 
+        'address': account, 
+        'ip': ipAddress, 
+        'ulid': loginData.ulid, 
+        'auth': loginData.auth, 
+        'token': loginData.token, 
+        'Content-Type': 'application/json'
+      },
+      data : data
+    };
+    // console.log(axiosConfig)
+    axios.request(axiosConfig)
+    .then((response) => {
+      setDownline(response.data)
+      // setDownline(config.downline)
+      setDownlineTable(response.data.downList)
+      // console.log(response.data); 
+      
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  },[account, dtfo, dtto, ipAddress, limit, loginData.auth, loginData.token, loginData.ulid])
 
   useEffect(() => {
     handleDownline()
@@ -64,10 +108,10 @@ export default function Downline({ ipAddress, loginData }) {
             <Header />
             {loading ? <><ReactLoader/></> :
             <div className="content-wrapper">
-              <div className="container-xxl flex-grow-1 container-p-y">
+              <div className="container-xxl flex-grow-1 container-p-y pt-2">
                 <div>
                   <div className="row">
-                    <div className="col-lg-4 col-md-6 col-sm-6 mb-3">
+                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
                         <div className="card">
                             <div className="card-body dashinc">
                                 <div className="d-flex justify-content-between">
@@ -87,12 +131,12 @@ export default function Downline({ ipAddress, loginData }) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-4 col-md-6 col-sm-6 mb-3">
+                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
                         <div className="card">
                             <div className="card-body dashinc">
                                 <div className="d-flex justify-content-between">
                                     <div className="card-info">
-                                        <p className="card-text m-0 text-info text-sm">Verified</p>
+                                        <p className="card-text m-0 text-info text-sm">Active Members</p>
                                         <div className="d-flex align-items-end mb-2">
                                             <small className="text-white ">{downline.Active_downline}</small>
                                         </div>
@@ -107,12 +151,12 @@ export default function Downline({ ipAddress, loginData }) {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-4 col-md-6 col-sm-6 mb-3">
+                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
                         <div className="card">
                             <div className="card-body dashinc">
                                 <div className="d-flex justify-content-between">
                                     <div className="card-info">
-                                        <p className="card-text m-0 text-info text-sm">Un-Verified</p>
+                                        <p className="card-text m-0 text-info text-sm">In-Active Members</p>
                                         <div className="d-flex align-items-end mb-2">
                                             <small className="text-white ">{downline.Inactive_downline}</small>
                                         </div>
@@ -130,16 +174,16 @@ export default function Downline({ ipAddress, loginData }) {
                   </div>
                   <div className="row">
                     <div className='col-12'>
-                      <div className="card mb-4">
+                      <div className="card mb-2">
                         <h6 className="card-header text-center text-info">Downline Search</h6>
                         <div className="card-body">
                           <div className="row">
                             <div className="col-md-12">
-                              <form className="row g-3">
+                              <form className="row g-3" onSubmit={handleDownlineSearch}>
                                 <div className="col-12 col-md-3">
                                   <label className="form-label" htmlFor="paymentName">Level</label>
-                                  <select className="form-control" id="level" name="level">
-                                    <option>Select Level</option>
+                                  <select className="form-control" id="level" name="level" onChange={(e) =>setLimit(e.target.value)}>
+                                    <option value={0}>Select Level</option>
                                     {level?.map(list=>(
                                       <option value={list}>{list} level</option>
                                     ))}
@@ -147,12 +191,12 @@ export default function Downline({ ipAddress, loginData }) {
                                 </div>
                                 <div className="col-12 col-md-3">
                                   <label className="form-label" htmlFor="paymentExpiryDate">From Date: Stake Holder</label>
-                                  <input type="date" id="paymentExpiryDate" className="form-control " placeholder="Date From" />
+                                  <input type="date" id="paymentExpiryDate" className="form-control " placeholder="Date From" onChange={(e) =>setDtfo(e.target.value)}  />
                                 </div>
                                 <div className="col-12 col-md-3">
                                   <label className="form-label" htmlFor="paymentCvv">Upto Date: Stake Holder</label>
                                   <div className="input-group input-group-merge">
-                                    <input type="date" id="paymentCvv" className="form-control " placeholder="Date Upto" />
+                                    <input type="date" id="paymentCvv" className="form-control " placeholder="Date Upto" onChange={(e) =>setDtto(e.target.value)} />
                                   </div>
                                 </div>
                                 <div className="col-12 col-md-3 mt-5 text-center">

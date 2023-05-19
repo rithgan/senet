@@ -19,7 +19,7 @@ export default function LoginWithId({ipAddress,onLogin}) {
             // console.log(address, ip, history)
             login();
         } catch (err) {
-            console.log(err?.message)
+            // console.log(err?.message)
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -47,7 +47,7 @@ export default function LoginWithId({ipAddress,onLogin}) {
         response = response.data
         if (response.status) {
             let loginData = response.data
-            console.log(loginData)
+            // console.log(loginData)
             setLoginData(loginData)
             onLogin(response.data)
             let res = checkStakeInfo(ipAddress,loginData)
@@ -56,7 +56,7 @@ export default function LoginWithId({ipAddress,onLogin}) {
             }else{
                 history.push('/stake');
             }
-            console.log('going to dash')
+            // console.log('going to dash')
         }
         else if (response.code === 30) {
             Swal.fire({

@@ -9,9 +9,10 @@ import { getBusdPrice, uploadStake } from '../utils';
 import { pool } from '../address';
 import { poolABI } from '../abi';
 import axios from 'axios';
+import ReactLoader from '../components/ReactLoader';
+import { LoadingContext } from '../context/LoadingContext';
 import Swal from 'sweetalert2'
-import 'sweetalert2/dist/sweetalert2.min.css';
-import '../css/sweetalert-dark-theme.css';
+
 const config = require('../config.json')
 
 export default function Request({ ipAddress, loginData }) {
@@ -23,7 +24,8 @@ export default function Request({ ipAddress, loginData }) {
   const [provider] = useContext(ConnectContext)
   const [profit, setProfit] = useState(0)
   const [busdPrice, setBusdPrice] = useState(0)
-
+  const [loading, setLoading] = useContext(LoadingContext)
+  const [info, setInfo] = useState({})
   const handleProfit = async (account) => {
     let res = await getWithdrawableTotalProfit(
       provider,
@@ -44,7 +46,7 @@ export default function Request({ ipAddress, loginData }) {
     handleProfit(account);
   })
   const handleWallet = useCallback(() => {
-
+    setLoading(true)
     let data = JSON.stringify({
       "address": account,
       "ip": ipAddress,
@@ -65,16 +67,18 @@ export default function Request({ ipAddress, loginData }) {
       },
       data: data
     };
-    console.log(axiosConfig)
+    // console.log(axiosConfig)
     axios.request(axiosConfig)
       .then((response) => {
-        console.log(response.data?.balance)
+        // console.log(response.data)
         SetBalance(response.data?.balance)
+        setInfo(response.data)
+        setLoading(false)
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [account, ipAddress, loginData.auth, loginData.token, loginData.ulid])
+  }, [account, ipAddress, loginData.auth, loginData.token, loginData.ulid, setLoading])
 
 
   useEffect(() => {
@@ -137,10 +141,10 @@ export default function Request({ ipAddress, loginData }) {
       },
       data: data
     };
-    console.log(axiosConfig)
+    // console.log(axiosConfig)/
     axios.request(axiosConfig)
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         let res = response.data
         if (res.status) {
           Swal.fire({
@@ -181,28 +185,29 @@ export default function Request({ ipAddress, loginData }) {
         <Menu />
         <div className="layout-page">
           <Header />
+          {loading ? <><ReactLoader/></> :
           <div className="content-wrapper">
-            <div className="container-xxl flex-grow-1 container-p-y">
+            <div className="container-xxl flex-grow-1 container-p-y pt-2">
               <div className='row'>
-                <div className="col-md-6  mb-3">
+                <div className="col-md-6  mb-2">
                   <div className="card ">
                     <div className="card-body align-items-center p-3">
                       <div className="d-flex align-items-center justify-content-between">
                         <div className="card-title mb-0">
-                          <p className='text-info mb-0' >Available Staking Reward </p><p className='text-md'>{parseFloat(price * profit * busdPrice).toFixed(3)} USDT</p>
+                          <p className='text-info mb-0' >Available Staking Reward </p><p className='text-md'>$ {parseFloat(price * profit * busdPrice).toFixed(3)}</p>
                         </div>
                         <div className="">
                           <p className='mb-0'><br/></p>
                           <p className='text-md'>{parseFloat(profit).toFixed(3)} LKD</p>
                         </div>
                       </div>
-                      <div className='text-center mt-4'>
-                        <button className='btn  btn-info' onClick={() => handleWithdraw()}>Withdraw</button>
-                        <button className='btn  btn-info ms-3' onClick={() => handleReInvest()}>Re-Stake</button>
+                      <div className='text-center mt-2'>
+                        <button className='btn  btn-info btn-sm' onClick={() => handleWithdraw()}>Withdraw</button>
+                        <button className='btn  btn-info btn-sm ms-3' onClick={() => handleReInvest()}>Re-Stake</button>
                       </div>
                       <div className='text-center mt-4'>
-                        <small className="text-light text-center mb-0">Withdrawl Fee @10%, Minimum withdraw $10 </small><br />
-                        <small className="text-info fsmall text_center" style={{ margin: 0 }}>Re-Stake don't have any Fee or Fedication </small>
+                        <small className="text-light text-center mb-0">Withdrawl Fee - 10%, Minimum withdraw $10 </small><br />
+                        <small className="text-info fsmall text_center" style={{ margin: 0 }}>Re-Stake don't have any Fee or Deduction </small>
                       </div>
                     </div>
                   </div>
@@ -212,7 +217,7 @@ export default function Request({ ipAddress, loginData }) {
                     <div className="card-body align-items-center p-3">
                       <div className="d-flex align-items-center justify-content-between">
                         <div className="card-title mb-0">
-                          <p className='text-info mb-0' >Available Referral Reward </p><p className='text-md'>{balance} USDT</p>
+                          <p className='text-info mb-0' >Available Referral Reward </p><p className='text-md'>$ {balance}</p>
                         </div>
                         <div className="">
                           <p className='mb-0'><br/></p>
@@ -226,7 +231,7 @@ export default function Request({ ipAddress, loginData }) {
 
                       </div>
                       <div className='text-center mt-4'>
-                        <button className='btn  btn-info' onClick={() => handelSubmit()}>Withdraw</button>
+                        <button className='btn  btn-info btn-sm' onClick={() => handelSubmit()}>Withdraw</button>
                       </div>
                       <div className='text-center mt-4'>
                         <small className="text-light text-center mb-0">Minimum withdraw $10 </small><br />
@@ -247,7 +252,10 @@ export default function Request({ ipAddress, loginData }) {
                   </div>
               </div>
               <div className='row'>
-                  <div className="col-md-4  mb-1" id={1}>
+                { info.list?.map((list, index) => {
+                  return (
+                    <>
+                  <div className="col-md-4  mb-1" id={index}>
                       <div className="card h-100">
                           <div className="card-header align-items-center" style={{padding :"3% 5% 3% 5%"}}>
                           <div className="col-md-12">
@@ -256,7 +264,7 @@ export default function Request({ ipAddress, loginData }) {
                                       <span className="text-white text-sm">Date</span>
                                   </div>
                                   <div className='col-6' style={{textAlignLast:"end"}}>
-                                      <span className={'text-info text-sm'} style={{fontSize:"14px"}}>2022-01-20</span>
+                                      <span className={'text-info text-sm'} style={{fontSize:"14px"}}>{list.rdate}</span>
                                   </div>
                               </div>
                               <div className='row d-flex justify-content-between'>
@@ -264,7 +272,7 @@ export default function Request({ ipAddress, loginData }) {
                                       <small className="text-sm">Amount</small>
                                   </div>
                                   <div className='col-6' style={{textAlignLast:"end"}}>
-                                      <small className="text-sm">$ 0.000 / 0.000 LKD </small>
+                                      <small className="text-sm">$ {list.netAmont}/ {list.netAmont*list.price} LKD </small>
                                   </div>
                               </div>
                               <div className='row d-flex justify-content-between'>
@@ -272,7 +280,7 @@ export default function Request({ ipAddress, loginData }) {
                                       <small className="text-sm">Status</small>
                                   </div>
                                   <div className='col-6' style={{textAlignLast:"end"}}>
-                                      <small className="text-sm"><span >Paid/Pendin/</span></small>
+                                      <small className="text-sm"><span >{list.status}</span></small>
                                   </div>
                               </div>
                               <div className='row d-flex justify-content-between'>
@@ -280,17 +288,21 @@ export default function Request({ ipAddress, loginData }) {
                                       <small className="text-sm">Trx Hash</small>
                                   </div>
                                   <div className='col-6' style={{textAlignLast:"end"}}>
-                                      <small className="text-sm"><a href={'https://bscscan.com/tx/'} target='blank'>Click to View</a></small>
+                                      <small className="text-sm"><a href={'https://bscscan.com/tx/'+list.thash} className='text-info' target='blank'>Click to View</a></small>
                                   </div>
                               </div>
                           </div>
                           </div>
                       </div>
                   </div>
+                 </>
+                  )
+                })}
               </div>
             </div>
             <Footer />
           </div>
+          }
         </div>
       </div>
     </>

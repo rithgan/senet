@@ -36,13 +36,13 @@ export default function Business({ipAddress, loginData}) {
       },
       data : data
     };
-    console.log(axiosConfig)
+    // console.log(axiosConfig)
     axios.request(axiosConfig)  
     .then((response) => {
         setBusiness(response.data)
       // setDownline(config.downline)
       setBusinessTable(response.data.info)
-      console.log(response.data); 
+    //   console.log(response.data); 
       setLoading(false)
     })
     .catch((error) => {
@@ -62,9 +62,9 @@ export default function Business({ipAddress, loginData}) {
                         <Header />
                         {loading ? <><ReactLoader/></> :
                         <div className="content-wrapper">
-                            <div className="container-xxl flex-grow-1 container-p-y">
+                            <div className="container-xxl flex-grow-1 container-p-y pt-2">
                                 <div className='row'>
-                                    <div className="col-md-12  mb-3">
+                                    <div className="col-md-12  mb-2">
                                         <div className="card">
                                         <div className="card-header align-items-center ">
                                             <div className="card-title mb-0">
@@ -75,12 +75,12 @@ export default function Business({ipAddress, loginData}) {
                                     </div>
                                 </div>
                                 <div className='row'>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 mb-3">
+                                    <div className="col-lg-4 col-md-4 col-sm-4 mb-2">
                                         <div className="card">
                                             <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text m-0 text-info text-sm">Team</p>
+                                                        <p className="card-text m-0 text-info text-sm">Direct Team Partners</p>
                                                         <div className="d-flex align-items-end mb-2">
                                                             <small className="text-white "> {business?.total}</small>
                                                         </div>
@@ -95,7 +95,7 @@ export default function Business({ipAddress, loginData}) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 mb-3">
+                                    <div className="col-lg-4 col-md-4 col-sm-4 mb-2">
                                         <div className="card">
                                             <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
@@ -103,6 +103,26 @@ export default function Business({ipAddress, loginData}) {
                                                         <p className="card-text m-0 text-info text-sm">Total Business</p>
                                                         <div className="d-flex align-items-end mb-2">
                                                             <small className="text-white "> {business?.buss?.toFixed(3)}</small>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div className="card-icon">
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className='bx bx-dollar-circle bx-sm'></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-4 col-sm-4 mb-2">
+                                        <div className="card">
+                                            <div className="card-body dashinc">
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">Today's Business</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white "> {business?.today?.toFixed(3)}</small>
                                                         </div>
                                                         
                                                     </div>
@@ -143,7 +163,7 @@ export default function Business({ipAddress, loginData}) {
                                                             <small className="text-sm text-white"> Contact Number </small>
                                                         </div>
                                                         <div className='col-6' style={{textAlignLast:"end"}}>
-                                                            <small className="text-sm text-white">+{list?.mcode} {list?.umobile}</small>
+                                                            <small className="text-sm text-white"> {list?.umobile}</small>
                                                         </div>
                                                     </div>
                                                 </div>

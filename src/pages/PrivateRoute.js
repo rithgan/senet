@@ -13,7 +13,7 @@ function PrivateRoute({ component: Component }) {
   if (loginData && loginData?.auth.length > 0) {
     isLoggedIn = true
   }
-  console.log("isloggedin",isLoggedIn)
+  // console.log("isloggedin",isLoggedIn)
   // isLoggedIn = true
   let bgDisplay ={
   }

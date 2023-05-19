@@ -6,8 +6,7 @@ import React, { useCallback, useContext, useEffect,useState } from 'react'
 import { NetworkContext } from '../context/NetworkContext';
 import axios from 'axios';
 import Swal from 'sweetalert2'
-import 'sweetalert2/dist/sweetalert2.min.css';
-import '../css/sweetalert-dark-theme.css';
+
 const config = require('../config.json')
 
 export default function Support({ipAddress, loginData}) {
@@ -35,10 +34,10 @@ export default function Support({ipAddress, loginData}) {
       },
       data : data
     };
-    console.log(axiosConfig)
+    // console.log(axiosConfig)
     axios.request(axiosConfig)  
     .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         SetTicket(response.data)
     })
     .catch((error) => {
@@ -59,7 +58,7 @@ export default function Support({ipAddress, loginData}) {
                     <div className="layout-page">
                         <Header />
                         <div className="content-wrapper">
-                            <div className="container-xxl flex-grow-1 container-p-y">
+                            <div className="container-xxl flex-grow-1 container-p-y pt-2">
                                 <div>
                                     
                                     <div className='row'>
@@ -80,7 +79,7 @@ export default function Support({ipAddress, loginData}) {
                                     </div>
                                     <div className="row">
                                         { ticket?.info?.map((list, i) =>{
-                                                console.log(list)
+                                                // console.log(list)
                                                 return(
                                                     <>
                                                     <div className="col-md-4  mb-1" id={i}>

@@ -45,14 +45,14 @@ function Stake({ ipAddress, loginData }) {
     setLoading(true)
     let packages = await getRewards(provider, pool, poolABI, account)
     packages.reverse()
-    console.log(packages)
+    // console.log(packages)
     setPackages(packages)
     setLoading(false)
   }, [account, provider, setLoading])
 
   const handleApprove = async (address, abi) => {
     let res = await approve(provider, address, abi, pool);
-    console.log(res);
+    // console.log(res);
     handleCheckApprove(address,abi)
   };
   const handleCheckApprove =useCallback( async (address, abi) => {
@@ -65,12 +65,13 @@ function Stake({ ipAddress, loginData }) {
   },[account, provider, status])
 
   const handleDeposit = async (deposit) => {
-   
+   setLoading(true)
     let conf = await depositAmount(provider, pool, poolABI, deposit);
-    console.log(conf)
+    // console.log(conf)
     let txnHash = conf?.transactionHash
     await uploadStake(txnHash, deposit, account, ipAddress, loginData, price)
     setDeposit(0)
+    setLoading(false)
     handleInvestments(pool, poolABI)
   };
 
@@ -148,7 +149,7 @@ function Stake({ ipAddress, loginData }) {
                       </div>
                       <div className="">
                         <p className="m-0 me-2">{wallet} LKD</p>
-                        <small className="text-muted">{parseFloat(wallet * price).toFixed(3)} USDT</small>
+                        <small className="text-muted">$ {parseFloat(wallet * price).toFixed(3)}</small>
                       </div>
                     </div>
                   </div>
@@ -170,25 +171,25 @@ function Stake({ ipAddress, loginData }) {
                         <input type="text" disabled className="form-control " placeholder="LKD" value={parseFloat(deposit / price).toFixed(3) + ' LKD'} />
 
                       </div>
-                      <div className='text-center mt-2'>
+                      <div className='align-items-center justify-content-between text-center mt-3'>
                         {status
                           ? <>
                             
-                            <button className='btn  btn-secondary ' >Approve</button>
-                            <button className='btn  btn-info ms-3' onClick={() => handleDeposit(deposit, wallet)}>Deposit</button>
+                            <button className='btn  btn-dark btn-sm me-3' >Approve</button>
+                            <button className='btn  btn-info btn-sm ' onClick={() => handleDeposit(deposit, wallet)}>Deposit</button>
                           </>
                           :
                           <>
                             
-                            <button className='btn  btn-info ms-3' onClick={() => handleApprove(address, abi)}>Approve</button>
-                            <button className='btn  btn-secondary' >Deposit</button>
+                            <button className='btn  btn-info btn-sm me-3' onClick={() => handleApprove(address, abi)}>Approve</button>
+                            <button className='btn  btn-dark btn-sm' >Deposit</button>
                           </>
                         }
 
                       </div>
                       <div className='text-center mt-3'>
-                        <small className="text-light  mb-0">Basic ($25-$99) @6% Monthly Return </small> <br /><small className="text-light">Standred ($100-$199) @8% Monthly Return   </small><br />
-                        <small className="text-light  mb-0">Super ($200-$499) @10% Monthly Return </small><br /> <small className="text-light ">Premium ($500 & above) @12% Monthly Return   </small>
+                        <small className="text-light  mb-0">Basic ($25-$99) -6% Monthly Return </small> <br /><small className="text-light">Standred ($100-$199) -8% Monthly Return   </small><br />
+                        <small className="text-light  mb-0">Super ($200-$499) -10% Monthly Return </small><br /> <small className="text-light ">Premium ($500 & above) -12% Monthly Return   </small>
 
                       </div>
                     </div>
@@ -206,13 +207,13 @@ function Stake({ ipAddress, loginData }) {
                           <p className='text-md'>{parseFloat(profit).toFixed(3)} LKD</p>
                         </div>
                       </div>
-                      <div className='text-center mt-4'>
-                        <button className='btn  btn-info' onClick={() => handleWithdraw()}>Withdraw</button>
-                        <button className='btn  btn-info ms-3' onClick={() => handleReInvest()}>Re-Stake</button>
+                      <div className='text-center mt-2'>
+                        <button className='btn  btn-info btn-sm' onClick={() => handleWithdraw()}>Withdraw</button>
+                        <button className='btn  btn-info btn-sm ms-3' onClick={() => handleReInvest()}>Re-Stake</button>
                       </div>
                       <div className='text-center mt-4'>
                         <small className="text-light text-center mb-0">Withdrawl Fee @10%, Minimum withdraw $10 </small><br />
-                        <small className="text-info fsmall text_center" style={{ margin: 0 }}>Re-Stake don't have any Fee or Fedication </small>
+                        <small className="text-info fsmall text_center" style={{ margin: 0 }}>Re-Stake don't have any Fee or Deduction </small>
                       </div>
                     </div>
                   </div>
@@ -223,21 +224,24 @@ function Stake({ ipAddress, loginData }) {
                   if (roiPercentage === 6) {
                     plan = "Basic Stake"
                     offer = "($25-$99)"
-                    totalReward =  totalReward * days *  0.002
+                    totalReward =  totalInvestment * days *  0.002
                   } if (roiPercentage === 8) {
                     plan = "Standard Stake"
                     offer = "($100-$199)"
-                    totalReward = totalReward * days *  0.00265
+                    totalReward = totalInvestment * days *  0.00265
                   } if (roiPercentage === 10) {
                     plan = "Super Stake"
                     offer = "($200-$499)"
-                    totalReward = totalReward * days *  0.0033
+                    totalReward = totalInvestment * days *  0.0033
                   } if (roiPercentage === 12) {
                     plan = "Premium Stake"
                     offer = "($500  & Above)"
-                    totalReward = totalReward * days *  0.004
+                    totalReward = totalInvestment * days *  0.004
                   }
                   totalReward = totalReward < 200 ? totalReward : 200
+                  
+                  totalInvestment = Math.ceil(totalInvestment)
+                  totalReward =  Math.ceil(totalReward)
 
                   return (<div key={startDate} className="col-md-6  mb-3">
                     <div key={startDate} className="card h-100">

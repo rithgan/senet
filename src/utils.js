@@ -1,14 +1,14 @@
 import axios from "axios"
 import Swal from "sweetalert2"
-import { LkdToken } from "./address"
+const url = "https://api.linkdao.network"
 const config = require('./config.json')
 
 
-export const getPrice = async () => { //get lkd price
-  const response = await axios.get(`https://api.coingecko.com/api/v3/simple/token_price/binance-smart-chain?contract_addresses=${LkdToken}&vs_currencies=usd`)
-  console.log(response.data[LkdToken].usd)
-  return response.data[LkdToken].usd
-}
+// export const getPrice = async () => { //get lkd price
+//   const response = await axios.get(url + '/api/tokenPrice')
+//   return response.data.data
+  
+// }
 
 export const truncateAddress = (address) => {
   if (!address) return "No Account";
@@ -19,10 +19,18 @@ export const truncateAddress = (address) => {
   return `${match[1]}…${match[2]}`;
 };
 
+export const getPrice = async () => {
+  const coinInfo = await axios.get(
+    `https://api.coingecko.com/api/v3/coins/linkdao`
+  );
+  return coinInfo.data.market_data.current_price.usd;
+};
+
 export const getBusdPrice = async () => { //get busd price
   let res = await axios.get('https://api.binance.com/api/v3/ticker/price?symbol=BUSDUSDT')
   let price = res.data['price']
   return price
+  
 }
 
 
@@ -72,16 +80,18 @@ export const uploadStake = async (txnHash, deposit, account, ipAddress, loginDat
     },
     data: data
   };
-  console.log(axiosConfig)
+  // console.log(axiosConfig)
   try {
     let response = await axios.request(axiosConfig)
     console.log(response.data)
-    Swal.fire({
-      icon: 'success',
-      title: 'Transaction successful',
-      text: `${deposit} USDT deposited`,
-      footer: `<a href='https://testnet.bscscan.com/tx/${txnHash}' target='_blank'>View transaction</a>`
-    })
+    if(response.data.status === true){
+      Swal.fire({
+        icon: 'success',
+        title: 'Transaction successful',
+        text: `${deposit} USDT deposited`,
+        footer: `<a href='https://bscscan.com/tx/${txnHash}' target='_blank'>View transaction</a>`
+      })
+    }
   } catch (err) {
     console.error(err)
   }
@@ -109,11 +119,9 @@ export const checkStakeInfo = async(ipAddress,loginData)=>{
     },
     data : data
   };
-  
   axios.request(axiosConfig)
   .then((response) => {
-    console.log(JSON.stringify(response.data));
-    let res = JSON.stringify(response.data)
+    let res = (response.data)
     return res.status
   })
   .catch((error) => {

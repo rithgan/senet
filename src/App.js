@@ -20,14 +20,14 @@ import Star from './pages/earning/start';
 import Award from './pages/earning/award';
 import PrivateRoute from './pages/PrivateRoute';
 import Leverage from './pages/leverage';
-import { IpContext } from './context/IpContext';
+import Mentor from './pages/earning/mentor';
 import { NetworkProvider } from './context/NetworkContext';
 import { ConnectProvider } from "./context/ConnectContext";
 import Stake from './pages/Stakes/Stake';
 import LoginWithId from './pages/LoginWithId';
-
 function App() {
-  const [ipAddress] = useContext(IpContext);
+  // const [ipAddress] = useContext(IpContext);
+  const [ipAddress,setIpAddress] = useState("1.1.1.1");
   const [token, setToken] = useState('');
   const handleLogin = (token) => {
     setToken(token);
@@ -57,6 +57,7 @@ function App() {
             <PrivateRoute exact path="/star" component={Star}  />
             <PrivateRoute exact path="/award" component={Award}  />
             <PrivateRoute exact path="/refule" component={Leverage}  />
+            <PrivateRoute exact path="/mentor" component={Mentor}  /> 
             <Route path="*">
               <NotFound />
             </Route>

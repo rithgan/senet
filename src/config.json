@@ -1,3 +1,5 @@
 {
-    "baseUrl":"https://newdefi.cryptosuite.pw/admin"
+    "baseUrlTest"              : "https://newdefi.cryptosuite.pw/admin",
+    "baseUrl"            : "https://masteradmin.linkdaodefi.network",
+    "recipientAddress"    : "0xd10E0E0EE5692DA1EDF3CBd14691EEE22E07E8F4"
 }

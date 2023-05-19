@@ -1,5 +1,20 @@
 import { ethers } from 'ethers'
-
+import axios from 'axios';
+const apip = async () => {
+    let axiosConfig = {
+        method: 'get',
+        url: 'https://oracal.linkdaodefi.network/updatePrice',
+        // updatePrice 
+    };
+    try{
+		let response = await axios.request(axiosConfig)
+        
+        return response.status
+	}catch(err){
+		console.log(err)
+    }
+    
+}
 const contract = async (provider, poolAddress, poolABI) => {
     let signer = provider.getSigner();
     let contract = new ethers.Contract(poolAddress, poolABI, signer);
@@ -7,28 +22,38 @@ const contract = async (provider, poolAddress, poolABI) => {
 };
 
 export const depositAmount = async (provider, poolAddress, poolABI, amount,wallet) => {
-    let cont = await contract(provider, poolAddress, poolABI)
-    if(amount === wallet){
-        amount = amount-1
+    let api = await apip();
+    
+    if(api === 200 )
+    {
+        let cont = await contract(provider, poolAddress, poolABI)
+        if(amount === wallet){
+            amount = amount-1
+        }
+        let res =  await cont.investAmount(ethers.utils.parseEther(amount.toString()))
+        let conf = await res.wait()
+        return conf
     }
-    let res =  await cont.investAmount(ethers.utils.parseEther(amount.toString()))
-    let conf = await res.wait()
-    return conf
 }
 
 export const depositedAmt = async (provider, pool, poolABI, userAddress) => {
     let cont = await contract(provider, pool, poolABI)
-    let res = await cont.getUserTotalInvestments(userAddress)
-    res = res.map((hex) => ethers.BigNumber.from(hex))
-    const sum = res.reduce((accumulator, currentValue) =>
-        accumulator.add(currentValue)
-    );
-    return parseFloat(ethers.utils.formatUnits(sum, 18)).toFixed(3)
+        let res = await cont.getUserTotalInvestments(userAddress)
+        res = res.map((hex) => ethers.BigNumber.from(hex))
+        const sum = res.reduce((accumulator, currentValue) =>
+            accumulator.add(currentValue)
+        );
+        return parseFloat(ethers.utils.formatUnits(sum, 18)).toFixed(3)
+       
 }
 
 export const withdraw = async (provider, pool, poolABI) => {
-    let cont = await contract(provider, pool, poolABI)
-    await cont.withdrawReward()
+    let api = await apip();
+    if(api === 200 )
+    {
+        let cont = await contract(provider, pool, poolABI)
+        await cont.withdrawReward()
+    }
 }
 
 export const dailyReward = async (provider, pool, poolABI, account) => {
@@ -57,11 +82,15 @@ export const totalRewardsPaid = async (provider, pool, poolABI) => {
 }
 
 export const reInvest = async(provider, pool, poolABI) => {
-    let cont = await contract(provider, pool, poolABI)
-    let res = await cont.reinvestReward()
-    // return parseFloat(ethers.utils.formatUnits(res, 18)).toFixed(2)
-    let conf = await res.wait()
-    return conf
+    let api = await apip();
+    if(api === 200 )
+    {
+        let cont = await contract(provider, pool, poolABI)
+        let res = await cont.reinvestReward()
+        // return parseFloat(ethers.utils.formatUnits(res, 18)).toFixed(2)
+        let conf = await res.wait()
+        return conf
+    }
 }
 
 export const getUserInvestmentsByPackage = async(provider, pool, poolABI,account,index) => {
