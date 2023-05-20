@@ -24,7 +24,7 @@ export default function Dash({ipAddress, loginData}) {
   const [profit , setProfit] = useState(0)
   const [ price, setPrice] = useState(0)
   const [loading, setLoading] = useContext(LoadingContext)
-  const [referall, setReferall] = useState("Add referall link here")
+  const [referall, setReferall] = useState("")
   let [growth,setGrowth] = useState(0)
   const [dash, setDash] = useState({})
   const [busdPrice, setBusdPrice] = useState(0)
@@ -78,7 +78,7 @@ export default function Dash({ipAddress, loginData}) {
         },
         data : data
       };
-    //   console.log(axiosConfig)
+      console.log("login data",axiosConfig)
       axios.request(axiosConfig)  
       .then((response) => {
           if(response.data?.status){
@@ -91,11 +91,11 @@ export default function Dash({ipAddress, loginData}) {
             else{ setReferall('') }
           } 
           else{
-            Swal.fire({
-                icon: 'warning',
-                title: 'LinkDao Defi',
-                text: response.data?.message
-            });
+            // Swal.fire({
+            //     icon: 'warning',
+            //     title: 'LinkDao Defi',
+            //     text: response.data?.message
+            // });
           }
         
         setLoading(false) 
