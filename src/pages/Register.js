@@ -17,9 +17,9 @@ export default function Register({ ipAddress }) {
     const handleRegister = async (e) => {
         e.preventDefault()
 
-        let response = await connectWallet()
-        if (response) {
-            console.log(response)
+        // let response = await connectWallet()
+        if (provider) {
+            console.log(provider)
             setTimeout(async () => {
                 let res = await checkNetwork()
                 if (res) {
@@ -125,58 +125,58 @@ export default function Register({ ipAddress }) {
     }
 
 
-    const connectWallet = useCallback(async () => {
-        try {
-            //console.log("Wallet connect called");
-            const instance = await web3Modal().connect();
-            // setInstance(instance);
-            let provider = new ethers.providers.Web3Provider(instance, 'any');
-            setProvider(provider);
-            const accounts = await provider.listAccounts();
-            if (accounts) {
-                setAccount(accounts[0]);
-                return account
-            }
-            return false
-            //console.log(account)
-        } catch (error) {
-            console.error(error?.message);
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Oops...',
-            //     text: error?.message
-            // })
-        }
-    }, [account, setAccount, setProvider]);
-    useEffect(() => {
-        if (web3Modal().cachedProvider) {
-            connectWallet();
-        }
-    }, [connectWallet]);
+    // const connectWallet = useCallback(async () => {
+    //     try {
+    //         //console.log("Wallet connect called");
+    //         const instance = await web3Modal().connect();
+    //         // setInstance(instance);
+    //         let provider = new ethers.providers.Web3Provider(instance, 'any');
+    //         setProvider(provider);
+    //         const accounts = await provider.listAccounts();
+    //         if (accounts) {
+    //             setAccount(accounts[0]);
+    //             return account
+    //         }
+    //         return false
+    //         //console.log(account)
+    //     } catch (error) {
+    //         console.error(error?.message);
+    //         // Swal.fire({
+    //         //     icon: 'error',
+    //         //     title: 'Oops...',
+    //         //     text: error?.message
+    //         // })
+    //     }
+    // }, [account, setAccount, setProvider]);
+    // useEffect(() => {
+    //     if (web3Modal().cachedProvider) {
+    //         connectWallet();
+    //     }
+    // }, [connectWallet]);
 
-    useEffect(() => {
-        if (provider?.on) {
-            const handleAccountsChanged = (accounts) => {
-                // console.log("accountsChanged", accounts);
-                if (accounts) setAccount(accounts[0]);
-            };
+    // useEffect(() => {
+    //     if (provider?.on) {
+    //         const handleAccountsChanged = (accounts) => {
+    //             // console.log("accountsChanged", accounts);
+    //             if (accounts) setAccount(accounts[0]);
+    //         };
 
-            //   const handleDisconnect = () => {
-            //     console.log("disconnect", error);
-            //     disconnectWallet();
-            //   };
+    //         //   const handleDisconnect = () => {
+    //         //     console.log("disconnect", error);
+    //         //     disconnectWallet();
+    //         //   };
 
-            provider.on("accountsChanged", handleAccountsChanged);
-            //   provider.on("disconnect", handleDisconnect);
+    //         provider.on("accountsChanged", handleAccountsChanged);
+    //         //   provider.on("disconnect", handleDisconnect);
 
-            return () => {
-                if (provider.removeListener) {
-                    provider.removeListener("accountsChanged", handleAccountsChanged);
-                    //   provider.removeListener("disconnect", handleDisconnect);
-                }
-            };
-        }
-    }, [provider, setAccount]);
+    //         return () => {
+    //             if (provider.removeListener) {
+    //                 provider.removeListener("accountsChanged", handleAccountsChanged);
+    //                 //   provider.removeListener("disconnect", handleDisconnect);
+    //             }
+    //         };
+    //     }
+    // }, [provider, setAccount]);
 
     useEffect(() => {
         const queryParameters = new URLSearchParams(window.location.search)

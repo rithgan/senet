@@ -27,42 +27,43 @@ export default function Menu() {
 
   const disconnectWallet = useCallback(async () => {
     try {
-      // console.log("Wallet disconnect called");
-      web3Modal().clearCachedProvider();
-      // setAccount([])
-      refreshState();
-      window.location.reload();
+        // console.log("Wallet disconnect called");
+        web3Modal().clearCachedProvider();
+        provider.removeAllListeners();
+        // setAccount([])
+        //   refreshState();
+        //   window.location.reload();
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
-  }, [refreshState]);
+}, [provider]);
 
-  useEffect(() => {
-    if (provider?.on) {
-      // const handleAccountsChanged = (accounts) => {
-      //   console.log("accountsChanged", accounts);
-      //   if (accounts) setAccount(accounts[0]);
-      // };
+  // useEffect(() => {
+  //   if (provider?.on) {
+  //     // const handleAccountsChanged = (accounts) => {
+  //     //   console.log("accountsChanged", accounts);
+  //     //   if (accounts) setAccount(accounts[0]);
+  //     // };
 
-      const handleDisconnect = () => {
-        // console.log("disconnect");
-        disconnectWallet();
-      };
+  //     const handleDisconnect = () => {
+  //       // console.log("disconnect");
+  //       disconnectWallet();
+  //     };
 
-      // provider.on("accountsChanged", handleAccountsChanged);
-      provider.on("disconnect", handleDisconnect);
+  //     // provider.on("accountsChanged", handleAccountsChanged);
+  //     provider.on("disconnect", handleDisconnect);
 
-      return () => {
-        if (provider.removeListener) {
-          // provider.removeListener("accountsChanged", handleAccountsChanged);
-          provider.removeListener("disconnect", handleDisconnect);
-        }
-      };
-    }
-  }, [disconnectWallet, provider, setAccount]);
+  //     return () => {
+  //       if (provider.removeListener) {
+  //         // provider.removeListener("accountsChanged", handleAccountsChanged);
+  //         provider.removeListener("disconnect", handleDisconnect);
+  //       }
+  //     };
+  //   }
+  // }, [disconnectWallet, provider, setAccount]);
 
   const handleLogout = async () => {
-    // disconnectWallet()
+    disconnectWallet()
     try {
       const loginData = JSON.parse(localStorage.getItem('loginData'));
       let data = JSON.stringify({
