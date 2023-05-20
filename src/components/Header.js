@@ -119,20 +119,22 @@ export default function Header() {
         }
     }, [account, disconnectWallet, history, ipAddress]);
 
-    const handleAccountsChanged = (accounts) => {
-        console.log("accountsChanged", accounts);
-        if (accounts) {
-            // setAccount(accounts[0]);
-            handleLogout()
-        }
-    };
+    // const handleAccountsChanged = (accounts) => {
+    //     console.log("accountsChanged", accounts);
+    //     if (accounts) {
+    //         // setAccount(accounts[0]);
+    //         handleLogout()
+    //     }
+    // };
 
-    const handleDisconnect = () => {
-        console.log("disconnect");
-        disconnectWallet();
-    };
-    provider.provider.on("accountsChanged", handleAccountsChanged);
-    provider.provider.on("disconnect", handleDisconnect);
+    // const handleDisconnect = () => {
+    //     console.log("disconnect");
+    //     disconnectWallet();
+    // };
+    useEffect(()=>{
+        provider.provider.on("accountsChanged", handleLogout);
+        provider.provider.on("disconnect", handleLogout);
+    },[handleLogout, provider.provider])
 
     // useEffect(() => {
     //     console.log(provider)
