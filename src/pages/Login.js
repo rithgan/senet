@@ -64,9 +64,9 @@ export default function Login({ ipAddress, onLogin }) {
     }, [connectWallet]);
 
     useEffect(() => {
-        if (provider?.on) {
+        if (provider) {
             const handleAccountsChanged = (accounts) => {
-                // console.log("accountsChanged", accounts);
+                console.log("accountsChanged", accounts);
                 if (accounts) setAccount(accounts[0]);
             };
 
@@ -74,13 +74,13 @@ export default function Login({ ipAddress, onLogin }) {
                 // console.log("disconnect");
                 disconnectWallet();
             };
-            provider.on("accountsChanged", handleAccountsChanged);
-            provider.on("disconnect", handleDisconnect);
+            provider.provider.on("accountsChanged", handleAccountsChanged);
+            provider.provider.on("disconnect", handleDisconnect);
 
             return () => {
-                if (provider.removeListener) {
-                    provider.removeListener("accountsChanged", handleAccountsChanged);
-                    provider.removeListener("disconnect", handleDisconnect);
+                if (provider.provider.removeListener) {
+                    provider.provider.removeListener("accountsChanged", handleAccountsChanged);
+                    provider.provider.removeListener("disconnect", handleDisconnect);
                 }
             };
         }
