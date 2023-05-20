@@ -13,7 +13,7 @@ export const ConnectProvider = ({ children }) => {
       Swal.fire({
         icon: 'error',
         title: 'LinkDao Defi',
-        text: 'Error: Please connect to the BSC mainnet. Otherwise all you transactions will fail.'
+        text: 'Error: Please connect to the BSC mainnet. Otherwise all your transactions will fail.'
       })
       return false
     } else {

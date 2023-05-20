@@ -174,7 +174,7 @@ export default function Header() {
                 <div className="navbar-nav align-items-center">
                     <div className="nav-item navbar-search-wrapper mb-0">
                         <span className="nav-item nav-link search-toggler px-0">
-                            <span className=" text-info text-sm d-flex">Live Price ${price} </span>
+                            <span className="text-sm d-flex" style={{color:'white'}}>Live Price ${price} </span>
                         </span>
                     </div>
                 </div>
@@ -274,11 +274,11 @@ export default function Header() {
                                 <i className="bx bx-user-check me-1" />{truncateAddress(account)}
                             </span>
                         </li>
-                        <li className="nav-item ms-1 me-xl-0">
+                        {/* <li className="nav-item ms-1 me-xl-0">
                             <Link onClick={() => handleLogout()} to="/" className="menu-link text-mid"  data-toggle="tooltip" data-placement="bottom" title="Disconnect">
                                 <i className="menu-icon tf-icons bx bx-exit" style={{ marginLeft: '0.5rem', color: "#a3a4cc" }} />
                             </Link>
-                        </li>
+                        </li> */}
 
                         {/* <li className="nav-item navbar-dropdown dropdown-user dropdown">
 							    <a className="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
