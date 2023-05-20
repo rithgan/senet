@@ -12,6 +12,7 @@ import Menu from '../../components/Menu';
 import { LoadingContext } from '../../context/LoadingContext';
 import ReactLoader from '../../components/ReactLoader';
 import "./Stake.css";
+import Swal from 'sweetalert2';
 
 
 
@@ -53,21 +54,35 @@ function Stake({ ipAddress, loginData }) {
   const handleApprove = async (address, abi) => {
     let res = await approve(provider, address, abi, pool);
     // console.log(res);
-    handleCheckApprove(address,abi)
+    handleCheckApprove(address, abi)
   };
-  const handleCheckApprove =useCallback( async (address, abi) => {
+  const handleCheckApprove = useCallback(async (address, abi) => {
     if (account) {
       let value = await checkApprove(provider, address, abi, account, pool);
       if (parseInt(value.toString()) > 0) setStatus(true);
       else setStatus(false);
       return status;
     }
-  },[account, provider, status])
+  }, [account, provider, status])
 
   const handleDeposit = async (deposit) => {
-  //  setLoading(true)
+    //  setLoading(true)
     let conf = await depositAmount(provider, pool, poolABI, deposit);
     // console.log(conf)
+    if (conf === false) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'LinkDao Defi',
+        text: "Deposit amount exceeds your approve limit",
+        confirmButtonText: 'Click here to approve again',
+        showCloseButton:true
+      }).then(result => {
+        if (result.isConfirmed) {
+          handleApprove(address, abi)
+        }
+      })
+
+    }
     let txnHash = conf?.transactionHash
     await uploadStake(txnHash, deposit, account, ipAddress, loginData, price)
     setDeposit(0)
@@ -76,12 +91,12 @@ function Stake({ ipAddress, loginData }) {
   };
 
 
-  const handleDailyReward = useCallback( async () => {
+  const handleDailyReward = useCallback(async () => {
     let res = await dailyReward(provider, pool, poolABI, account);
     setDaily(res);
-  },[account, provider])
+  }, [account, provider])
 
-  const handleProfit =useCallback( async (account) => {
+  const handleProfit = useCallback(async (account) => {
     let res = await getWithdrawableTotalProfit(
       provider,
       pool,
@@ -89,7 +104,7 @@ function Stake({ ipAddress, loginData }) {
       account
     );
     setProfit(parseFloat(res).toFixed(3));
-  },[provider])
+  }, [provider])
 
 
   const handleWithdraw = async () => {
@@ -113,10 +128,10 @@ function Stake({ ipAddress, loginData }) {
     setBusdPrice(parseFloat(pr).toFixed(3));
   }, []);
 
-  const handleWalletAmt =useCallback( async (address, abi) => {
+  const handleWalletAmt = useCallback(async (address, abi) => {
     let res = await balance(provider, address, abi, account);
     setWallet(res);
-  },[account, provider])
+  }, [account, provider])
 
   useEffect(() => {
     handleCheckApprove(address, abi);
@@ -126,35 +141,35 @@ function Stake({ ipAddress, loginData }) {
     handlePrice();
     handleBusdPrice()
     handleInvestments(pool, poolABI)
-  },[account, handleBusdPrice, handleCheckApprove, handleDailyReward, handleInvestments, handlePrice, handleProfit, handleWalletAmt]);
+  }, [account, handleBusdPrice, handleCheckApprove, handleDailyReward, handleInvestments, handlePrice, handleProfit, handleWalletAmt]);
 
   return (
     <div className="layout-container">
       <Menu />
       <div className="layout-page">
         <Header />
-        {loading ? <><ReactLoader/></> :
+        {loading ? <><ReactLoader /></> :
           <div className="content-wrapper">
             <div className='container-xxl flex-grow-1 container-p-y'>
               <div className='row'>
                 <div className="col-md-12  mb-3">
-                <div className="card">
-                  <div className="card-header align-items-center ">
-                    <div className="card-title mb-2">
-                      <h6 className="m-0 me-2 text-center text-info">Stake Statistics</h6>
-                    </div>
-                    <div className="card-header d-flex align-items-center justify-content-between p-0">
-                      <div className="card-title mb-0">
-                        <h6 className="m-0 me-2">My Wallet</h6>
+                  <div className="card">
+                    <div className="card-header align-items-center ">
+                      <div className="card-title mb-2">
+                        <h6 className="m-0 me-2 text-center text-info">Stake Statistics</h6>
                       </div>
-                      <div className="">
-                        <p className="m-0 me-2">{wallet} LKD</p>
-                        <small className="text-muted">$ {parseFloat(wallet * price).toFixed(3)}</small>
+                      <div className="card-header d-flex align-items-center justify-content-between p-0">
+                        <div className="card-title mb-0">
+                          <h6 className="m-0 me-2">My Wallet</h6>
+                        </div>
+                        <div className="">
+                          <p className="m-0 me-2">{wallet} LKD</p>
+                          <small className="text-muted">$ {parseFloat(wallet * price).toFixed(3)}</small>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
               </div>
               <div className='row'>
                 <div className="col-md-6  mb-3">
@@ -174,13 +189,13 @@ function Stake({ ipAddress, loginData }) {
                       <div className='align-items-center justify-content-between text-center mt-3'>
                         {status
                           ? <>
-                            
+
                             <button className='btn  btn-dark btn-sm me-3' >Approve</button>
                             <button className='btn  btn-info btn-sm ' onClick={() => handleDeposit(deposit, wallet)}>Deposit</button>
                           </>
                           :
                           <>
-                            
+
                             <button className='btn  btn-info btn-sm me-3' onClick={() => handleApprove(address, abi)}>Approve</button>
                             <button className='btn  btn-dark btn-sm' >Deposit</button>
                           </>
@@ -203,7 +218,7 @@ function Stake({ ipAddress, loginData }) {
                           <p className='text-info mb-0' >Available Staking Reward </p><p className='text-md'>{parseFloat(price * profit * busdPrice).toFixed(3)} USDT</p>
                         </div>
                         <div className="">
-                          <p className='mb-0'><br/></p>
+                          <p className='mb-0'><br /></p>
                           <p className='text-md'>{parseFloat(profit).toFixed(3)} LKD</p>
                         </div>
                       </div>
@@ -219,29 +234,29 @@ function Stake({ ipAddress, loginData }) {
                   </div>
                 </div>
                 {/* setting the card of pacakges */}
-                {packages.map(({ roiPercentage, totalReward, maxReward, startDate, totalInvestment,days }) => {
+                {packages.map(({ roiPercentage, totalReward, maxReward, startDate, totalInvestment, days }) => {
                   let plan = "", offer = ""
                   if (roiPercentage === 6) {
                     plan = "Basic Stake"
                     offer = "($25-$99)"
-                    totalReward =  totalInvestment * days *  0.002
+                    totalReward = totalInvestment * days * 0.002
                   } if (roiPercentage === 8) {
                     plan = "Standard Stake"
                     offer = "($100-$199)"
-                    totalReward = totalInvestment * days *  0.00265
+                    totalReward = totalInvestment * days * 0.00265
                   } if (roiPercentage === 10) {
                     plan = "Super Stake"
                     offer = "($200-$499)"
-                    totalReward = totalInvestment * days *  0.0033
+                    totalReward = totalInvestment * days * 0.0033
                   } if (roiPercentage === 12) {
                     plan = "Premium Stake"
                     offer = "($500  & Above)"
-                    totalReward = totalInvestment * days *  0.004
+                    totalReward = totalInvestment * days * 0.004
                   }
                   totalReward = totalReward < 200 ? totalReward : 200
-                  
+
                   totalInvestment = Math.ceil(totalInvestment)
-                  totalReward =  totalReward.toFixed(4)
+                  totalReward = totalReward.toFixed(4)
 
                   return (<div key={startDate} className="col-md-6  mb-3">
                     <div key={startDate} className="card h-100">

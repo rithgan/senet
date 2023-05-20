@@ -1,5 +1,7 @@
 import { ethers } from 'ethers'
 import axios from 'axios';
+import { TransactionTypes } from 'ethers/lib/utils';
+
 const apip = async () => {
     let axiosConfig = {
         method: 'get',
@@ -30,9 +32,18 @@ export const depositAmount = async (provider, poolAddress, poolABI, amount,walle
         if(amount === wallet){
             amount = amount-1
         }
-        let res =  await cont.investAmount(ethers.utils.parseEther(amount.toString()))
-        let conf = await res.wait()
-        return conf
+        console.log(ethers.utils.parseEther(amount.toString()))
+        try{
+            
+            let res =  await cont.investAmount(ethers.utils.parseEther(amount.toString()))
+            let conf = await res.wait()
+            return conf
+        }catch(err){
+            console.error(err.code)
+            if(err.code === -32603){
+                return false
+            }
+        }
     }
 }
 
