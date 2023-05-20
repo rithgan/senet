@@ -1,12 +1,16 @@
 import { useState, createContext, useContext, useEffect, useCallback } from "react";
 import { ConnectContext } from "./ConnectContext";
 import web3Modal from "../modal";
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+
+
 
 export const NetworkContext = createContext();
 
 export const NetworkProvider = ({ children }) => {
   const [account, setAccount] = useState();
   const [provider, setProvider] = useContext(ConnectContext)
+  const history = useHistory();
 
   const refreshState = useCallback(() => {
     setAccount();
@@ -41,6 +45,7 @@ export const NetworkProvider = ({ children }) => {
       const handleAccountsChanged = (accounts) => {
         console.log("accountsChanged", accounts);
         if (accounts) setAccount(accounts[0]);
+        history.push('/')
       };
 
       // const handleDisconnect = () => {
@@ -51,6 +56,7 @@ export const NetworkProvider = ({ children }) => {
       provider.provider.on("disconnect", () => {
         console.log('Wallet disconnected');
         provider.removeAllListeners();
+        // history.push('/')
         web3Modal().clearCachedProvider();
         // setProvider(null);
         // window.location.reload()
@@ -64,7 +70,7 @@ export const NetworkProvider = ({ children }) => {
       //   }
       // };
     }
-  }, [provider, setAccount, setProvider]);
+  }, [history, provider, setAccount, setProvider]);
   return (
     <NetworkContext.Provider value={[account, setAccount]}>
       {children}
