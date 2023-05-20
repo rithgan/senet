@@ -56,8 +56,9 @@ export const NetworkProvider = ({ children }) => {
       provider.provider.on("disconnect", () => {
         console.log('Wallet disconnected');
         provider.removeAllListeners();
-        // history.push('/')
+        history.push('/')
         web3Modal().clearCachedProvider();
+        sessionStorage.removeItem('loginData');
         // setProvider(null);
         // window.location.reload()
       });
