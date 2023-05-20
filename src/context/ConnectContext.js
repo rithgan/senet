@@ -1,11 +1,13 @@
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext, useEffect, useCallback } from "react";
 import Swal from 'sweetalert2'
+import web3Modal from "../modal";
+import { ethers } from "ethers";
 
 export const ConnectContext = createContext();
 
 export const ConnectProvider = ({ children }) => {
   const [provider, setProvider] = useState();
-  async function checkNetwork() {
+  const checkNetwork = async()=> {
     const network = await provider.getNetwork();
     if (network.name !== 'bnb') {
       Swal.fire({
@@ -21,6 +23,16 @@ export const ConnectProvider = ({ children }) => {
       return true
     }
   }
+
+  useEffect(()=>{
+    const handleProvider = async()=>{
+      const instance = await web3Modal().connect();
+      let provider = new ethers.providers.Web3Provider(instance,'any');
+      setProvider(provider);
+    }
+    handleProvider()
+  },[])
+
   return (
     <ConnectContext.Provider value={[provider, setProvider, checkNetwork]}>
       {children}

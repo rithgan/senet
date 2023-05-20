@@ -27,15 +27,15 @@ import Stake from './pages/Stakes/Stake';
 import LoginWithId from './pages/LoginWithId';
 function App() {
   // const [ipAddress] = useContext(IpContext);
-  const [ipAddress,setIpAddress] = useState("1.1.1.1");
+  const [ipAddress, setIpAddress] = useState("1.1.1.1");
   const [token, setToken] = useState('');
   const handleLogin = (token) => {
     setToken(token);
   };
   return (
     <BrowserRouter>
-      <NetworkProvider>
-        <ConnectProvider>
+      <ConnectProvider>
+        <NetworkProvider>
           <Switch>
             <Route exact path="/"><Login ipAddress={ipAddress} onLogin={handleLogin} /></Route>
             <Route path="/register"><Register ipAddress={ipAddress} /></Route>
@@ -49,21 +49,21 @@ function App() {
             <PrivateRoute exact path="/wallet" component={Wallet} />
             <PrivateRoute exact path="/support" component={Support} />
             <PrivateRoute exact path="/stake" component={Stake} />
-            <PrivateRoute exact path="/ticket" component={Ticket}  />
-            <PrivateRoute exact path="/perform" component={Performance}  />
-            <PrivateRoute exact path="/top" component={Top}  />
-            <PrivateRoute exact path="/passive" component={Passive}  />
-            <PrivateRoute exact path="/vip" component={Vip}  />
-            <PrivateRoute exact path="/star" component={Star}  />
-            <PrivateRoute exact path="/award" component={Award}  />
-            <PrivateRoute exact path="/refule" component={Leverage}  />
-            <PrivateRoute exact path="/mentor" component={Mentor}  /> 
+            <PrivateRoute exact path="/ticket" component={Ticket} />
+            <PrivateRoute exact path="/perform" component={Performance} />
+            <PrivateRoute exact path="/top" component={Top} />
+            <PrivateRoute exact path="/passive" component={Passive} />
+            <PrivateRoute exact path="/vip" component={Vip} />
+            <PrivateRoute exact path="/star" component={Star} />
+            <PrivateRoute exact path="/award" component={Award} />
+            <PrivateRoute exact path="/refule" component={Leverage} />
+            <PrivateRoute exact path="/mentor" component={Mentor} />
             <Route path="*">
               <NotFound />
             </Route>
           </Switch>
-        </ConnectProvider>
-      </NetworkProvider>
+        </NetworkProvider>
+      </ConnectProvider>
     </BrowserRouter>
   );
 }

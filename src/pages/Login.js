@@ -16,84 +16,84 @@ export default function Login({ ipAddress, onLogin }) {
     const [provider, setProvider, checkNetwork] = useContext(ConnectContext)
     // const history = useContext(HistoryContext)
     const history = useHistory();
+    // const connectWallet = useCallback(async () => {
+    //     try {
+    //         //console.log("Wallet connect called");
+    //         const instance = await web3Modal().connect();
+    //         // setInstance(instance);
+    //         let provider = new ethers.providers.Web3Provider(instance,'any');
+    //         setProvider(provider);
+    //         const accounts = await provider.listAccounts();
+    //         if (accounts) {
+    //             setAccount(accounts[0]);
+    //             return account
+    //         }
+    //         return false
+    //         //console.log(account)
+    //     } catch (error) {
+    //         console.error(error?.message);
+    //         // Swal.fire({
+    //         //     icon: 'error',
+    //         //     title: 'Oops...',
+    //         //     text: error?.message
+    //         // })
+    //     }
+    // }, [account, setAccount, setProvider]);
 
-    const connectWallet = useCallback(async () => {
-        try {
-            //console.log("Wallet connect called");
-            const instance = await web3Modal().connect();
-            // setInstance(instance);
-            let provider = new ethers.providers.Web3Provider(instance,'any');
-            setProvider(provider);
-            const accounts = await provider.listAccounts();
-            if (accounts) {
-                setAccount(accounts[0]);
-                return account
-            }
-            return false
-            //console.log(account)
-        } catch (error) {
-            console.error(error?.message);
-            // Swal.fire({
-            //     icon: 'error',
-            //     title: 'Oops...',
-            //     text: error?.message
-            // })
-        }
-    }, [account, setAccount, setProvider]);
+    // const refreshState = useCallback(() => {
+    //     setAccount();
+    // }, [setAccount]);
 
-    const refreshState = useCallback(() => {
-        setAccount();
-    }, [setAccount]);
+    // const disconnectWallet = useCallback(async () => {
+    //     try {
+    //         // console.log("Wallet disconnect called");
+    //         web3Modal().clearCachedProvider();
+    //         //   setAccount([])
+    //         refreshState();
+    //         window.location.reload();
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }, [refreshState]);
 
-    const disconnectWallet = useCallback(async () => {
-        try {
-            // console.log("Wallet disconnect called");
-            web3Modal().clearCachedProvider();
-            //   setAccount([])
-            refreshState();
-            window.location.reload();
-        } catch (error) {
-            console.error(error);
-        }
-    }, [refreshState]);
+    // useEffect(() => {
+    //     if (web3Modal().cachedProvider) {
+    //         connectWallet();
+    //     }
+    // }, [connectWallet]);
 
-    useEffect(() => {
-        if (web3Modal().cachedProvider) {
-            connectWallet();
-        }
-    }, [connectWallet]);
+    // useEffect(() => {
+    //     if (provider) {
+    //         const handleAccountsChanged = (accounts) => {
+    //             console.log("accountsChanged", accounts);
+    //             if (accounts) setAccount(accounts[0]);
+    //         };
 
-    useEffect(() => {
-        if (provider) {
-            const handleAccountsChanged = (accounts) => {
-                console.log("accountsChanged", accounts);
-                if (accounts) setAccount(accounts[0]);
-            };
+    //         const handleDisconnect = () => {
+    //             // console.log("disconnect");
+    //             disconnectWallet();
+    //         };
+    //         provider.provider.on("accountsChanged", handleAccountsChanged);
+    //         provider.provider.on("disconnect", handleDisconnect);
 
-            const handleDisconnect = () => {
-                // console.log("disconnect");
-                disconnectWallet();
-            };
-            provider.provider.on("accountsChanged", handleAccountsChanged);
-            provider.provider.on("disconnect", handleDisconnect);
-
-            return () => {
-                if (provider.provider.removeListener) {
-                    provider.provider.removeListener("accountsChanged", handleAccountsChanged);
-                    provider.provider.removeListener("disconnect", handleDisconnect);
-                }
-            };
-        }
-    }, [disconnectWallet, provider, setAccount]);
+    //         return () => {
+    //             if (provider.provider.removeListener) {
+    //                 provider.provider.removeListener("accountsChanged", handleAccountsChanged);
+    //                 provider.provider.removeListener("disconnect", handleDisconnect);
+    //             }
+    //         };
+    //     }
+    // }, [disconnectWallet, provider, setAccount]);
 
     const handleLogin = async (event) => {
         event.preventDefault()
         try {
             // let address = account, ip = ipAddress
-            let response = await connectWallet()
+            // let response = await connectWallet()
             // console.log(address, ip, history)
-            if (response) {
-                console.log(response)
+            console.log(provider)
+            if (provider) {
+                console.log(provider)
                 setTimeout(async()=>{
                     let res = await checkNetwork()
                     console.log(res)
@@ -129,10 +129,10 @@ export default function Login({ ipAddress, onLogin }) {
             },
             data: data
         };
-        // console.log(axiosConfig)
+        console.log(axiosConfig)
         let response = await axios.request(axiosConfig)
+        console.log(response)
         response = response.data
-        // console.log(response.data)
         if (response.status) {
             // console.log(response,data)
             let loginData = response.data

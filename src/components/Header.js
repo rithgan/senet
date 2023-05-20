@@ -56,20 +56,21 @@ export default function Header() {
         try {
             // console.log("Wallet disconnect called");
             web3Modal().clearCachedProvider();
+            provider.removeAllListeners();
             // setAccount([])
             //   refreshState();
             //   window.location.reload();
         } catch (error) {
             console.error(error);
         }
-    }, []);
+    }, [provider]);
 
 
-    useEffect(() => {
-        if (web3Modal().cachedProvider) {
-            connectWallet();
-        }
-    }, [connectWallet]);
+    // useEffect(() => {
+    //     if (web3Modal().cachedProvider) {
+    //         connectWallet();
+    //     }
+    // }, [connectWallet]);
 
     useEffect(() => {
         handlePrice();
@@ -131,10 +132,10 @@ export default function Header() {
     //     console.log("disconnect");
     //     disconnectWallet();
     // };
-    useEffect(()=>{
-        provider.provider.on("accountsChanged", handleLogout);
-        provider.provider.on("disconnect", handleLogout);
-    },[handleLogout, provider.provider])
+    // useEffect(()=>{
+    //     provider.provider.on("accountsChanged", handleLogout);
+    //     provider.provider.on("disconnect", handleLogout);
+    // },[handleLogout, provider.provider])
 
     // useEffect(() => {
     //     console.log(provider)
