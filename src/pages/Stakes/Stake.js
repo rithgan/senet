@@ -88,7 +88,7 @@ function Stake({ ipAddress, loginData }) {
       poolABI,
       account
     );
-    setProfit(res);
+    setProfit(parseFloat(res).toFixed(3));
   },[provider])
 
 
@@ -241,7 +241,7 @@ function Stake({ ipAddress, loginData }) {
                   totalReward = totalReward < 200 ? totalReward : 200
                   
                   totalInvestment = Math.ceil(totalInvestment)
-                  totalReward =  Math.ceil(totalReward)
+                  totalReward =  totalReward.toFixed(4)
 
                   return (<div key={startDate} className="col-md-6  mb-3">
                     <div key={startDate} className="card h-100">

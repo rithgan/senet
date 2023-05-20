@@ -174,7 +174,7 @@ export default function Header() {
                 <div className="navbar-nav align-items-center">
                     <div className="nav-item navbar-search-wrapper mb-0">
                         <span className="nav-item nav-link search-toggler px-0">
-                            <span className="text-sm d-flex" style={{color:'white'}}>Live Price ${price} </span>
+                            <span className="text-info text-sm" >Live Price <span style={{color:'white'}}>${price}</span> </span>
                         </span>
                     </div>
                 </div>

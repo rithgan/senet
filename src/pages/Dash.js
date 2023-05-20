@@ -10,7 +10,7 @@ import { NetworkContext } from '../context/NetworkContext';
 import { LoadingContext } from '../context/LoadingContext';
 import ReactLoader from '../components/ReactLoader';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { getBusdPrice } from '../utils';
+import { getBusdPrice, getPrice } from '../utils';
 import RadialGauge from '../components/RadialGauge';
 import axios from 'axios';
 import Swal from 'sweetalert2'
@@ -37,8 +37,8 @@ export default function Dash({ipAddress, loginData}) {
   }, []);
 
   const handlePrice = useCallback(async () => {
-    let pr = await getBusdPrice();
-    setPrice(parseFloat(pr).toFixed(2));
+    let pr = await getPrice();
+    setPrice(parseFloat(pr).toFixed(3));
     
   }, [setPrice]);
 
@@ -53,7 +53,7 @@ export default function Dash({ipAddress, loginData}) {
       poolABI,
       account
     );
-    setProfit(parseFloat(res).toFixed(2));
+    setProfit(parseFloat(res).toFixed(3));
   },[account, provider, setProfit])
 
   const handleDash = useCallback(async () => {
