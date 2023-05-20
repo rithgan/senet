@@ -5,7 +5,7 @@ import { IpContext } from '../context/IpContext';
 
 function PrivateRoute({ component: Component }) {
   let isLoggedIn = false
-  const loginData = JSON.parse(localStorage.getItem('loginData'));
+  const loginData = JSON.parse(sessionStorage.getItem('loginData'));
   const [mobileOpen, setMobileOpen] = useContext(MobileSidebarContext)
   const [ipAddress] = useContext(IpContext);
 

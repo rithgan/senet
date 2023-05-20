@@ -69,7 +69,7 @@ export default function LoginWithId({ipAddress,onLogin}) {
         }
     };
     function setLoginData(loginData) {
-        localStorage.setItem('loginData', JSON.stringify(loginData));
+        sessionStorage.setItem('loginData', JSON.stringify(loginData));
     }
     return (
         <div className="container-xxl">
