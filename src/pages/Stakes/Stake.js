@@ -277,8 +277,8 @@ function Stake({ ipAddress, loginData }) {
 
                           </div>
                           <div className="d-flex flex-column" style={{ textAlign: "right" }}>
-                            <h6 className="text-nowrap d-block mb-2">Reward</h6>
-                            <p className="mb-0" >{totalReward} USDT</p>
+                            <h6 className="text-nowrap d-block mb-2">Max Reward</h6>
+                            <p className="mb-0" >{Math.ceil(maxReward)} USDT</p>
                           </div>
                         </div>
                         <div className="d-flex flex-wrap gap-2 py-3">

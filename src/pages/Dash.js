@@ -202,33 +202,13 @@ export default function Dash({ ipAddress, loginData }) {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
-                                        <div className="card" >
-                                            <div className="card-body dashinc" onClick={() => history.push('/stake')}>
-                                                <div className="d-flex justify-content-between">
-                                                    <div className="card-info">
-                                                        <p className="card-text m-0 text-info text-sm">Staking Reward</p>
-                                                        <div className="d-flex align-items-end mb-2">
-                                                            <small className="text-white ">$ {parseFloat(price * profit * busdPrice).toFixed(3)}</small>
-                                                        </div>
-
-                                                    </div>
-                                                    <div className="card-icon">
-
-                                                        <span className="badge bg-label-info rounded p-2">
-                                                            <i className="bx bx-trending-up bx-sm" />
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                     <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
                                         <div className="card">
                                             <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text m-0 text-info text-sm">Total Referral Earning</p>
+                                                        <p className="card-text m-0 text-info text-sm">Total Earning</p>
                                                         <div className="d-flex align-items-end mb-2">
                                                             <small className="text-white "> $ {dash?.total}</small>
                                                         </div>
@@ -249,7 +229,7 @@ export default function Dash({ ipAddress, loginData }) {
                                             <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text m-0 text-info text-sm">Todays's Referral Earning</p>
+                                                        <p className="card-text m-0 text-info text-sm">Todays Earning</p>
                                                         <div className="d-flex align-items-end mb-2">
                                                             <small className="text-white "> ${dash?.today}</small>
                                                         </div>
@@ -259,6 +239,27 @@ export default function Dash({ ipAddress, loginData }) {
                                                         <span className="badge bg-label-info rounded p-2">
                                                             {/* <i className="bx bx-user bx-sm" /> */}
                                                             <i className='bx bx-dollar-circle bx-sm'></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                        <div className="card" >
+                                            <div className="card-body dashinc" onClick={() => history.push('/stake')}>
+                                                <div className="d-flex justify-content-between">
+                                                    <div className="card-info">
+                                                        <p className="card-text m-0 text-info text-sm">Staking Reward</p>
+                                                        <div className="d-flex align-items-end mb-2">
+                                                            <small className="text-white ">$ {parseFloat(price * profit * busdPrice).toFixed(3)}</small>
+                                                        </div>
+
+                                                    </div>
+                                                    <div className="card-icon">
+
+                                                        <span className="badge bg-label-info rounded p-2">
+                                                            <i className="bx bx-trending-up bx-sm" />
                                                         </span>
                                                     </div>
                                                 </div>
