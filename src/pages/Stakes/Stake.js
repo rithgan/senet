@@ -48,6 +48,7 @@ function Stake({ ipAddress, loginData }) {
     packages.reverse()
     // console.log(packages)
     setPackages(packages)
+    console.log(packages)
     setLoading(false)
   }, [account, provider, setLoading])
 
@@ -234,7 +235,7 @@ function Stake({ ipAddress, loginData }) {
                   </div>
                 </div>
                 {/* setting the card of pacakges */}
-                {packages.map(({ roiPercentage, totalReward, maxReward, startDate, totalInvestment, days }) => {
+                {packages.map(({ roiPercentage, totalReward, maxReward, startDate, totalInvestment, days,totalProfit }) => {
                   let plan = "", offer = ""
                   if (roiPercentage === 6) {
                     plan = "Basic Stake"
@@ -256,7 +257,8 @@ function Stake({ ipAddress, loginData }) {
                   totalReward = totalReward < 200 ? totalReward : 200
 
                   totalInvestment = Math.ceil(totalInvestment)
-                  totalReward = totalReward.toFixed(4)
+                  // totalReward = totalReward.toFixed(4)
+                  totalReward  = (totalProfit*price).toFixed(4)
 
                   return (<div key={startDate} className="col-md-6  mb-3">
                     <div key={startDate} className="card h-100">
