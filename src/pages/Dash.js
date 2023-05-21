@@ -31,19 +31,19 @@ export default function Dash({ ipAddress, loginData }) {
     const [investments, setInvestments] = useState(0)
     const history = useHistory();
 
-    const handleInvestments = useCallback(async (pool, poolABI) => {
-        // let investments = await getRewards(provider, pool, poolABI, account)
-        // console.log(investments)
-        // setInvestments(investments[0])
-        // setMax(investments[1])
-        setLoading(true)
-        let packages = await getRewards(provider, pool, poolABI, account)
-        packages.reverse()
-        console.log(packages)
-        let inv = packages.reduce((total,item)=>total.totalInvestment+item.totalInvestment)
-        setInvestments(inv)
-        setLoading(false)
-    }, [account, provider, setLoading])
+    // const handleInvestments = useCallback(async (pool, poolABI) => {
+    //     // let investments = await getRewards(provider, pool, poolABI, account)
+    //     // console.log(investments)
+    //     // setInvestments(investments[0])
+    //     // setMax(investments[1])
+    //     setLoading(true)
+    //     let packages = await getRewards(provider, pool, poolABI, account)
+    //     packages.reverse()
+    //     console.log(packages)
+    //     let inv = packages.reduce((total,item)=>total.totalInvestment+item.totalInvestment)
+    //     setInvestments(inv)
+    //     setLoading(false)
+    // }, [account, provider, setLoading])
 
     const handleBusdPrice = useCallback(async () => {
         let pr = await getBusdPrice();
@@ -126,8 +126,8 @@ export default function Dash({ ipAddress, loginData }) {
         handlePrice()
         handleDash()
         handleBusdPrice()
-        handleInvestments(pool, poolABI)
-    }, [handleDash, handleDeposited, handlePrice, handleProfit, handleBusdPrice, handleInvestments])
+        // handleInvestments(pool, poolABI)
+    }, [handleDash, handleDeposited, handlePrice, handleProfit, handleBusdPrice])
 
 
     return (
@@ -149,7 +149,7 @@ export default function Dash({ ipAddress, loginData }) {
                                                             <p className="card-text m-0 text-info text-md">Welcome</p>
                                                             <p className="card-text m-0 text-white text-sm">Dear {dash?.name}</p>
                                                             <p className="card-text m-0 text-white text-sm">Your Refferal Code : {referall}</p>
-                                                            <p className="card-text m-0 text-white text-sm">Total Staked : $ {investments}</p>
+                                                            <p className="card-text m-0 text-white text-sm">Total Staked : $ {dash?.total_invest}</p>
                                                             <CopyToClipboard text={dash?.copyLink}>
                                                                 <button className="btn btn-info btn-sm text-sm me-sm-3 mt-2">Copy Referral Link</button>
                                                             </CopyToClipboard>

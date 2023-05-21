@@ -6,7 +6,6 @@ import { ConnectContext } from '../context/ConnectContext';
 import web3Modal from ".././modal";
 import Swal from 'sweetalert2'
 import axios from 'axios';
-import { IpContext } from '../context/IpContext';
 import { MobileSidebarContext } from '../context/MobileSidebarContext';
 import { getPrice, truncateAddress } from '../utils';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
@@ -19,7 +18,7 @@ export default function Header() {
     const [account, setAccount] = useContext(NetworkContext);
     const [provider, setProvider, checkNetwork] = useContext(ConnectContext)
     const history = useHistory();
-    const [ipAddress] = useContext(IpContext)
+    const [ipAddress, setIpAddress] = useState("1.1.1.1");
     const [price, setPrice] = useState(0);
     const [mobileOpen, setMobileOpen] = useContext(MobileSidebarContext)
 
@@ -174,7 +173,7 @@ export default function Header() {
                 <div className="navbar-nav align-items-center">
                     <div className="nav-item navbar-search-wrapper mb-0">
                         <span className="nav-item nav-link search-toggler px-0">
-                            <span className="text-info text-sm" >Live Price <span style={{color:'white'}}>${price}</span> </span>
+                            <span className="text-info text-sm" >Live Price <span style={{ color: 'white' }}>${price}</span> </span>
                         </span>
                     </div>
                 </div>

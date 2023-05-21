@@ -2,7 +2,6 @@ import React, { useContext, useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { ConnectContext } from '../context/ConnectContext';
 import { NetworkContext } from '../context/NetworkContext';
-import { IpContext } from '../context/IpContext';
 import web3Modal from ".././modal";
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import axios from 'axios';
@@ -16,7 +15,7 @@ export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
   const [isSubWalletOpen, setIsSubWalletOpen] = useState(false)
-  const [ipAddress] = useContext(IpContext);
+  const [ipAddress, setIpAddress] = useState("1.1.1.1");
   const [mobileOpen, setMobileOpen] = useContext(MobileSidebarContext)
   const { height, width } = useWindowDimensions();
 
@@ -27,16 +26,16 @@ export default function Menu() {
 
   const disconnectWallet = useCallback(async () => {
     try {
-        // console.log("Wallet disconnect called");
-        web3Modal().clearCachedProvider();
-        provider.removeAllListeners();
-        // setAccount([])
-        //   refreshState();
-        //   window.location.reload();
+      // console.log("Wallet disconnect called");
+      web3Modal().clearCachedProvider();
+      provider.removeAllListeners();
+      // setAccount([])
+      //   refreshState();
+      //   window.location.reload();
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-}, [provider]);
+  }, [provider]);
 
   // useEffect(() => {
   //   if (provider?.on) {
