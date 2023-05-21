@@ -163,7 +163,7 @@ export default function Dash({ ipAddress, loginData }) {
                                     </div>
                                 </div>
                                 <div className="row">
-                                    <div className="col-md-12  mb-2">
+                                    {/* <div className="col-md-12  mb-2">
                                         <div className="card h-100">
                                             <div className="card-header align-items-center" style={{ padding: "4% 5% 5% 5%" }}>
                                                 <div className="col-md-12">
@@ -178,7 +178,7 @@ export default function Dash({ ipAddress, loginData }) {
                                             </div>
 
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div className="col-md-12  mb-2">
                                         <div className="card" >
                                             <div className="card-body dashinc" onClick={() => history.push('/stake')}>
