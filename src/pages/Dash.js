@@ -229,7 +229,7 @@ export default function Dash({ ipAddress, loginData }) {
                                             <div className="card-body dashinc">
                                                 <div className="d-flex justify-content-between">
                                                     <div className="card-info">
-                                                        <p className="card-text m-0 text-info text-sm">Todays Earning</p>
+                                                        <p className="card-text m-0 text-info text-sm">Today's Earning</p>
                                                         <div className="d-flex align-items-end mb-2">
                                                             <small className="text-white "> ${dash?.today}</small>
                                                         </div>
