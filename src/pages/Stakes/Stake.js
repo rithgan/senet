@@ -54,7 +54,7 @@ function Stake({ ipAddress, loginData }) {
 
   const handleApprove = async (address, abi) => {
     let res = await approve(provider, address, abi, pool);
-    // console.log(res);
+    console.log(res);
     handleCheckApprove(address, abi)
   };
   const handleCheckApprove = useCallback(async (address, abi) => {
@@ -71,24 +71,25 @@ function Stake({ ipAddress, loginData }) {
     let conf = await depositAmount(provider, pool, poolABI, deposit);
     // console.log(conf)
     if (conf === false) {
-      Swal.fire({
+     let result = await  Swal.fire({
         icon: 'warning',
         title: 'LinkDao Defi',
         text: "Deposit amount exceeds your approve limit",
         confirmButtonText: 'Click here to approve again',
         showCloseButton:true
-      }).then(result => {
-        if (result.isConfirmed) {
-          handleApprove(address, abi)
-        }
       })
-
+      console.log(result)
+      if(result.isConfirmed){
+        await handleApprove(address,abi)
+        await handleDeposit(deposit)
+      }
+    }else{
+      let txnHash = conf?.transactionHash
+      await uploadStake(txnHash, deposit, account, ipAddress, loginData, price)
+      setDeposit(0)
+      // setLoading(false)
+      handleInvestments(pool, poolABI)
     }
-    let txnHash = conf?.transactionHash
-    await uploadStake(txnHash, deposit, account, ipAddress, loginData, price)
-    setDeposit(0)
-    // setLoading(false)
-    handleInvestments(pool, poolABI)
   };
 
 
