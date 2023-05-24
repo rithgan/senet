@@ -7,12 +7,17 @@ import web3Modal from ".././modal";
 import { ethers } from "ethers";
 import { ConnectContext } from '../context/ConnectContext';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input'
 const config = require('../config.json')
 
 export default function Register({ ipAddress }) {
     const [account, setAccount] = useContext(NetworkContext);
     const [provider, setProvider, checkNetwork] = useContext(ConnectContext)
     const [splid, setSplid] = useState('')
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [mobile, setMobile] = useState('')
     const history = useHistory();
     const handleRegister = async (e) => {
         e.preventDefault()
@@ -27,7 +32,10 @@ export default function Register({ ipAddress }) {
                     let data = JSON.stringify({
                         "splid": splid,
                         "address": account,
-                        "ip": ipAddress
+                        "ip": ipAddress,
+                        "name" : name,
+                        "mobile" : mobile,
+                        "email" : email
                     });
 
                     let axiosConfig = {
@@ -209,8 +217,20 @@ export default function Register({ ipAddress }) {
                             {/* Connect with lkd form and action, go to dash.php */}
                             <form id="formAuthentication" className="mb-3" onSubmit={handleRegister}>
                                 <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">Sponsor ID</label>
+                                    <label htmlFor="1email" className="form-label">Sponsor ID</label>
                                     <input type="text" className="form-control" id="splid" name="splid" placeholder="Enter Sponsor ID" value={splid} onChange={(e) => setSplid(e.target.value)} onBlur={handleSlid} />
+                                </div>
+                                 <div className="mb-3">
+                                    <label htmlFor="e1mail" className="form-label">Name</label>
+                                    <input type="text" className="form-control" id="name" name="name" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="2email" className="form-label">Email</label>
+                                    <input type="teemai4lxt" className="form-control" id="email" name="email" placeholder="Enter your Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="2email" className="form-label">Contact Number</label>
+                                    <PhoneInput id="taxId" name="taxId" className="form-control" defaultCountry="US" placeholder="Contact Number" value={mobile} onChange={setMobile}/>
                                 </div>
                                 <button className="btn btn-info d-grid w-100">Connect Wallet</button>
                             </form>

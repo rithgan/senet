@@ -160,6 +160,14 @@ export default function Business({ipAddress, loginData}) {
                                                     </div>
                                                     <div className='row d-flex justify-content-between'>
                                                         <div className='col-6 text-left'>
+                                                            <small className="text-sm text-white"> Name </small>
+                                                        </div>
+                                                        <div className='col-6' style={{textAlignLast:"end"}}>
+                                                            <small className="text-sm text-white"> {list?.uname}</small>
+                                                        </div>
+                                                    </div>
+                                                    <div className='row d-flex justify-content-between'>
+                                                        <div className='col-6 text-left'>
                                                             <small className="text-sm text-white"> Contact Number </small>
                                                         </div>
                                                         <div className='col-6' style={{textAlignLast:"end"}}>
