@@ -104,7 +104,7 @@ export default function Performance({ ipAddress, loginData }) {
                                     <small className="text-sm">For Walkers</small>
                                 </div>
                                 <div className='col-6' style={{textAlignLast:"end"}}>
-                                  <small className="text-sm">$ {data?.turnver?.walker?.toFixed(3)}</small>
+                                  <small className="text-sm">$ {parseFloat(data?.turnver?.walker).toFixed(3)}</small>
                                 </div>
                               </div>
                               <div className='row d-flex justify-content-between'>
@@ -112,7 +112,7 @@ export default function Performance({ ipAddress, loginData }) {
                                   <small className="text-sm">For Joggers</small>
                                 </div>
                                 <div className='col-4' style={{textAlignLast:"end"}}>
-                                <small className="text-sm">$ {data?.turnver?.jogger?.toFixed(3)}</small>
+                                <small className="text-sm">$ {parseFloat(data?.turnver?.jogger).toFixed(3)}</small>
                                 </div>
                               </div>
                               <div className='row d-flex justify-content-between'>
@@ -121,7 +121,7 @@ export default function Performance({ ipAddress, loginData }) {
                                 </div>
                                 <div className='col-4' style={{textAlignLast:"end"}}>
                                 
-                                <small className="text-sm">$ {data?.turnver?.runner?.toFixed(3)}</small>
+                                <small className="text-sm">$ {parseFloat(data?.turnver?.runner).toFixed(3)}</small>
                                 </div>
                               </div>
                               <div className='row d-flex justify-content-between'>
@@ -130,7 +130,7 @@ export default function Performance({ ipAddress, loginData }) {
                                 </div>
                                 <div className='col-4' style={{textAlignLast:"end"}}>
                                 
-                                <small className="text-sm">$ {data?.turnver?.winner?.toFixed(3)}</small>
+                                <small className="text-sm">$ {parseFloat(data?.turnver?.winner).toFixed(3)}</small>
                                 </div>
                               </div>
                             </div>
@@ -300,9 +300,6 @@ export default function Performance({ ipAddress, loginData }) {
                       </div>
                     </div>
                 </div>
-                  
-                  
-                
               </div>
               <Footer />
             </div>}
