@@ -5,7 +5,7 @@ import Menu from '../components/Menu';
 import { NetworkContext } from '../context/NetworkContext';
 import { ConnectContext } from '../context/ConnectContext';
 import { withdraw, reInvest, getWithdrawableTotalProfit } from '../contract/stakes';
-import { getBusdPrice, uploadStake } from '../utils';
+import { getBusdPrice, uploadStake, getPrice } from '../utils';
 import { pool } from '../address';
 import { poolABI } from '../abi';
 import axios from 'axios';
@@ -39,7 +39,8 @@ export default function Request({ ipAddress, loginData }) {
   const handleBusdPrice = useCallback(async () => {
     let pr = await getBusdPrice();
     setBusdPrice(parseFloat(pr).toFixed(3));
-    setPrice(parseFloat(pr).toFixed(3));
+    let lkd = await getPrice()
+    setPrice(parseFloat(lkd).toFixed(3));
   }, []);
 
   useEffect(() => {
@@ -93,7 +94,16 @@ export default function Request({ ipAddress, loginData }) {
 
   const handelAmount = (e) => {
     let amt = e.target.value
-    if (amt > balance) {
+    setAmount(amt)
+    SetToken(amt / price)
+    
+    
+      
+  }
+
+  const handelSubmit = (e) => {
+    
+    if (amount > balance) {
       Swal.fire({
         icon: 'error',
         title: "Lkd Defi",
@@ -101,73 +111,67 @@ export default function Request({ ipAddress, loginData }) {
       })
     }
     else
-      if (amt < 10) {
+      if (amount < 10) {
         Swal.fire({
           icon: 'error',
-          title: "Lkd Defi",
+          title: "LinkDao Defi",
           text: "Please Enter valid Amount"
         })
         setAmount(0)
         SetToken(0)
       }
       else {
-        setAmount(amt)
-        SetToken(amt / price)
-      }
-  }
-
-  const handelSubmit = (e) => {
-    e.preventDefault()
-    let data = JSON.stringify({
-      "address": account,
-      "ip": ipAddress,
-      "ulid": loginData.ulid,
-      "usd": amount,
-      "price": price,
-      "token": token
-    });
-
-    let axiosConfig = {
-      method: 'post',
-      maxBodyLength: Infinity,
-      url: `${config.baseUrl}/api/walletrequest`,
-      headers: {
-        'address': account,
-        'ip': ipAddress,
-        'ulid': loginData.ulid,
-        'auth': loginData.auth,
-        'token': loginData.token,
-        'Content-Type': 'application/json'
-      },
-      data: data
-    };
-    // console.log(axiosConfig)/
-    axios.request(axiosConfig)
-      .then((response) => {
-        // console.log(response.data)
-        let res = response.data
-        if (res.status) {
-          Swal.fire({
-            icon: 'info',
-            title: 'LinkDao Defi',
-            text: res.message
+          let data = JSON.stringify({
+            "address": account,
+            "ip": ipAddress,
+            "ulid": loginData.ulid,
+            "usd": amount,
+            "price": price,
+            "token": token
           });
-          setAmount(0)
-          SetToken(0)
 
-        }
-        else {
-          Swal.fire({
-            icon: 'warning',
-            title: 'LinkDao Defi',
-            text: res.message
-          });
-        }
-        handleWallet()
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+          let axiosConfig = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `${config.baseUrl}/api/walletrequest`,
+            headers: {
+              'address': account,
+              'ip': ipAddress,
+              'ulid': loginData.ulid,
+              'auth': loginData.auth,
+              'token': loginData.token,
+              'Content-Type': 'application/json'
+            },
+            data: data
+          };
+          // console.log(axiosConfig)/
+          axios.request(axiosConfig)
+            .then((response) => {
+              // console.log(response.data)
+              let res = response.data
+              if (res.status) {
+                Swal.fire({
+                  icon: 'info',
+                  title: 'LinkDao Defi',
+                  text: res.message
+                });
+                setAmount(0)
+                SetToken(0)
+
+              }
+              else {
+                Swal.fire({
+                  icon: 'warning',
+                  title: 'LinkDao Defi',
+                  text: res.message
+                });
+              }
+              handleWallet()
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+          }
   }
 
   const handleWithdraw = async () => {
@@ -272,7 +276,7 @@ export default function Request({ ipAddress, loginData }) {
                                       <small className="text-sm">Amount</small>
                                   </div>
                                   <div className='col-6' style={{textAlignLast:"end"}}>
-                                      <small className="text-sm">$ {list.netAmont}/ {list.netAmont*list.price} LKD </small>
+                                      <small className="text-sm">$ {list.netAmont}/ {list.netAmont/list.price} LKD </small>
                                   </div>
                               </div>
                               <div className='row d-flex justify-content-between'>
