@@ -55,6 +55,7 @@ function Stake({ ipAddress, loginData }) {
   const handleApprove = async (address, abi) => {
     let res = await approve(provider, address, abi, pool);
     console.log(res);
+    setStatus(true)
     handleCheckApprove(address, abi)
   };
   const handleCheckApprove = useCallback(async (address, abi) => {
@@ -88,6 +89,7 @@ function Stake({ ipAddress, loginData }) {
       await uploadStake(txnHash, deposit, account, ipAddress, loginData, price)
       setDeposit(0)
       // setLoading(false)
+      setStatus(false);
       handleInvestments(pool, poolABI)
     }
   };
